@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
 	private static readonly float INIT_Y_POSITION = 4;
-	private static readonly int GRAVITY_SCALE = 4;
-	private static readonly int MAX_CREATE_OBJECT_NUMBER = 3;
+	private static readonly int GRAVITY_SCALE = 2;
+	private static readonly int MAX_CREATE_OBJECT_NUMBER = 5;
 
 	public static GameManager init = null;
 	private void Awake() {

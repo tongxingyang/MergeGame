@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public class MainObject : MonoBehaviour {
-    //readonly string TAG = "mainObject";
+	//readonly string TAG = "mainObject";
 
 	public ObjectManager.Type type;
 
@@ -12,11 +12,12 @@ public class MainObject : MonoBehaviour {
 		Vector2 velocity = this.GetComponent<Rigidbody2D>().velocity;
 		Vector2 targetVelocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
 
-        if (collision.gameObject.CompareTag("ground")) {
+		if (collision.gameObject.CompareTag("ground")) {
 			GameManager.init.isNextObjectSpawn = true;
-        }
-		else if(velocity.sqrMagnitude > targetVelocity.sqrMagnitude) {
-			ObjectManager.init.objectCrash(collision.gameObject.GetComponent<MainObject>(), this.GetComponent<MainObject>());
-        }
+		} else if (collision.gameObject.CompareTag("object") && CompareTag("object")) {
+			if (velocity.sqrMagnitude > targetVelocity.sqrMagnitude) {
+				ObjectManager.init.objectCrash(collision.gameObject.GetComponent<MainObject>(), this.GetComponent<MainObject>());
+			}
+		}
 	}
 }

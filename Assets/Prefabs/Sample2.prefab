@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1964223404711046002}
   m_Layer: 0
   m_Name: Sample2
-  m_TagString: mainObject
+  m_TagString: object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

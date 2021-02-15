@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager init = null;
 	private void Awake() {
-		if(init == null) {
+		if (init == null) {
 			init = this;
 		} else if (init != this) {
 			Destroy(this.gameObject);
@@ -21,48 +21,42 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public GameObject[] objects;
-
-	private bool _isNextObjectSpawn;
-	public bool isNextObjectSpawn {
-        set {
-			if (value) {
-				int rand = Random.Range(0, MAX_CREATE_OBJECT_NUMBER);
-				createObject(rand);
-			}
-        }
-    }
-
 	private GameObject newSpawnObject;
 
 	private void Start() {
 		createObject(0);
 	}
 
+	public void isNextObjectSpawn() {
+		int rand = Random.Range(0, MAX_CREATE_OBJECT_NUMBER);
+		newSpawnObject.GetComponent<MainObject>().thisObjectIsCrash = false;
+
+		createObject(rand);
+	}
+
 	public void createObject(int rand) {
-		if (newSpawnObject == null) {
-			newSpawnObject = Instantiate(objects[rand], new Vector3(0, INIT_Y_POSITION, 0), Quaternion.identity);
-		}
+		newSpawnObject = Instantiate(objects[rand], new Vector3(0, INIT_Y_POSITION, 0), Quaternion.identity);
+		newSpawnObject.GetComponent<MainObject>().thisObjectIsCrash = true;
 	}
 
 	public void createMargeObject(int type, Vector3 position) {
 		Instantiate(objects[type], position, Quaternion.identity).GetComponent<Rigidbody2D>().gravityScale = GRAVITY_SCALE;
 	}
 
+	private void OnMouseDown() {
+		objectControlWhenOnTouch();
+	}
+
 	private void OnMouseDrag() {
-		try {
-			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			newSpawnObject.transform.position = new Vector3(mousePosition.x, INIT_Y_POSITION, 0);
-		} catch (NullReferenceException e) {
-			Debug.Log(e.StackTrace);
-        }
+		objectControlWhenOnTouch();
+	}
+
+	private void objectControlWhenOnTouch() {
+		Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		newSpawnObject.transform.position = new Vector3(mousePosition.x, INIT_Y_POSITION, 0);
 	}
 
 	private void OnMouseUp() {
-		try {
-			newSpawnObject.GetComponent<Rigidbody2D>().gravityScale = GRAVITY_SCALE;
-			newSpawnObject = null;
-		} catch (NullReferenceException e) {
-			Debug.Log(e.StackTrace);
-        }
+		newSpawnObject.GetComponent<Rigidbody2D>().gravityScale = GRAVITY_SCALE;
 	}
 }

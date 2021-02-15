@@ -26,8 +26,6 @@ public class ObjectManager : MonoBehaviour {
     }
 
     public void objectCrash(MainObject target, MainObject temp) {
-		GameManager.init.isNextObjectSpawn = true;
-
 		if(target.type == temp.type) {
 			margeObject(target, temp);
         }

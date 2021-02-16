@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour {
 	private static readonly float TIME_TO_NEXT_OBJECT = 0.7f;
 
 	public static GameManager init = null;
+	public Text coin, currScore, bestScore;
+
+	private ScoreManager scoreManager;
+
 	private void Awake() {
 		if (init == null) {
 			init = this;
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour {
 
 	private void Start() {
 		createObject(0);
+		scoreManager = new ScoreManager(coin, currScore, bestScore);
 	}
 
 	public void createObject(int rand) {
@@ -36,6 +42,7 @@ public class GameManager : MonoBehaviour {
 
 	public void createMargeObject(int type, Vector3 position) {
 		setGravityScale(Instantiate(objects[type], position, Quaternion.identity));
+		scoreManager.changingScore(type);
 	}
 
 	private void setGravityScale(GameObject gameObject) {
@@ -72,7 +79,6 @@ public class GameManager : MonoBehaviour {
 		newSpawnObject = null;
 		isPrepareNextObject = false;
 	}
-
 
 	IEnumerator timeToNextObject() {
 		destroyObject();

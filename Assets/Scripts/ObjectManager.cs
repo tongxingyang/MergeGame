@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectManager : MonoBehaviour {
 	private static readonly int GARBAGE_COUNT = 10;
 
+
     public enum Type {
 		one, two, three, four, five, six, seven, eight, nine, ten, max
     }
@@ -19,39 +20,31 @@ public class ObjectManager : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	private Queue<MainObject> garbageObject;
+	private static Queue<GameObject> garbageObjectContainer;
 
     private void Start() {
-		garbageObject = new Queue<MainObject>();
+		garbageObjectContainer = new Queue<GameObject>();
     }
 
-    public void objectCrash(MainObject target, MainObject temp) {
-		if(target.type == temp.type) {
-			margeObject(target, temp);
-        }
-    }
-
-	private void margeObject(MainObject target, MainObject temp) {
+    public void mergeObject(MainObject target, MainObject curr) {
 		if (target.type == Type.max) return;
-
+		addGarbageObject(new GameObject[] { target.gameObject, curr.gameObject });
 		GameManager.init.createMargeObject((int)target.type + 1, target.transform.position);
+	}
 
-		garbageObjectClearAndAdd(target, temp);
-    }
+	public void addGarbageObject(GameObject[] gameObjects) {
+		if (garbageObjectContainer.Count > GARBAGE_COUNT) {
+			for (int i = 0; i < GARBAGE_COUNT; ++i) {
+				Destroy(garbageObjectContainer.Dequeue());
+			}
+		}
 
-	private void garbageObjectClearAndAdd(MainObject target, MainObject temp) {
-		if(garbageObject.Count > GARBAGE_COUNT) {
-			for(int i = 0; i < GARBAGE_COUNT; ++i) {
-				Destroy(garbageObject.Dequeue().gameObject);
-            }
-        }
+		foreach(GameObject gameObject in gameObjects) {
 
-		garbageObject.Enqueue(target);
-		garbageObject.Enqueue(temp);
+			garbageObjectContainer.Enqueue(gameObject);
+			gameObject.SetActive(false);
+		}
 
-		target.gameObject.SetActive(false);
-		temp.gameObject.SetActive(false);
-
-		Debug.Log(garbageObject.Count);
+		Debug.Log(garbageObjectContainer.Count);
 	}
 }

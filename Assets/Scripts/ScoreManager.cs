@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using UnityEngine.UI;
 
 class ScoreManager {
-	private static readonly int SCORE = 70;
+	public static readonly float DROP_SCORE = 1f;
+	public static readonly float MARGE_SCORE = 2f;
+	private static readonly float BASE_SCORE = 13f;
 
-	private int coin, currScore, bestScore;
+	private float coin, currScore, bestScore;
 	private Text coinText, currScoreText, bestScoreText;
-	
+
 	public ScoreManager(Text ct, Text cst, Text bst) {
 		coinText = ct;
 		currScoreText = cst;
@@ -25,8 +27,9 @@ class ScoreManager {
 		bestScoreText.text = "0";
 	}
 
-	public void changingScore(int type) {
-		currScore += (type * SCORE);
+	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
+
+		currScore += (type * (int)mergeLevel * BASE_SCORE);
 		if (bestScore < currScore)
 			bestScore = currScore;
 
@@ -34,8 +37,11 @@ class ScoreManager {
 	}
 
 	private void setScoreText() {
-		coinText.text = coin.ToString();
-		currScoreText.text = currScore.ToString();
-		bestScoreText.text = bestScore.ToString();
+		currScoreText.text = string.Format("{0}", currScore);
+		bestScoreText.text = string.Format("{0}", bestScore);
+	}
+
+	private void setGoldText() {
+		coinText.text = String.Format("{0}", coin);
 	}
 }

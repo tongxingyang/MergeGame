@@ -16,11 +16,11 @@ public class MainObject : MonoBehaviour {
 	private Sprite sprite;
 	
     private void Update() {
-		if (MaxLine.init.y < transform.position.y + radius) {
-			MaxLine.init.StartFlickerAnim();
+/*		if (MaxLine.init.y < transform.position.y + radius) {
+			//MaxLine.init.StartFlickerAnim();
 		} else {
 			MaxLine.init.StopFlickerAnim();
-        }
+        }*/
     }
 
 	public void Setting() {
@@ -38,7 +38,6 @@ public class MainObject : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-
 		if (isBothObjects(collision.gameObject)) {
 			targetPosCheckAndMerge(collision.gameObject);
 		}

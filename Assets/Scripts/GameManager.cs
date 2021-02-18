@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager init = null;
 
-
 	private void Awake() {
 		if (init == null) {
 			init = this;
@@ -15,8 +14,5 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		DontDestroyOnLoad(this.gameObject);
-	}
-
-	private void Start() {
 	}
 }

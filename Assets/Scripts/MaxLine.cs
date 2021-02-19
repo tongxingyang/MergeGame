@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MaxLine : MonoBehaviour {
-    private static readonly int DELAY_ANIMATION = 5;
+    private static readonly float DELAY_ANIMATION = 1.5f;
 
     int isWaring = Animator.StringToHash("isWaring");
     public static MaxLine init;
@@ -15,45 +16,44 @@ public class MaxLine : MonoBehaviour {
 		}
 	}
 
-    public float y {
-        get { return _y; }
+    private float _waringLine;
+    public float WARING_LINE {
+        get {
+            return this.transform.position.y - boxCollider2D.size.y;
+        }
     }
-
-    private float _y;
-    private Animator animator;
-    private GameObject preObj = null;
-    private GameObject currObj = null;
-
-    private void Start() {
-        _y = transform.position.y;
-        animator = GetComponent<Animator>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (currObj == null) {
-            currObj = collision.gameObject;
-            StartCoroutine(nameof(delayToAnimation));
+    private float _overLine;
+    public float OVER_LINE {
+        get {
+            return this.transform.position.y;
         }
     }
 
-    IEnumerator delayToAnimation() {
-        yield return new WaitForSeconds(DELAY_ANIMATION);
-        if (currObj != null) {
+    private Animator animator;
+    private BoxCollider2D boxCollider2D = null;
+
+    private void Start() {
+        animator = GetComponent<Animator>();
+        boxCollider2D = this.GetComponent<BoxCollider2D>();
+    }
+
+    public void WaringLine(float y) {
+        if(WARING_LINE < y && OVER_LINE > y) {
+
             StartFlickerAnim();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (currObj == collision.gameObject) {
-            currObj = null;
-        }
-    }
-
     public void StartFlickerAnim() {
-        animator.SetBool(isWaring, true);
+        StartCoroutine(nameof(delayToWaringLine));
     }
 
     public void StopFlickerAnim() {
         animator.SetBool(isWaring, false);
+    }
+
+    IEnumerator delayToWaringLine() {
+        yield return new WaitForSeconds(DELAY_ANIMATION);
+        animator.SetBool(isWaring, true);
     }
 }

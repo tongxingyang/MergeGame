@@ -15,4 +15,8 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad(this.gameObject);
 	}
+
+	public void GameOver() {
+		UIManager.init.setGameOverPanel();
+    }
 }

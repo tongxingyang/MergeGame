@@ -14,14 +14,21 @@ public class MainObject : MonoBehaviour {
 
 	private float _radius;
 	private Sprite sprite;
+	private bool isDrop = false;
 	
     private void Update() {
-/*		if (MaxLine.init.y < transform.position.y + radius) {
-			//MaxLine.init.StartFlickerAnim();
+		if (isDrop) {
+			MaxLine.init.WaringLine(this.transform.position.y);
+		} else if (isGameOver()) {
+			GameManager.init.GameOver();
 		} else {
 			MaxLine.init.StopFlickerAnim();
-        }*/
+        } 
     }
+
+	private bool isGameOver() {
+		return (MaxLine.init.OVER_LINE < this.transform.position.y && isDrop);
+	}
 
 	public void Setting() {
 		try {
@@ -38,6 +45,8 @@ public class MainObject : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
+		isDrop = true;
+
 		if (isBothObjects(collision.gameObject)) {
 			targetPosCheckAndMerge(collision.gameObject);
 		}

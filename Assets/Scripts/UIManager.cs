@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public Text coin, currScore, bestScore;
+	public GameObject gameOverPanel;
+
 	private ScoreManager scoreManager;
 
     private void Start() {
@@ -25,5 +27,10 @@ public class UIManager : MonoBehaviour {
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
 		scoreManager.AddScore(type, mergeLevel);
+    }
+
+	public void setGameOverPanel() {
+		gameOverPanel.SetActive(true);
+		gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
     }
 }

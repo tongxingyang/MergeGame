@@ -23,18 +23,21 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public GameObject[] objects;
+	public GameObject objParent;
 
 	private static Queue<GameObject> garbageObjectContainer;
-
 	private GameObject currObject;
 
 	private void Start() {
-		CreateObject(0);
+		objParent = new GameObject("objParent");
 		garbageObjectContainer = new Queue<GameObject>();
+
+		CreateObject(0);
 	}
 
 	public void CreateObject(int rand) {
 		currObject = Instantiate(objects[rand], new Vector3(0, INIT_Y_POSITION, 0), Quaternion.identity);
+		currObject.transform.parent = objParent.transform;
 		MouseControl.init.SetCurrObject(currObject);
 	}
 
@@ -46,8 +49,9 @@ public class ObjectManager : MonoBehaviour {
 	public void MergeObject(MainObject target, MainObject curr) {
 		if (target.mergeLevel == MergeLevel.max) return;
 
-		Instantiate(objects[(int)target.mergeLevel], target.transform.position, Quaternion.identity)
-			.GetComponent<MainObject>().Setting();
+		GameObject tempObj = Instantiate(objects[(int)target.mergeLevel], target.transform.position, Quaternion.identity);
+		tempObj.GetComponent<MainObject>().Setting();
+		tempObj.transform.parent = objParent.transform;
 
 		AddMergedObjectToGarbage(new GameObject[] { target.gameObject, curr.gameObject });
 		UIManager.init.AddScore(ScoreManager.MARGE_SCORE, target.mergeLevel);
@@ -71,5 +75,23 @@ public class ObjectManager : MonoBehaviour {
 		yield return new WaitForSeconds(TIME_TO_NEXT_OBJECT);
 		CreateObject(Random.Range(0, MAX_CREATE_OBJECT_NUMBER));
 		UIManager.init.AddScore(ScoreManager.DROP_SCORE);
+	}
+
+	public void StopObj() {
+		foreach (Transform gameObject in objParent.GetComponentsInChildren<Transform>()) {
+			if (gameObject.gameObject.GetComponent<Rigidbody2D>() != null) {
+				gameObject.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+				gameObject.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+			}
+		}
+	}
+
+	public void Restart() {
+		garbageObjectContainer.Clear();
+		foreach (Transform gameObject in objParent.GetComponentsInChildren<Transform>()) {
+			Destroy(gameObject.gameObject);
+		}
+
+		Start();
 	}
 }

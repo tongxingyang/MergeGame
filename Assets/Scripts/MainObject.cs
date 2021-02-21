@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MainObject : MonoBehaviour {
 	private static readonly int GRAVITY_SCALE = 2;
+	private static readonly int DELETE_OBJ = Animator.StringToHash("delete");
 
 	public ObjectManager.MergeLevel mergeLevel;
 
@@ -14,21 +15,20 @@ public class MainObject : MonoBehaviour {
 
 	private float _radius;
 	private Sprite sprite;
+	private Animator animator;
 	private bool isDrop = false;
-	
-    private void Update() {
+
+	private void Start() {
+		animator = GetComponent<Animator>();
+	}
+
+	private void Update() {
 		if (isDrop) {
 			MaxLine.init.WaringLine(this.transform.position.y);
-		} else if (isGameOver()) {
-			GameManager.init.GameOver();
 		} else {
 			MaxLine.init.StopFlickerAnim();
         } 
     }
-
-	private bool isGameOver() {
-		return (MaxLine.init.OVER_LINE < this.transform.position.y && isDrop);
-	}
 
 	public void Setting() {
 		try {
@@ -45,7 +45,8 @@ public class MainObject : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		isDrop = true;
+		if (!collision.gameObject.CompareTag("Untagged"))
+			isDrop = true;
 
 		if (isBothObjects(collision.gameObject)) {
 			targetPosCheckAndMerge(collision.gameObject);
@@ -64,7 +65,6 @@ public class MainObject : MonoBehaviour {
 		Vector2 velocity = this.GetComponent<Rigidbody2D>().velocity;
 		Vector2 targetVelocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
 
-
 		if(this.transform.position.y > collision.transform.position.y) {
 			mergeObject(collision);
 		} else if(this.transform.position.y == collision.transform.position.y) {
@@ -76,5 +76,9 @@ public class MainObject : MonoBehaviour {
 
 	private void mergeObject(GameObject collision) {
 		ObjectManager.init.MergeObject(collision.GetComponent<MainObject>(), this);
+	}
+
+	private void OnDisable() {
+		animator.SetBool(DELETE_OBJ, true);
 	}
 }

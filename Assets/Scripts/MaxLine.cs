@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MaxLine : MonoBehaviour {
     private static readonly float DELAY_ANIMATION = 1.5f;
+    private static readonly int isWaring = Animator.StringToHash("isWaring");
 
-    int isWaring = Animator.StringToHash("isWaring");
     public static MaxLine init;
     private void Awake() {
 		if (init == null) {
@@ -38,9 +38,12 @@ public class MaxLine : MonoBehaviour {
     }
 
     public void WaringLine(float y) {
-        if(WARING_LINE < y && OVER_LINE > y) {
-
-            StartFlickerAnim();
+        if (gameObject.activeSelf) {
+            if (WARING_LINE < y && OVER_LINE > y) {
+                StartFlickerAnim();
+            } else if (OVER_LINE < y) {
+                GameManager.init.GameOver();
+            }
         }
     }
 

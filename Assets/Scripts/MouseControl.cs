@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class MouseControl : MonoBehaviour {
@@ -32,9 +33,11 @@ public class MouseControl : MonoBehaviour {
     }
 
 	private void OnMouseUp() {
-		if (!isDropCurrObejct) {
-			SetCurrObject();
-			ObjectManager.init.RespawnCurrObject();
+		if (!isUITouch()) {
+			if (!isDropCurrObejct) {
+				SetCurrObject();
+				ObjectManager.init.RespawnCurrObject();
+			}
 		}
 	}
 
@@ -47,11 +50,29 @@ public class MouseControl : MonoBehaviour {
 	}
 
 	private void ObjectControlWhenOnTouch() {
-		if (!isDropCurrObejct) {
-			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			mousePosition.y = currObject.transform.position.y;
+		if (!isUITouch()) {
+			GameManager.init.GameStart();
 
-			currObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
+			if (!isDropCurrObejct) {
+
+				Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				mousePosition.y = currObject.transform.position.y;
+
+				currObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
+			}
+		}
+	}
+
+	private bool isUITouch() {
+		return EventSystem.current.IsPointerOverGameObject();
+	}
+
+	public void GameOver(bool isOver) {
+		if (isOver) {
+			currObject = null;
+			this.gameObject.SetActive(false);
+		} else {
+			this.gameObject.SetActive(true);
 		}
 	}
 }

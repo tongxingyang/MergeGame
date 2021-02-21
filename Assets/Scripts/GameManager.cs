@@ -7,6 +7,21 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager init = null;
 
+	private bool _isGameOver;
+	public bool isGameOver {
+		set {
+			if (value) {
+				ObjectManager.init.StopObj();
+			} else {
+				ObjectManager.init.Restart();
+			}
+
+			MouseControl.init.GameOver(value);
+			MaxLine.init.gameObject.SetActive(!value);
+			UIManager.init.setGameOverPanel(value);
+		}
+	}
+
 	private void Awake() {
 		if (init == null) {
 			init = this;
@@ -17,6 +32,14 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		UIManager.init.setGameOverPanel();
+		isGameOver = true;
     }
+
+	public void GameStart() {
+		UIManager.init.ShopActiveFalse();
+	}
+
+	public void GameReset() {
+		isGameOver = false;
+	}
 }

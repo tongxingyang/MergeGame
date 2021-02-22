@@ -19,18 +19,16 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public Text coin, shopCoin, currScore, bestScore;
-	public GameObject canvas;
+	public Animator animator;
 	public GameObject gameOverPanel;
 	public GameObject MainUI;
 	public GameObject shopIcon;
 	public GameObject settingIcon;
 
 	private ScoreManager scoreManager;
-	private Animator animator;
 
     private void Start() {
 		scoreManager = new ScoreManager(coin, shopCoin, currScore, bestScore);
-		animator = canvas.GetComponent<Animator>();
 	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
@@ -54,10 +52,11 @@ public class UIManager : MonoBehaviour {
 	public void CloseShop() {
 		ObjectManager.init.objParent.SetActive(true);
 		animator.SetBool(SHOP_OPEN, false);
+		animator.SetInteger(TO_SHOP_CONTANTS, 0);
 	}
 
-	public void ToBallAsShop() {
-		animator.SetInteger(TO_SHOP_CONTANTS, 1);
+	public void ToContentsAnimation(int value) {
+		animator.SetInteger(TO_SHOP_CONTANTS, value);
 	}
 
 	public void ShopActiveFalse() {

@@ -24,11 +24,14 @@ public class UIManager : MonoBehaviour {
 	public GameObject MainUI;
 	public GameObject shopIcon;
 	public GameObject settingIcon;
+	public GameObject shopBallImagesObjContainer;
 
 	private ScoreManager scoreManager;
+	private Image[] shopBallImages;
 
     private void Start() {
 		scoreManager = new ScoreManager(coin, shopCoin, currScore, bestScore);
+		shopBallImages = shopBallImagesObjContainer.GetComponentsInChildren<Image>();
 	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
@@ -62,5 +65,17 @@ public class UIManager : MonoBehaviour {
 	public void ShopActiveFalse() {
 		settingIcon.SetActive(false);
 		shopIcon.SetActive(false);
+	}
+
+	public void ChoceObjItem(int num) {
+		ChangeShopObjImage(num);
+	}
+
+	private void ChangeShopObjImage(int num) {
+		for(int i = 1; i < shopBallImages.Length; ++i) {
+			String path = "obj/objects" + num + "_" + (i - 1);
+			Sprite sprite = Resources.Load<Sprite>(path);
+			shopBallImages[i].sprite = sprite;
+		}
 	}
 }

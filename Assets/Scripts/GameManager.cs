@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+	private static readonly float GAME_OVER_DELAY = 3.0f;
 
 	public static GameManager init = null;
 
@@ -19,7 +20,11 @@ public class GameManager : MonoBehaviour {
 			MouseControl.init.GameOver(value);
 			MaxLine.init.gameObject.SetActive(!value);
 			UIManager.init.setGameOverPanel(value);
+			Camera.main.GetComponent<CameraControl>().isGameOver = value;
+
+			_isGameOver = value;
 		}
+        get { return _isGameOver; }
 	}
 
 	private void Awake() {
@@ -31,8 +36,9 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	public void GameOver() {
-		isGameOver = true;
+    public void GameOver(GameObject overTerget) {
+		overTerget.GetComponent<MainObject>().ObjStateWhenGameOver();
+		StartCoroutine(nameof(GameOverDelay));
     }
 
 	public void GameStart() {
@@ -41,5 +47,18 @@ public class GameManager : MonoBehaviour {
 
 	public void GameReset() {
 		isGameOver = false;
+	}
+
+	public void AtHome() {
+		isGameOver = false;
+		UIManager.init.MainUI.SetActive(true);
+    }
+
+	IEnumerator GameOverDelay() {
+		Camera.main.GetComponent<CameraControl>().isGameOver = true;
+		MouseControl.init.GameOver(true);
+
+		yield return new WaitForSeconds(GAME_OVER_DELAY);
+		isGameOver = true;
 	}
 }

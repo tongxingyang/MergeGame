@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6953724803942867385}
   - component: {fileID: -768637480154949056}
   m_Layer: 0
-  m_Name: Sample1
+  m_Name: Obj0
   m_TagString: object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 872025557
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 8578228542354441529, guid: 3b8c445d489ba41c59b1d15e0bd3490f,
     type: 3}

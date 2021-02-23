@@ -6,25 +6,39 @@ using UnityEngine;
 public class MainObject : MonoBehaviour {
 	private static readonly int GRAVITY_SCALE = 2;
 	private static readonly int DELETE_OBJ = Animator.StringToHash("delete");
+	private static readonly int FLICKER_OBJ = Animator.StringToHash("flicker");
 
 	public ObjectManager.MergeLevel mergeLevel;
 
+	private float _radius;
 	public float radius {
 		get { return _radius; }
+		set {
+			_radius = value;
+        }
     }
 
-	private float _radius;
 	private Sprite sprite;
 	private Animator animator;
+	private AudioSource audioSource;
+	private Vector3 fixedPos;
+
 	private bool isDrop = false;
+	private bool isFixed = false;
+
 
 	private void Start() {
 		animator = GetComponent<Animator>();
 	}
 
+	private void StartAudio() {
+    }
+
 	private void Update() {
-		if (isDrop) {
-			MaxLine.init.WaringLine(this.transform.position.y);
+        if (isFixed) {
+			this.transform.position = fixedPos;
+        } else if (isDrop) {
+			MaxLine.init.WaringLine(this.gameObject);
 		} else {
 			MaxLine.init.StopFlickerAnim();
         } 
@@ -33,7 +47,7 @@ public class MainObject : MonoBehaviour {
 	public void Setting() {
 		try {
 			sprite = GetComponent<SpriteRenderer>().sprite;
-			_radius = sprite.rect.width / (sprite.pixelsPerUnit * 0.01f) * 0.005f;
+			radius = sprite.rect.width / (sprite.pixelsPerUnit * 0.01f) * 0.005f;
 
 			gameObject.AddComponent<CircleCollider2D>();
 			gameObject.GetComponent<CircleCollider2D>().radius = radius;
@@ -76,6 +90,20 @@ public class MainObject : MonoBehaviour {
 
 	private void mergeObject(GameObject collision) {
 		ObjectManager.init.MergeObject(collision.GetComponent<MainObject>(), this);
+	}
+
+	public void ObjStateWhenGameOver() {
+		StartFlickerAnim();
+		fixedPos = this.transform.position;
+		isFixed = true;
+	}
+
+	public float returnYPos() {
+		return this.transform.position.y + radius;
+    }
+
+	private void StartFlickerAnim() {
+		animator.SetBool(FLICKER_OBJ, true);
 	}
 
 	private void OnDisable() {

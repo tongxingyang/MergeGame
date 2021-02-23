@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.UI;
+using TMPro;
 
 class ScoreManager {
 	public static readonly float DROP_SCORE = 1f;
@@ -11,11 +12,12 @@ class ScoreManager {
 	private static readonly float BASE_SCORE = 13f;
 
 	private float coin, currScore, bestScore;
-	private Text shopCoin, coinText, currScoreText, bestScoreText;
+	//private TextMeshProUGUI shopCoin, coinText;
+	private TextMeshProUGUI currScoreText, bestScoreText;
 
-	public ScoreManager(Text ct, Text sct, Text cst, Text bst) {
-		coinText = ct;
-		shopCoin = sct;
+	public ScoreManager(TextMeshProUGUI cst, TextMeshProUGUI bst) {
+		//coinText = ct;
+		//shopCoin = sct;
 		currScoreText = cst;
 		bestScoreText = bst;
 
@@ -23,8 +25,8 @@ class ScoreManager {
 	}
 
 	private void initScore() {
-		shopCoin.text = "0";
-		coinText.text = "0";
+		//shopCoin.text = "0";
+		//coinText.text = "0";
 		currScoreText.text = "0";
 		bestScoreText.text = "0";
 	}
@@ -44,7 +46,7 @@ class ScoreManager {
 	}
 
 	private void setGoldText() {
-		coinText.text = String.Format("{0}", coin);
-		shopCoin.text = String.Format("{0}", coin);
+		//coinText.text = String.Format("{0}", coin);
+		//shopCoin.text = String.Format("{0}", coin);
 	}
 }

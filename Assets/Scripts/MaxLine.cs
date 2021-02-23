@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MaxLine : MonoBehaviour {
-    private static readonly float DELAY_ANIMATION = 1.5f;
+    private static readonly float DELAY_ANIMATION = 1f;
     private static readonly int isWaring = Animator.StringToHash("isWaring");
 
     public static MaxLine init;
@@ -37,12 +37,14 @@ public class MaxLine : MonoBehaviour {
         boxCollider2D = this.GetComponent<BoxCollider2D>();
     }
 
-    public void WaringLine(float y) {
+    public void WaringLine(GameObject obj) {
+        float y = obj.GetComponent<MainObject>().returnYPos();
+
         if (gameObject.activeSelf) {
             if (WARING_LINE < y && OVER_LINE > y) {
                 StartFlickerAnim();
             } else if (OVER_LINE < y) {
-                GameManager.init.GameOver();
+                GameManager.init.GameOver(obj);
             }
         }
     }

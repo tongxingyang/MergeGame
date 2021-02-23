@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour {
 	private static readonly int SHOP_OPEN = Animator.StringToHash("isShop");
 	private static readonly int TO_SHOP_CONTANTS = Animator.StringToHash("shopVal");
+	private static readonly int IS_GAME_OVER_PANEL = Animator.StringToHash("isGameOver");
 
 	public static UIManager init = null;
 	private void Awake() {
@@ -18,7 +20,8 @@ public class UIManager : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	public Text coin, shopCoin, currScore, bestScore;
+	//public TextMeshProUGUI coin, shopCoin;
+	public TextMeshProUGUI currScore, bestScore;
 	public Animator animator;
 	public GameObject gameOverPanel;
 	public GameObject MainUI;
@@ -28,7 +31,7 @@ public class UIManager : MonoBehaviour {
 	private ScoreManager scoreManager;
 
     private void Start() {
-		scoreManager = new ScoreManager(coin, shopCoin, currScore, bestScore);
+		scoreManager = new ScoreManager(currScore, bestScore);
 	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
@@ -38,7 +41,9 @@ public class UIManager : MonoBehaviour {
 	public void setGameOverPanel(bool isOver) {
 		if (isOver) {
 			gameOverPanel.SetActive(true);
-			gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
+			gameOverPanel.GetComponent<Animator>().SetBool(IS_GAME_OVER_PANEL, true);
+			GetComponent<AudioSource>().Play();
+			//gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
 		} else {
 			gameOverPanel.SetActive(false);
 		}
@@ -63,4 +68,6 @@ public class UIManager : MonoBehaviour {
 		settingIcon.SetActive(false);
 		shopIcon.SetActive(false);
 	}
+
+	
 }

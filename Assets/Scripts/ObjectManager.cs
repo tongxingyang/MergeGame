@@ -23,6 +23,8 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public GameObject[] objects;
+
+	[HideInInspector]
 	public GameObject objParent;
 
 	private static Queue<GameObject> garbageObjectContainer;
@@ -48,6 +50,8 @@ public class ObjectManager : MonoBehaviour {
 
 	public void MergeObject(MainObject target, MainObject curr) {
 		if (target.mergeLevel == MergeLevel.max) return;
+
+		StartMergeAudio();
 
 		GameObject tempObj = Instantiate(objects[(int)target.mergeLevel], target.transform.position, Quaternion.identity);
 		tempObj.GetComponent<MainObject>().Setting();
@@ -94,4 +98,8 @@ public class ObjectManager : MonoBehaviour {
 
 		Start();
 	}
+
+	private void StartMergeAudio() {
+		GetComponent<AudioSource>().Play();
+    }
 }

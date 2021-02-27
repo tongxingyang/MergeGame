@@ -21,18 +21,16 @@ public class MainObject : MonoBehaviour {
 	private Sprite sprite;
 	private Animator animator;
 	private AudioSource audioSource;
-	private Vector3 fixedPos;
+	private Vector3 fixedPos, inCameraPos;
 
 	private bool isDrop = false;
 	private bool isFixed = false;
+	private bool isMerging = false;
 
 
 	private void Start() {
 		animator = GetComponent<Animator>();
 	}
-
-	private void StartAudio() {
-    }
 
 	private void Update() {
         if (isFixed) {
@@ -41,8 +39,17 @@ public class MainObject : MonoBehaviour {
 			MaxLine.init.WaringLine(this.gameObject);
 		} else {
 			MaxLine.init.StopFlickerAnim();
-        } 
-    }
+        }
+
+		inCameraPos = Camera.main.WorldToViewportPoint(transform.position);
+
+		if (inCameraPos.x < 0f) inCameraPos.x = 0f;
+		if (inCameraPos.x > 1f) inCameraPos.x = 1f;
+		if (inCameraPos.y < 0f) inCameraPos.y = 0f;
+		if (inCameraPos.y > 1f) inCameraPos.y = 1f;
+
+		transform.position = Camera.main.ViewportToWorldPoint(inCameraPos);
+	}
 
 	public void Setting() {
 		try {
@@ -62,7 +69,8 @@ public class MainObject : MonoBehaviour {
 		if (!collision.gameObject.CompareTag("Untagged"))
 			isDrop = true;
 
-		if (isBothObjects(collision.gameObject)) {
+		if (isBothObjects(collision.gameObject) && !isMerging) {
+			isMerging = true;
 			targetPosCheckAndMerge(collision.gameObject);
 		}
 	}

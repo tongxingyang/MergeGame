@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class MaxLine : MonoBehaviour {
     private static readonly float DELAY_ANIMATION = 1f;
+    private static readonly float DELAY_GAMEOVER = 2f;
     private static readonly int isWaring = Animator.StringToHash("isWaring");
+
+    private GameObject temp;
 
     public static MaxLine init;
     private void Awake() {
@@ -22,6 +25,7 @@ public class MaxLine : MonoBehaviour {
             return this.transform.position.y - boxCollider2D.size.y;
         }
     }
+
     private float _overLine;
     public float OVER_LINE {
         get {
@@ -42,15 +46,14 @@ public class MaxLine : MonoBehaviour {
 
         if (gameObject.activeSelf) {
             if (WARING_LINE < y && OVER_LINE > y) {
-                StartFlickerAnim();
+                StartCoroutine(nameof(delayToWaringLine));
             } else if (OVER_LINE < y) {
-                GameManager.init.GameOver(obj);
+                StartCoroutine(nameof(delayToGameOver), obj);
             }
         }
     }
 
     public void StartFlickerAnim() {
-        StartCoroutine(nameof(delayToWaringLine));
     }
 
     public void StopFlickerAnim() {
@@ -60,5 +63,18 @@ public class MaxLine : MonoBehaviour {
     IEnumerator delayToWaringLine() {
         yield return new WaitForSeconds(DELAY_ANIMATION);
         animator.SetBool(isWaring, true);
+    }
+
+    IEnumerator delayToGameOver(GameObject obj) {
+        yield return new WaitForSeconds(DELAY_GAMEOVER);
+        if (OVER_LINE < obj.transform.position.y) {
+            GameManager.init.GameOver(obj);
+        }
+    }
+
+    public void setColor(bool isGameOver) {
+        animator.SetBool(isWaring, false);
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        gameObject.SetActive(!isGameOver);
     }
 }

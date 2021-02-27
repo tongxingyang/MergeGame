@@ -8,7 +8,7 @@ using TMPro;
 public class UIManager : MonoBehaviour {
 	private static readonly int SHOP_OPEN = Animator.StringToHash("isShop");
 	private static readonly int TO_SHOP_CONTANTS = Animator.StringToHash("shopVal");
-	private static readonly int IS_GAME_OVER_PANEL = Animator.StringToHash("isGameOver");
+	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
 
 	public static UIManager init = null;
 	private void Awake() {
@@ -21,28 +21,31 @@ public class UIManager : MonoBehaviour {
 	}
 
 	//public TextMeshProUGUI coin, shopCoin;
-	public TextMeshProUGUI currScore, bestScore;
 	public Animator animator;
 	public GameObject gameOverPanel;
 	public GameObject MainUI;
 	public GameObject shopIcon;
 	public GameObject settingIcon;
+	public GameObject settingPanel;
+	public GameObject lisensePanel;
+	public GameObject pausePanel;
+	public GameObject pauseBtn;
 
-	private ScoreManager scoreManager;
+	public Scrollbar bgmVolume, effectVolume;
 
     private void Start() {
-		scoreManager = new ScoreManager(currScore, bestScore);
 	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
-		scoreManager.AddScore(type, mergeLevel);
+		ScoreManager.init.AddScore(type, mergeLevel);
     }
 
 	public void setGameOverPanel(bool isOver) {
 		if (isOver) {
-			gameOverPanel.SetActive(true);
-			gameOverPanel.GetComponent<Animator>().SetBool(IS_GAME_OVER_PANEL, true);
-			GetComponent<AudioSource>().Play();
+			OpenPanel(gameOverPanel);
+			ScoreManager.init.setSaveBestScore();
+			if (!GetComponent<AudioSource>().isPlaying)
+				GetComponent<AudioSource>().Play();
 			//gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
 		} else {
 			gameOverPanel.SetActive(false);
@@ -64,10 +67,15 @@ public class UIManager : MonoBehaviour {
 		animator.SetInteger(TO_SHOP_CONTANTS, value);
 	}
 
-	public void ShopActiveFalse() {
-		settingIcon.SetActive(false);
-		shopIcon.SetActive(false);
+	public void MainUIActive(bool _active) {
+		settingIcon.SetActive(_active);
+		shopIcon.SetActive(_active);
+		settingPanel.SetActive(false);
+		pauseBtn.SetActive(!_active);
 	}
 
-	
+	public void OpenPanel(GameObject gameObject) {
+		gameObject.SetActive(true);
+		gameObject.GetComponent<Animator>().SetBool(OPEN_UI_ANIM, true);
+	}
 }

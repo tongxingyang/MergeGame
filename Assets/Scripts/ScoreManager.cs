@@ -4,24 +4,64 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine;
 using TMPro;
 
-class ScoreManager {
+class ScoreManager : MonoBehaviour {
 	public static readonly float DROP_SCORE = 1f;
 	public static readonly float MARGE_SCORE = 2f;
 	private static readonly float BASE_SCORE = 13f;
+	private static readonly int ADS_MAX_COUNT = 3;
 
-	private float coin, currScore, bestScore;
-	//private TextMeshProUGUI shopCoin, coinText;
-	private TextMeshProUGUI currScoreText, bestScoreText;
+	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount;
 
-	public ScoreManager(TextMeshProUGUI cst, TextMeshProUGUI bst) {
-		//coinText = ct;
-		//shopCoin = sct;
-		currScoreText = cst;
-		bestScoreText = bst;
+	public static ScoreManager init = null;
+	public float finalBestScore;
 
-		initScore();
+	private void Awake() {
+		if (init == null) {
+			init = this;
+		} else if (init != this) {
+			Destroy(this.gameObject);
+		}
+		DontDestroyOnLoad(this.gameObject);
+	}
+
+	private int _currAdsCount = 1;
+	public int currAdsCount {
+		get {
+			return _currAdsCount;
+		}
+		set {
+			if (value > ADS_MAX_COUNT) {
+				currAdsCount = 0;
+				AdsManager.init.UserChoseToWatchAd();
+			} else _currAdsCount = value;
+		}
+	}
+
+	private DataInfo.GameData gameData;
+	private float _coin, _currScore, _bestScore;
+	//public float coin;
+
+	private void Start() {
+		currScore = 0;
+	}
+
+	public float currScore {
+		get { return _currScore; }
+		set {
+			_currScore = value;
+			currScoreText.text = string.Format("{0}", value);
+			scoreViewText.text = string.Format("{0}", value);
+		}
+	}
+	public float bestScore {
+		get { return _bestScore; }
+		set {
+			_bestScore = value;
+			bestScoreText.text = string.Format("{0}", value);
+		}
 	}
 
 	private void initScore() {
@@ -31,18 +71,15 @@ class ScoreManager {
 		bestScoreText.text = "0";
 	}
 
+	public void setSaveBestScore() {
+		finalBestScore = bestScore;
+	}
+
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
 
 		currScore += (type * (int)mergeLevel * BASE_SCORE);
 		if (bestScore < currScore)
 			bestScore = currScore;
-
-		setScoreText();
-	}
-
-	private void setScoreText() {
-		currScoreText.text = string.Format("{0}", currScore);
-		bestScoreText.text = string.Format("{0}", bestScore);
 	}
 
 	private void setGoldText() {

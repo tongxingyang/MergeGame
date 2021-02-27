@@ -38,9 +38,11 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public void CreateObject(int rand) {
-		currObject = Instantiate(objects[rand], new Vector3(0, INIT_Y_POSITION, 0), Quaternion.identity);
-		currObject.transform.parent = objParent.transform;
-		MouseControl.init.SetCurrObject(currObject);
+		if (!GameManager.init.isGameOver) {
+			currObject = Instantiate(objects[rand], new Vector3(0, INIT_Y_POSITION, 0), Quaternion.identity);
+			currObject.transform.parent = objParent.transform;
+			MouseControl.init.SetCurrObject(currObject);
+		}
 	}
 
 	public void RespawnCurrObject() {
@@ -49,7 +51,8 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public void MergeObject(MainObject target, MainObject curr) {
-		if (target.mergeLevel == MergeLevel.max) return;
+		if ((target.mergeLevel == MergeLevel.max) || GameManager.init.isGameOver) 
+			return;
 
 		StartMergeAudio();
 

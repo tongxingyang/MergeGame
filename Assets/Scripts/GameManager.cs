@@ -41,12 +41,6 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	private void Start() {
-		if (IAPManager.init.HadPurchased(PREMIUM)) {
-			BuyPremium();
-		}
-	}
-
 	public void GameOver(GameObject overTerget) {
 		overTerget.GetComponent<MainObject>().ObjStateWhenGameOver();
 		StartCoroutine(nameof(GameOverDelay));

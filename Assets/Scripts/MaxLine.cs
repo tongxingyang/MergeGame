@@ -67,8 +67,12 @@ public class MaxLine : MonoBehaviour {
 
     IEnumerator delayToGameOver(GameObject obj) {
         yield return new WaitForSeconds(DELAY_GAMEOVER);
-        if (OVER_LINE < obj.transform.position.y) {
-            GameManager.init.GameOver(obj);
+        try {
+            if (OVER_LINE < obj.transform.position.y) {
+                GameManager.init.GameOver(obj);
+            }
+        }catch(Exception e) {
+            Debug.Log(e.StackTrace);
         }
     }
 

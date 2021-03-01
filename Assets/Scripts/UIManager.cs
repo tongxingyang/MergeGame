@@ -24,8 +24,7 @@ public class UIManager : MonoBehaviour {
 	public Animator animator;
 	public GameObject gameOverPanel;
 	public GameObject MainUI;
-	public GameObject shopIcon;
-	public GameObject settingIcon;
+	public GameObject homePanel;
 	public GameObject settingPanel;
 	public GameObject lisensePanel;
 	public GameObject pausePanel;
@@ -42,10 +41,11 @@ public class UIManager : MonoBehaviour {
 
 	public void setGameOverPanel(bool isOver) {
 		if (isOver) {
+			if (!GetComponent<AudioSource>().isPlaying && !gameOverPanel.activeSelf)
+				GetComponent<AudioSource>().Play();
+
 			OpenPanel(gameOverPanel);
 			ScoreManager.init.setSaveBestScore();
-			if (!GetComponent<AudioSource>().isPlaying)
-				GetComponent<AudioSource>().Play();
 			//gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
 		} else {
 			gameOverPanel.SetActive(false);
@@ -68,8 +68,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void MainUIActive(bool _active) {
-		settingIcon.SetActive(_active);
-		shopIcon.SetActive(_active);
+		homePanel.SetActive(_active);
 		settingPanel.SetActive(false);
 		pauseBtn.SetActive(!_active);
 	}

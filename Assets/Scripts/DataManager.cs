@@ -55,6 +55,10 @@ public class DataManager : MonoBehaviour {
 			UIManager.init.bgmVolume.value = gameData.bgmVolume;
 			UIManager.init.effectVolume.value = gameData.effectVolume;
 
+		} else {
+			ScoreManager.init.finalBestScore = 0;
+			ScoreManager.init.bestScore = 0;
+			ScoreManager.init.currAdsCount = 0;
 		}
 	}
 }

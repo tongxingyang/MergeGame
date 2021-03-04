@@ -49,32 +49,32 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 	}
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extension) {
-		Debug.Log("IAP초기화");
+		Debug.Log("IAP??????");
 		storeController = controller;
 		extensionProvider = extension;
 
 		if (HadPurchased(PREMIUM)) {
-			GameManager.init.BuyPremium();
+			GameManager.init.isPremium = true;
 		}
 	}
 
 	public void OnInitializeFailed(InitializationFailureReason error) {
-		Debug.LogError($"IAP초기화 실패 {error}");
+		Debug.LogError($"IAP?????? ???? {error}");
 	}
 
-	//구매 시도 완료 직전
+	//???? ???? ???? ????
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent) {
-		Debug.Log($"구매결과{purchaseEvent.purchasedProduct.definition.id}");
+		Debug.Log($"????????{purchaseEvent.purchasedProduct.definition.id}");
 
 		if(purchaseEvent.purchasedProduct.definition.id == PREMIUM) {
-			GameManager.init.BuyPremium();
+			GameManager.init.isPremium = true;
 		}
 
 		return PurchaseProcessingResult.Complete;
 	}
 
 	public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) {
-		Debug.LogError($"실패 {product.definition.id}, {failureReason}");
+		Debug.LogError($"???? {product.definition.id}, {failureReason}");
 	}
 
 	public void Purchase(string productId) {
@@ -83,21 +83,21 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 		var product = storeController.products.WithID(productId);
 
 		if(product != null && product.availableToPurchase) {
-			Debug.Log($"구매시도 = {product.definition.id}");
+			Debug.Log($"???????? = {product.definition.id}");
 			storeController.InitiatePurchase(product);
 		} else {
-			Debug.Log($"구매 시도 불가 {productId}");
+			Debug.Log($"???? ???? ???? {productId}");
 		}
 	}
 
 	public void RestorePurchase() {
 		if (!isInit) return;
 		if(Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer) {
-			Debug.Log("구매 복구");
+			Debug.Log("???? ????");
 
 			var appleExt = extensionProvider.GetExtension<IAppleExtensions>();
 			appleExt.RestoreTransactions(
-				result => Debug.Log($"구매 복구 시도 결과 - {result}"));
+				result => Debug.Log($"???? ???? ???? ???? - {result}"));
 		}
 	}
 

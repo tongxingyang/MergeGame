@@ -20,7 +20,6 @@ public class MainObject : MonoBehaviour {
 
 	private Sprite sprite;
 	private Animator animator;
-	private AudioSource audioSource;
 	private Vector3 fixedPos, inCameraPos;
 
 	private bool isDrop = false;
@@ -36,7 +35,7 @@ public class MainObject : MonoBehaviour {
         if (isFixed) {
 			this.transform.position = fixedPos;
         } else if (isDrop) {
-			MaxLine.init.WaringLine(this.gameObject);
+			MaxLine.init.WaringLine(this);
 		} else {
 			MaxLine.init.StopFlickerAnim();
         }

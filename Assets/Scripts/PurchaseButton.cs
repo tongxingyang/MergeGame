@@ -8,8 +8,8 @@ public class PurchaseButton : MonoBehaviour {
 	public void HandleClick() { 
 		if (targetProductId == IAPManager.PREMIUM) {
 			if (IAPManager.init.HadPurchased(targetProductId)) {
-				Debug.Log("구매 완료한 상품");
-				GameManager.init.BuyPremium();
+				Debug.Log("???? ?????? ????");
+				GameManager.init.isPremium = true;
 				return;
 			}
 		}

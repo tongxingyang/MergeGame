@@ -41,7 +41,7 @@ public class MaxLine : MonoBehaviour {
         boxCollider2D = this.GetComponent<BoxCollider2D>();
     }
 
-    public void WaringLine(GameObject obj) {
+    public void WaringLine(MainObject obj) {
         float y = obj.GetComponent<MainObject>().returnYPos();
 
         if (gameObject.activeSelf) {
@@ -65,11 +65,12 @@ public class MaxLine : MonoBehaviour {
         animator.SetBool(isWaring, true);
     }
 
-    IEnumerator delayToGameOver(GameObject obj) {
+    IEnumerator delayToGameOver(MainObject obj) {
         yield return new WaitForSeconds(DELAY_GAMEOVER);
         try {
-            if (OVER_LINE < obj.transform.position.y) {
-                GameManager.init.GameOver(obj);
+            if (OVER_LINE < obj.gameObject.transform.position.y) {
+                obj.ObjStateWhenGameOver();
+                GameManager.init.GameOver();
             }
         }catch(Exception e) {
             Debug.Log(e.StackTrace);

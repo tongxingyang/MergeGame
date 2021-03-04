@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour {
     private static readonly float AUDIO_FADEOUT_VAL = 0.2f;
 
 
-    public bool isGameOver = false;
+    public bool isBGMFadeOut = false;
 
     private AudioSource audioSource;
     private float _currAudioVolum;
@@ -20,11 +20,15 @@ public class CameraControl : MonoBehaviour {
         currAudioVolum = audioSource.volume;
     }
 
-    void Update() {
-        if (isGameOver) {
+    private void Update() {
+        if (isBGMFadeOut) {
             audioSource.volume -= Time.deltaTime * AUDIO_FADEOUT_VAL;
         } else {
             audioSource.volume = currAudioVolum;
         }
+    }
+
+    public void BGMFadeOut(bool value) {
+        isBGMFadeOut = value;
     }
 }

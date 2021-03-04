@@ -36,6 +36,8 @@ public class DataManager : MonoBehaviour {
 		gameData.bgmVolume = UIManager.init.bgmVolume.value;
 		gameData.effectVolume = UIManager.init.effectVolume.value;
 
+		gameData.isPremium = GameManager.init.isPremium;
+
 		binaryFormatter.Serialize(file, gameData);
 		file.Close();
 	}
@@ -54,6 +56,8 @@ public class DataManager : MonoBehaviour {
 
 			UIManager.init.bgmVolume.value = gameData.bgmVolume;
 			UIManager.init.effectVolume.value = gameData.effectVolume;
+
+			GameManager.init.isPremium = gameData.isPremium;
 
 		} else {
 			ScoreManager.init.finalBestScore = 0;

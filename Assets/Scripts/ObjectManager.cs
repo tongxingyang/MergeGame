@@ -93,7 +93,7 @@ public class ObjectManager : MonoBehaviour {
 		}
 	}
 
-	public void Restart() {
+	public void InitObj() {
 		garbageObjectContainer.Clear();
 		foreach (Transform gameObject in objParent.GetComponentsInChildren<Transform>()) {
 			Destroy(gameObject.gameObject);

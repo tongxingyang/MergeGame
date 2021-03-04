@@ -6,7 +6,7 @@ public class ScoreShare : MonoBehaviour {
 
 	public void Share() {
 
-		string subject = ScoreManager.init.finalBestScore + "점 도달!! 넘을 수 있으면 넘어봐";
+		string subject = ScoreManager.init.finalBestScore + "? ??!! ?? ? ??? ???!";
 		string body = "https://play.google.com/store/apps/details?id=com.bognstudio.mergegame";
 
 		using (AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent"))

@@ -67,10 +67,10 @@ public class UIManager : MonoBehaviour {
 		animator.SetInteger(TO_SHOP_CONTANTS, value);
 	}
 
-	public void MainUIActive(bool _active) {
-		homePanel.SetActive(_active);
+	public void IsGameStart(bool _active) {
+		pauseBtn.SetActive(_active);
+		homePanel.SetActive(!_active);
 		settingPanel.SetActive(false);
-		pauseBtn.SetActive(!_active);
 	}
 
 	public void OpenPanel(GameObject gameObject) {

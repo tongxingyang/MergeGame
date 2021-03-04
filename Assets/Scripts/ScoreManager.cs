@@ -34,16 +34,15 @@ class ScoreManager : MonoBehaviour {
 		}
 		set {
 			if (value > ADS_MAX_COUNT) {
-				currAdsCount = 0;
-				AdsManager.init.UserChoseToWatchAd();
+				currAdsCount = 2;
+				AdsManager.init.ShowRewardedInterstitialAd();
 			} else _currAdsCount = value;
 		}
 	}
 
-	private DataInfo.GameData gameData;
 	private float _coin, _currScore, _bestScore;
-	//public float coin;
 
+	//public float coin;
 	private void Start() {
 		currScore = 0;
 	}
@@ -64,15 +63,14 @@ class ScoreManager : MonoBehaviour {
 		}
 	}
 
-	private void initScore() {
-		//shopCoin.text = "0";
-		//coinText.text = "0";
-		currScoreText.text = "0";
-		bestScoreText.text = "0";
-	}
-
 	public void setSaveBestScore() {
 		finalBestScore = bestScore;
+	}
+
+	public void InitScore() {
+		bestScore = finalBestScore;
+		currScore = 0;
+		currAdsCount++;
 	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {

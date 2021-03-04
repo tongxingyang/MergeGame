@@ -5,28 +5,40 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	private static readonly float GAME_OVER_DELAY = 3.0f;
-	private static readonly string PREMIUM = "premium";
 
 	public static GameManager init = null;
 
 	public GameObject premiumGround;
+
+	private bool _isPremium;
+	public bool isPremium {
+        get { return _isPremium; }
+		set {
+			if (value) {
+				_isPremium = true;
+				BuyPremium();
+			}
+		}
+	}
 
 	private bool _isGameOver;
 	public bool isGameOver {
 		set {
 			_isGameOver = value;
 
+			Camera.main.GetComponent<CameraControl>().BGMFadeOut(value);
+			MouseControl.init.GameOver(value);
+
 			if (value) {
+				StartCoroutine(nameof(GameOverDelay));
 				ObjectManager.init.StopObj();
 			} else {
-				ObjectManager.init.Restart();
+				ObjectManager.init.InitObj();
+				ScoreManager.init.InitScore();
 			}
 
-			MouseControl.init.GameOver(value);
 			MaxLine.init.setColor(isGameOver);
 			UIManager.init.setGameOverPanel(value);
-			Camera.main.GetComponent<CameraControl>().isGameOver = value;
-
 		}
 		get { return _isGameOver; }
 	}
@@ -41,44 +53,34 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	public void GameOver(GameObject overTerget) {
-		overTerget.GetComponent<MainObject>().ObjStateWhenGameOver();
-		StartCoroutine(nameof(GameOverDelay));
-	}
-
 	public void GameStart() {
-		UIManager.init.MainUIActive(false);
+		UIManager.init.IsGameStart(true);
 	}
 
 	public void GameRestart() {
-		isGameOver = false;
-		ScoreManager.init.currAdsCount++;
-		ScoreManager.init.currScore = 0;
+		AtHome();
+		GameStart();
 	}
 
 	public void AtHome() {
+		if (Time.timeScale < 1f) Time.timeScale = 1f;
+
 		isGameOver = false;
-		ScoreManager.init.currAdsCount++;
-		UIManager.init.MainUIActive(true);
-		ScoreManager.init.currScore = 0;
-
+		UIManager.init.IsGameStart(false);
 		ObjectManager.init.StopAllCoroutines();
+	}
 
-		if (Time.timeScale < 1.0f)
-			Time.timeScale = 1.0f;
+	public void GameOver() {
+		isGameOver = true;
+	}
+
+	IEnumerator GameOverDelay() {
+		yield return new WaitForSeconds(GAME_OVER_DELAY);
 	}
 
 	public void isPauseGame(bool on) {
 		UIManager.init.pausePanel.SetActive(on);
 		Time.timeScale = on ? 0.0f : 1.0f;
-	}
-
-	IEnumerator GameOverDelay() {
-		Camera.main.GetComponent<CameraControl>().isGameOver = true;
-		MouseControl.init.GameOver(true);
-
-		yield return new WaitForSeconds(GAME_OVER_DELAY);
-		isGameOver = true;
 	}
 
 	private void OnApplicationQuit() {

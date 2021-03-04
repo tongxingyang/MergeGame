@@ -10,5 +10,7 @@ namespace DataInfo {
 
 		public float bgmVolume;
 		public float effectVolume;
+
+		public bool isPremium = false;
 	}
 }

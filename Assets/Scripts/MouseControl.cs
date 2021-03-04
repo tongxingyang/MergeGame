@@ -86,7 +86,7 @@ public class MouseControl : MonoBehaviour {
 
 	private bool isUITouch() {
 		try {
-			return EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+			return true;// EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
 		} catch {
 			return false;
 		}

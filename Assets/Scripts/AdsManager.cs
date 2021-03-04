@@ -12,8 +12,6 @@ public class AdsManager : MonoBehaviour {
 
     // and rewarded test ca-app-pub-3940256099942544/4411468910
     // and banner test ca-app-pub-3940256099942544/2934735716
-    //private static readonly string iOS_REWARDED_ID = "ca-app-pub-3940256099942544/4411468910";
-    //private static readonly string iOS_BANNER_ID = "ca-app-pub-3940256099942544/2934735716";
     private static readonly string iOS_REWARDED_ID = "ca-app-pub-7832687788012663/9661809356";
     private static readonly string iOS_BANNER_ID = "ca-app-pub-7832687788012663/6504877560";
 
@@ -58,6 +56,8 @@ public class AdsManager : MonoBehaviour {
             string adUnitId = ANDROID_REWARDED_ID;
 #elif UNITY_IPHONE
         string adUnitId = iOS_REWARDED_ID;
+#else
+        string adUnitId = "unexpected_platform";
 #endif
 
         RewardedInterstitialAd.LoadAd(adUnitId, request, adLoadCallback);
@@ -109,6 +109,8 @@ public class AdsManager : MonoBehaviour {
             string adUnitId = ANDROID_BANNER_ID;
 #elif UNITY_IPHONE
             string adUnitId = iOS_BANNER_ID;
+#else
+            string adUnitId = "unexpected_platform";
 #endif
 
             // Create a 320x50 banner at the top of the screen.

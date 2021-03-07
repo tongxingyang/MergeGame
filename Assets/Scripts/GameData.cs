@@ -8,8 +8,8 @@ namespace DataInfo {
 		public float bestScore;
 		public int adsCount;
 
-		public float bgmVolume;
-		public float effectVolume;
+		public bool isEffectVolum;
+		public bool isBGMVolum;
 
 		public bool isPremium = false;
 	}

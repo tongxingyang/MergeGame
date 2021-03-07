@@ -8,7 +8,17 @@ public class CameraControl : MonoBehaviour {
 
     public bool isBGMFadeOut = false;
 
-    private AudioSource audioSource;
+    public static CameraControl init = null;
+    private void Awake() {
+        if (init == null) {
+            init = this;
+        }
+        else if (init != this) {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public AudioSource audioSource;
     private float _currAudioVolum;
     public float currAudioVolum {
         get { return _currAudioVolum; }

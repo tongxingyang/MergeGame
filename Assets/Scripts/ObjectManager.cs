@@ -23,6 +23,7 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public GameObject[] objects;
+	public SpriteRenderer backgroundImg;
 
 	[HideInInspector]
 	public GameObject objParent;
@@ -98,11 +99,23 @@ public class ObjectManager : MonoBehaviour {
 		foreach (Transform gameObject in objParent.GetComponentsInChildren<Transform>()) {
 			Destroy(gameObject.gameObject);
 		}
-
 		Start();
 	}
 
 	private void StartMergeAudio() {
 		GetComponent<AudioSource>().Play();
     }
+
+	public void ChangeObjectSpriteImage(int objNum) {
+		Sprite[] sprites = Resources.LoadAll<Sprite>("obj/objects" + objNum);
+
+		currObject.GetComponent<SpriteRenderer>().sprite = sprites[0];
+		for(int i = 0; i < objects.Length;  ++i) {
+			objects[i].GetComponent<SpriteRenderer>().sprite = sprites[i];
+		}
+	}
+
+	public void ChangeBackgroundImage(int wallNum) {
+		backgroundImg.sprite = Resources.Load<Sprite>("obj/background" + wallNum);
+	}
 }

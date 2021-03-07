@@ -6,9 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
-	private static readonly int SHOP_OPEN = Animator.StringToHash("isShop");
-	private static readonly int TO_SHOP_CONTANTS = Animator.StringToHash("shopVal");
 	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
+	private static readonly int SHOP_VAL = Animator.StringToHash("toMenu");
 
 	public static UIManager init = null;
 	private void Awake() {
@@ -30,9 +29,13 @@ public class UIManager : MonoBehaviour {
 	public GameObject pausePanel;
 	public GameObject pauseBtn;
 
-	public Scrollbar bgmVolume, effectVolume;
+	public AudioClip uiBtn;
+	public AudioClip gameOver;
+
+	public AudioSource audioSource;
 
     private void Start() {
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
@@ -41,8 +44,8 @@ public class UIManager : MonoBehaviour {
 
 	public void setGameOverPanel(bool isOver) {
 		if (isOver) {
-			if (!GetComponent<AudioSource>().isPlaying && !gameOverPanel.activeSelf)
-				GetComponent<AudioSource>().Play();
+			if (!audioSource.isPlaying && !gameOverPanel.activeSelf)
+				PlayAudioClip(gameOver);
 
 			OpenPanel(gameOverPanel);
 			ScoreManager.init.setSaveBestScore();
@@ -52,21 +55,6 @@ public class UIManager : MonoBehaviour {
 		}
     }
 
-	public void OpenShop() {
-		ObjectManager.init.objParent.SetActive(false);
-		animator.SetBool(SHOP_OPEN, true);
-	}
-
-	public void CloseShop() {
-		ObjectManager.init.objParent.SetActive(true);
-		animator.SetBool(SHOP_OPEN, false);
-		animator.SetInteger(TO_SHOP_CONTANTS, 0);
-	}
-
-	public void ToContentsAnimation(int value) {
-		animator.SetInteger(TO_SHOP_CONTANTS, value);
-	}
-
 	public void IsGameStart(bool _active) {
 		pauseBtn.SetActive(_active);
 		homePanel.SetActive(!_active);
@@ -75,6 +63,19 @@ public class UIManager : MonoBehaviour {
 
 	public void OpenPanel(GameObject gameObject) {
 		gameObject.SetActive(true);
-		gameObject.GetComponent<Animator>().SetBool(OPEN_UI_ANIM, true);
+		animator.SetBool(OPEN_UI_ANIM, true);
+	}
+
+	public void PlayShopAnim(int val) {
+		animator.SetInteger(SHOP_VAL, val);
+	}
+
+	public void PlayUIBtnSound() {
+		PlayAudioClip(uiBtn);
+	}
+
+	private void PlayAudioClip(AudioClip audioClip) {
+		audioSource.clip = audioClip;
+		audioSource.Play();
 	}
 }

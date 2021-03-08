@@ -35,10 +35,16 @@ public class DataManager : MonoBehaviour {
 		gameData.bestScore = ScoreManager.init.finalBestScore;
 		gameData.coin = ScoreManager.init.coin;
 
+		gameData.key = RankingSystem.init.key;
+
+		gameData.styleNum = ObjectManager.init.currStyleNum;
+		gameData.wallpaperNum = ObjectManager.init.currBackgroundNum;
 		gameData.styleProducts = new bool[ShoppingManager.init.style.Length];
-		for(int i = 0; i < gameData.styleProducts.Length; ++i) {
+		gameData.wallpaperProducts = new bool[ShoppingManager.init.wallpaper.Length];
+		for (int i = 0; i < gameData.styleProducts.Length; ++i) {
 			gameData.styleProducts[i] = ShoppingManager.init.style[i].isBuy;
-        }
+			gameData.wallpaperProducts[i] = ShoppingManager.init.wallpaper[i].isBuy;
+		}
 
 		gameData.isPremium = GameManager.init.isPremium;
 
@@ -63,9 +69,14 @@ public class DataManager : MonoBehaviour {
 			ScoreManager.init.currAdsCount = gameData.adsCount;
 			ScoreManager.init.coin = gameData.coin;
 
+			RankingSystem.init.key = gameData.key;
+
 			for (int i = 0; i < ShoppingManager.init.style.Length; ++i) {
 				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];
+				ShoppingManager.init.wallpaper[i].isBuy = gameData.wallpaperProducts[i];
 			}
+			ShoppingManager.init.ApplyItem(ShoppingManager.init.style[gameData.styleNum]);
+			ShoppingManager.init.ApplyItem(ShoppingManager.init.wallpaper[gameData.wallpaperNum]);
 
 			GameManager.init.isPremium = gameData.isPremium;
 

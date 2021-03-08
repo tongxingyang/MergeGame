@@ -23,17 +23,22 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public GameObject[] objects;
-	public SpriteRenderer backgroundImg;
+	public GameObject background;
+	public int currBackgroundNum;
+	public int currStyleNum;
 
 	[HideInInspector]
 	public GameObject objParent;
 
 	private static Queue<GameObject> garbageObjectContainer;
 	private GameObject currObject;
+	private GameObject currBackground;
 
 	private void Start() {
 		objParent = new GameObject("objParent");
 		garbageObjectContainer = new Queue<GameObject>();
+
+		currBackground = Instantiate(background);
 
 		CreateObject(0);
 	}
@@ -107,6 +112,7 @@ public class ObjectManager : MonoBehaviour {
     }
 
 	public void ChangeObjectSpriteImage(int objNum) {
+		currStyleNum = objNum;
 		Sprite[] sprites = Resources.LoadAll<Sprite>("obj/objects" + objNum);
 
 		currObject.GetComponent<SpriteRenderer>().sprite = sprites[0];
@@ -116,6 +122,8 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public void ChangeBackgroundImage(int wallNum) {
-		backgroundImg.sprite = Resources.Load<Sprite>("obj/background" + wallNum);
+		currBackgroundNum = wallNum;
+		Sprite sprite = Resources.Load<Sprite>("obj/background" + wallNum);
+		currBackground.GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 }

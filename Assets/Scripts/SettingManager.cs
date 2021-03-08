@@ -21,6 +21,12 @@ public class SettingManager : MonoBehaviour {
 	private void Awake() {
 		if (init == null) {
 			init = this;
+
+			effectText = effect.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+			effectImg = effect.transform.GetChild(1).GetComponent<RawImage>();
+			bgmText = BGM.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+			bgmImg = BGM.transform.GetChild(1).GetComponent<RawImage>();
+
 		}
 		else if (init != this) {
 			Destroy(this.gameObject);
@@ -29,11 +35,6 @@ public class SettingManager : MonoBehaviour {
 	}
 
 	private void Start() {
-		effectText = effect.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-		effectImg = effect.transform.GetChild(1).GetComponent<RawImage>();
-
-		bgmText = BGM.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-		bgmImg = BGM.transform.GetChild(1).GetComponent<RawImage>();
 
 		effect.onClick.AddListener(EffectOn);
 		BGM.onClick.AddListener(BGMOn);

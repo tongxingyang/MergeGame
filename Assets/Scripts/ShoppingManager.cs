@@ -65,7 +65,7 @@ public class ShoppingManager : MonoBehaviour{
 	}
 
 
-	private void ApplyItem(ItemInfo product) {
+	public void ApplyItem(ItemInfo product) {
 		if(product.productType == ItemInfo.ProductType.style) {
 			ObjectManager.init.ChangeObjectSpriteImage(product.productNum);
         } else if (product.productType == ItemInfo.ProductType.wallpaper) {
@@ -98,7 +98,7 @@ public class ShoppingManager : MonoBehaviour{
 			OpenMessageUI(notEnoughtMessageUI);
 			return;
         }
-
+		
 		currItem.isBuy = true;
 		if(currItem.productType == ItemInfo.ProductType.style) {
 			StyleClick(currItem.productNum);

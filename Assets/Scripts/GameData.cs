@@ -9,7 +9,12 @@ namespace DataInfo {
 		public int coin;
 		public int adsCount;
 
+		public string key;
+
 		public bool[] styleProducts;
+		public bool[] wallpaperProducts;
+		public int styleNum;
+		public int wallpaperNum;
 
 		public bool isEffectVolum;
 		public bool isBGMVolum;

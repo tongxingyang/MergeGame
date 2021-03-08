@@ -12,6 +12,8 @@ public class CameraControl : MonoBehaviour {
     private void Awake() {
         if (init == null) {
             init = this;
+
+            audioSource = GetComponent<AudioSource>();
         }
         else if (init != this) {
             Destroy(this.gameObject);
@@ -26,7 +28,6 @@ public class CameraControl : MonoBehaviour {
     }
 
     private void Start() {
-        audioSource = GetComponent<AudioSource>();
         currAudioVolum = audioSource.volume;
     }
 

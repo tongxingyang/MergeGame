@@ -13,7 +13,7 @@ class ScoreManager : MonoBehaviour {
 	private static readonly float BASE_SCORE = 13f;
 	private static readonly int ADS_MAX_COUNT = 3;
 
-	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount;
+	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount, coinText, shopCoinText;
 
 	public static ScoreManager init = null;
 	public float finalBestScore;
@@ -45,7 +45,17 @@ class ScoreManager : MonoBehaviour {
 	//public float coin;
 	private void Start() {
 		currScore = 0;
+		coin = 0;
 	}
+
+	public int coin {
+		get { return (int)_coin; }
+        set {
+			_coin = value;
+			coinText.text = string.Format("{0}", value);
+			shopCoinText.text = string.Format("{0}", value);
+		}
+    }
 
 	public float currScore {
 		get { return _currScore; }
@@ -80,8 +90,7 @@ class ScoreManager : MonoBehaviour {
 			bestScore = currScore;
 	}
 
-	private void setGoldText() {
-		//coinText.text = String.Format("{0}", coin);
-		//shopCoin.text = String.Format("{0}", coin);
-	}
+	public void AddCoin(int num) {
+		coin += num;
+    }
 }

@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour {
 	private void Awake() {
 		if (init == null) {
 			init = this;
+			audioSource = GetComponent<AudioSource>();
 		} else if (init != this) {
 			Destroy(this.gameObject);
 		}
@@ -34,9 +35,6 @@ public class UIManager : MonoBehaviour {
 
 	public AudioSource audioSource;
 
-    private void Start() {
-		audioSource = GetComponent<AudioSource>();
-	}
 
 	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
 		ScoreManager.init.AddScore(type, mergeLevel);

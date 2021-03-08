@@ -33,10 +33,18 @@ public class DataManager : MonoBehaviour {
 
 		gameData.adsCount = ScoreManager.init.currAdsCount;
 		gameData.bestScore = ScoreManager.init.finalBestScore;
+		gameData.coin = ScoreManager.init.coin;
+
+		gameData.styleProducts = new bool[ShoppingManager.init.style.Length];
+		for(int i = 0; i < gameData.styleProducts.Length; ++i) {
+			gameData.styleProducts[i] = ShoppingManager.init.style[i].isBuy;
+        }
+
 		gameData.isPremium = GameManager.init.isPremium;
 
-		gameData.isBGMVolum = !SettingManager.init.isBGMOn;
-		gameData.isEffectVolum = !SettingManager.init.isEffectOn;
+		gameData.isBGMVolum = CameraControl.init.audioSource.mute;
+		gameData.isEffectVolum = UIManager.init.audioSource.mute;
+
 
 		binaryFormatter.Serialize(file, gameData);
 		file.Close();
@@ -53,18 +61,22 @@ public class DataManager : MonoBehaviour {
 			ScoreManager.init.finalBestScore = gameData.bestScore;
 			ScoreManager.init.bestScore = gameData.bestScore;
 			ScoreManager.init.currAdsCount = gameData.adsCount;
+			ScoreManager.init.coin = gameData.coin;
+
+			for (int i = 0; i < ShoppingManager.init.style.Length; ++i) {
+				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];
+			}
 
 			GameManager.init.isPremium = gameData.isPremium;
 
-			SettingManager.init.isEffectOn = gameData.isEffectVolum;
-			SettingManager.init.isBGMOn = gameData.isBGMVolum;
-			SettingManager.init.EffectOn();
-			SettingManager.init.BGMOn();
+			SettingManager.init.BGMOn(gameData.isBGMVolum);
+			SettingManager.init.EffectOn(gameData.isEffectVolum);
 
 		} else {
 			ScoreManager.init.finalBestScore = 0;
 			ScoreManager.init.bestScore = 0;
 			ScoreManager.init.currAdsCount = 0;
+			ScoreManager.init.coin = 0;
 		}
 	}
 }

@@ -11,11 +11,11 @@ public class SettingManager : MonoBehaviour {
 	public Button effect;
 	public Button BGM;
 
-	public TextMeshProUGUI effectText;
-	public RawImage effectImg;
+	private TextMeshProUGUI effectText;
+	private RawImage effectImg;
 
-	public TextMeshProUGUI bgmText;
-	public RawImage bgmImg;
+	private TextMeshProUGUI bgmText;
+	private RawImage bgmImg;
 
 	public static SettingManager init = null;
 	private void Awake() {
@@ -39,12 +39,22 @@ public class SettingManager : MonoBehaviour {
 		BGM.onClick.AddListener(BGMOn);
 	}
 
+	public void EffectOn(bool isMute) {
+		isEffectOn = !isMute;
+		EffectOn();
+	}
+
+	public void BGMOn(bool isMute) {
+		isBGMOn = !isMute;
+		BGMOn();
+	}
+
 	public void EffectOn() {
 		if (isEffectOn) {
-			effectText.text = "효과음 끄기";
+			effectText.text = "?????? ????";
 			effectImg.texture = Resources.Load<Texture>("setting/iconEffect");
 		} else {
-			effectText.text = "효과음 켜기";
+			effectText.text = "?????? ????";
 			effectImg.texture = Resources.Load<Texture>("setting/iconMute");
 		}
 		UIManager.init.audioSource.mute = !isEffectOn;
@@ -53,11 +63,11 @@ public class SettingManager : MonoBehaviour {
 
 	public void BGMOn() {
 		if (isBGMOn) {
-			bgmText.text = "배경음악 끄기";
+			bgmText.text = "???????? ????";
 			bgmImg.texture = Resources.Load<Texture>("setting/iconBGM");
 		}
 		else {
-			bgmText.text = "배경음악 켜기";
+			bgmText.text = "???????? ????";
 			bgmImg.texture = Resources.Load<Texture>("setting/iconBGMMute");
 		}
 		CameraControl.init.audioSource.mute = !isBGMOn;

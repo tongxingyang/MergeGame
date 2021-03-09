@@ -9,7 +9,10 @@ namespace DataInfo {
 		public int coin;
 		public int adsCount;
 
-		public string key;
+		public string key = "";
+		public int userRank = 0;
+		public int flagIndex = 0;
+		public string userName = "";
 
 		public bool[] styleProducts;
 		public bool[] wallpaperProducts;

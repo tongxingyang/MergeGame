@@ -20,6 +20,7 @@ public class DataManager : MonoBehaviour {
 	}
 
 	private string dataPath;
+	public DataInfo.GameData gameData;
 
 	private void Start() {
 		Load();
@@ -29,13 +30,13 @@ public class DataManager : MonoBehaviour {
 		BinaryFormatter binaryFormatter = new BinaryFormatter();
 		FileStream file = File.Create(dataPath);
 
-		DataInfo.GameData gameData = new DataInfo.GameData();
+		gameData = new DataInfo.GameData();
 
 		gameData.adsCount = ScoreManager.init.currAdsCount;
 		gameData.bestScore = ScoreManager.init.finalBestScore;
 		gameData.coin = ScoreManager.init.coin;
 
-		gameData.key = RankingSystem.init.key;
+		//gameData.key = RankingSystem.init.key;
 
 		gameData.styleNum = ObjectManager.init.currStyleNum;
 		gameData.wallpaperNum = ObjectManager.init.currBackgroundNum;
@@ -57,7 +58,8 @@ public class DataManager : MonoBehaviour {
 	}
 
 	public void Load() {
-		if (File.Exists(dataPath)) {
+		FileStream stream = new FileStream(dataPath, FileMode.Open);
+		if (File.Exists(dataPath) && stream.Length > 0) {
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			FileStream file = File.OpenRead(dataPath);
 
@@ -69,7 +71,7 @@ public class DataManager : MonoBehaviour {
 			ScoreManager.init.currAdsCount = gameData.adsCount;
 			ScoreManager.init.coin = gameData.coin;
 
-			RankingSystem.init.key = gameData.key;
+			//RankingSystem.init.key = gameData.key;
 
 			for (int i = 0; i < ShoppingManager.init.style.Length; ++i) {
 				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];
@@ -89,5 +91,7 @@ public class DataManager : MonoBehaviour {
 			ScoreManager.init.currAdsCount = 0;
 			ScoreManager.init.coin = 0;
 		}
+
+		stream.Close();
 	}
 }

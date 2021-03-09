@@ -1,0 +1,8 @@
+SerializationException: Attempting to deserialize an empty stream.
+System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize (System.IO.Stream serializationStream, System.Runtime.Remoting.Messaging.HeaderHandler handler, System.Boolean fCheck, System.Boolean isCrossAppDomain, System.Runtime.Remoting.Messaging.IMethodCallMessage methodCallMessage) (at <eae584ce26bc40229c1b1aa476bfa589>:0)
+System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize (System.IO.Stream serializationStream, System.Runtime.Remoting.Messaging.HeaderHandler handler, System.Boolean fCheck, System.Runtime.Remoting.Messaging.IMethodCallMessage methodCallMessage) (at <eae584ce26bc40229c1b1aa476bfa589>:0)
+System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize (System.IO.Stream serializationStream, System.Runtime.Remoting.Messaging.HeaderHandler handler, System.Boolean fCheck) (at <eae584ce26bc40229c1b1aa476bfa589>:0)
+System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize (System.IO.Stream serializationStream, System.Runtime.Remoting.Messaging.HeaderHandler handler) (at <eae584ce26bc40229c1b1aa476bfa589>:0)
+System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize (System.IO.Stream serializationStream) (at <eae584ce26bc40229c1b1aa476bfa589>:0)
+DataManager.Load () (at Assets/Scripts/DataManager.cs:65)
+DataManager.Start () (at Assets/Scripts/DataManager.cs:26)

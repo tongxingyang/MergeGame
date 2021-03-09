@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 using Firebase;
 using Firebase.Database;
+using System.Text.RegularExpressions;
 
 public class RankingSystem : MonoBehaviour {
 	static readonly private string TITLE = "Ranking";
@@ -21,8 +23,15 @@ public class RankingSystem : MonoBehaviour {
 	public string key = "";
 	public Transform rankList;
 	public GameObject rankPrefab;
+	public List<Sprite> flags;
+
+	public TextMeshProUGUI userRank;
+	public TMP_Dropdown userFlag;
+	public TMP_InputField userName;
 
 	public static RankingSystem init = null;
+
+	DatabaseReference databaseReference;
 	private void Awake() {
 		if (init == null) {
 			init = this;
@@ -50,7 +59,7 @@ public class RankingSystem : MonoBehaviour {
 				return;
             }
 			_myRank = value;
-			myRankText.text = $"? ?? : {value} ";
+			userRank.text = $"{value} ";
 		}
     }
 	private int _myRankingScore = 123410;
@@ -64,12 +73,42 @@ public class RankingSystem : MonoBehaviour {
         }
     }
 
-	public TextMeshProUGUI myRankText;
-	DatabaseReference databaseReference;
-
-	private void Start() {
+	private void OnEnable() {
 		//Need to DatabaseReference for write Data
 		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+
+		SetUserNameTextField();
+		SetUserRank();
+		SetUserFlag();
+		OnLoad();
+	}
+
+	private void SetUserNameTextField() {
+		if (isGameData()) 
+			userName.text = DataManager.init.gameData.userName;
+
+		userName.characterLimit = 10;
+		userName.onValueChanged.AddListener(
+			(word) => userName.text = Regex.Replace(word, @"[^0-9a-zA-Z°¡-ÆR]", "")
+			);
+	}
+
+	private void SetUserRank() {
+		if (isGameData()) {
+			if (DataManager.init.gameData.userRank == 0)
+				userRank.text = "-";
+			else
+				userRank.text = DataManager.init.gameData.userRank.ToString();
+		} else {
+			userRank.text = "-";
+		}
+	}
+
+	private void SetUserFlag() {
+		userFlag.AddOptions(flags);
+		if (isGameData()) {
+			
+		}
 	}
 
 	public void OnSave() {
@@ -77,10 +116,10 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	public void OnLoad() {
-		if (myRank <= -1)
+		//if (myRank <= -1)
 			LoadUserRankingByTopClass();
-		else
-			LoadUserRankingByMyClass();
+		//else
+			//LoadUserRankingByMyClass();
 	}
 
 	private void SaveUserRanking(COUNTRY country, string userName, int score) {
@@ -167,4 +206,13 @@ public class RankingSystem : MonoBehaviour {
 	private void CreateRankObj() {
 
     }
+
+	private bool isGameData() {
+		if(null == DataManager.init.gameData) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }

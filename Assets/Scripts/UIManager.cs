@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject lisensePanel;
 	public GameObject pausePanel;
 	public GameObject pauseBtn;
+	
 
 	public AudioClip uiBtn;
 	public AudioClip gameOver;

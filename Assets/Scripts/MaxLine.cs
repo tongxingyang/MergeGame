@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MaxLine : MonoBehaviour {
     private static readonly float DELAY_ANIMATION = 1f;
-    private static readonly float DELAY_GAMEOVER = 2f;
+    private static readonly float DELAY_GAMEOVER = 1.2f;
     private static readonly int isWaring = Animator.StringToHash("isWaring");
 
     private GameObject temp;
@@ -68,7 +68,7 @@ public class MaxLine : MonoBehaviour {
     IEnumerator delayToGameOver(MainObject obj) {
         yield return new WaitForSeconds(DELAY_GAMEOVER);
         try {
-            if (OVER_LINE < obj.gameObject.transform.position.y) {
+            if (OVER_LINE < obj.GetComponent<MainObject>().returnYPos()) {
                 obj.ObjStateWhenGameOver();
                 GameManager.init.GameOver();
             }

@@ -21,6 +21,7 @@ public class DataManager : MonoBehaviour {
 
 	private string dataPath;
 	public DataInfo.GameData gameData;
+	public DataInfo.GameData tempData;
 
 	private void Start() {
 		Load();
@@ -31,6 +32,7 @@ public class DataManager : MonoBehaviour {
 		FileStream file = File.Create(dataPath);
 
 		gameData = new DataInfo.GameData();
+		gameData = tempData;
 
 		gameData.adsCount = ScoreManager.init.currAdsCount;
 		gameData.bestScore = ScoreManager.init.finalBestScore;
@@ -62,16 +64,12 @@ public class DataManager : MonoBehaviour {
 
 			if (file.Length <= 0) return;
 
-			DataInfo.GameData gameData = (DataInfo.GameData)binaryFormatter.Deserialize(file);
+			gameData = (DataInfo.GameData)binaryFormatter.Deserialize(file);
 
 			ScoreManager.init.finalBestScore = gameData.bestScore;
 			ScoreManager.init.bestScore = gameData.bestScore;
 			ScoreManager.init.currAdsCount = gameData.adsCount;
 			ScoreManager.init.coin = gameData.coin;
-
-			//Ranking--------------
-			//RankingSystem.init.key = gameData.key;
-			//---------------------
 
 			for (int i = 0; i < ShoppingManager.init.style.Length; ++i) {
 				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];

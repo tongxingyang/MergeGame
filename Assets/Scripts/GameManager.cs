@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-	private static readonly float GAME_OVER_DELAY = 3.0f;
+	private static readonly float GAME_OVER_DELAY = 2.3f;
 
 	public static GameManager init = null;
 
@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour {
 			}
 
 			MaxLine.init.setColor(isGameOver);
-			UIManager.init.setGameOverPanel(value);
+
+			if (!value)
+				UIManager.init.setGameOverPanel(value);
 		}
 		get { return _isGameOver; }
 	}
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator GameOverDelay() {
 		yield return new WaitForSeconds(GAME_OVER_DELAY);
+		UIManager.init.setGameOverPanel(true);
 	}
 
 	public void isPauseGame(bool on) {

@@ -106,7 +106,7 @@ public class MainObject : MonoBehaviour {
 	}
 
 	public float returnYPos() {
-		return this.transform.position.y + radius;
+		return (this.transform.position.y + radius);
     }
 
 	private void StartFlickerAnim() {

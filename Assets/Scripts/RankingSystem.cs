@@ -9,6 +9,7 @@ using Firebase.Database;
 using System.Text.RegularExpressions;
 
 public class RankingSystem : MonoBehaviour {
+	static readonly private float UPLOAD_BOTTON_DELAY = 5f;
 	static readonly private string TITLE = "RANK";
 	static readonly private string FLAG = "flag";
 	static readonly private string NAME = "name";
@@ -26,6 +27,9 @@ public class RankingSystem : MonoBehaviour {
 	public TMP_InputField userName;
 
 	public static RankingSystem init = null;
+
+	private bool isCoolTime = false;
+	private bool firstEntry = true;
 
 	DatabaseReference databaseReference;
 	private void Awake() {
@@ -46,9 +50,6 @@ public class RankingSystem : MonoBehaviour {
 		}
 	}
 
-	private bool firstEntry = true;
-	private bool topClass = true;
-
 	private void Start() {
 		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 	}
@@ -56,7 +57,10 @@ public class RankingSystem : MonoBehaviour {
     private void OnEnable() {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
+		key = DataManager.init.gameData.key ?? "";
+		DataManager.init.tempData.key = key;
 
+		isCoolTime = false;
 		if (firstEntry) {
 			LoadUserRanking(false);
 			firstEntry = false;
@@ -85,7 +89,16 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	public void OnSave() {
-		SaveUserRanking(userFlag.value, userName.text);
+		if (!isCoolTime) {
+			SaveUserRanking(userFlag.value, userName.text);
+			StartCoroutine(nameof(BtnDelay));
+		}
+	}
+
+	private IEnumerator BtnDelay() {
+		isCoolTime = true;
+		yield return new WaitForSeconds(UPLOAD_BOTTON_DELAY);
+		isCoolTime = false;
 	}
 
 	private void SaveUserRanking(int flag, string userName) {
@@ -94,6 +107,7 @@ public class RankingSystem : MonoBehaviour {
 
 		if (!isKey()) {
 			key = databaseReference.Child(TITLE).Push().Key;
+			DataManager.init.tempData.key = key ?? "";
 		}
 
 		databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
@@ -104,15 +118,10 @@ public class RankingSystem : MonoBehaviour {
 		return null != key && !key.Equals("");
     }
 
-	private void LoadUserRanking(bool topClass) {
-		FirebaseDatabase.DefaultInstance.GetReference(TITLE);
-		databaseReference.OrderByChild(SCORE).ValueChanged += HandleValueChanged;
-
-        if (topClass || !isKey()) {
-			databaseReference.LimitToLast(LIMIT_USER_DATA);
-		} else {
-			databaseReference.StartAt(int.Parse(bestScore.text));
-		}
+	private void LoadUserRanking(bool _topClass) {
+		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
+			.OrderByChild(SCORE)
+			.ValueChanged += HandleValueChanged;
 	}
 
 	private void HandleValueChanged(object sender, ValueChangedEventArgs arge) {
@@ -123,21 +132,19 @@ public class RankingSystem : MonoBehaviour {
 
 		List<DataSnapshot> list = new List<DataSnapshot>();
 		list.AddRange(arge.Snapshot.Children);
-		list.Reverse();
 
+		list.Reverse();
 		DeleteCurrRankingObject();
 
 		int rankingCount = 1;
 		foreach (DataSnapshot data in list) {
 			IDictionary rank = (IDictionary)data.Value;
 
-			if (arge.Snapshot.Key.Equals(key) && topClass) {
+			if (data.Key.Equals(key)) {
 				SetUserRankingData(rankingCount.ToString(), int.Parse(rank[FLAG].ToString()),
 					rank[NAME].ToString(), rank[SCORE].ToString());
-
-				topClass = false;
-				LoadUserRanking(true);
 			}
+
 
 			if (rankingCount <= LIMIT_USER_DATA) {
 				GameObject tempRank = Instantiate(rankPrefab);
@@ -146,10 +153,8 @@ public class RankingSystem : MonoBehaviour {
 				tempRank.GetComponent<RankUserData>().SetRankData(rankingCount++,
 					flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
 			}
-			Debug.Log($"????:{rank[FLAG]} / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
+			//Debug.Log($"????:{rank[FLAG]} / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
 		}
-
-		topClass = true;
 	}
 
 	private void DeleteCurrRankingObject() {

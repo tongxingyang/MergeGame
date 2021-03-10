@@ -36,8 +36,6 @@ public class DataManager : MonoBehaviour {
 		gameData.bestScore = ScoreManager.init.finalBestScore;
 		gameData.coin = ScoreManager.init.coin;
 
-		//gameData.key = RankingSystem.init.key;
-
 		gameData.styleNum = ObjectManager.init.currStyleNum;
 		gameData.wallpaperNum = ObjectManager.init.currBackgroundNum;
 		gameData.styleProducts = new bool[ShoppingManager.init.style.Length];
@@ -58,20 +56,22 @@ public class DataManager : MonoBehaviour {
 	}
 
 	public void Load() {
-		FileStream stream = new FileStream(dataPath, FileMode.Open);
-		if (File.Exists(dataPath) && stream.Length > 0) {
+		if (File.Exists(dataPath)) {
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			FileStream file = File.OpenRead(dataPath);
 
+			if (file.Length <= 0) return;
+
 			DataInfo.GameData gameData = (DataInfo.GameData)binaryFormatter.Deserialize(file);
-			file.Close();
 
 			ScoreManager.init.finalBestScore = gameData.bestScore;
 			ScoreManager.init.bestScore = gameData.bestScore;
 			ScoreManager.init.currAdsCount = gameData.adsCount;
 			ScoreManager.init.coin = gameData.coin;
 
+			//Ranking--------------
 			//RankingSystem.init.key = gameData.key;
+			//---------------------
 
 			for (int i = 0; i < ShoppingManager.init.style.Length; ++i) {
 				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];
@@ -85,13 +85,13 @@ public class DataManager : MonoBehaviour {
 			SettingManager.init.BGMOn(gameData.isBGMVolum);
 			SettingManager.init.EffectOn(gameData.isEffectVolum);
 
+			file.Close();
+
 		} else {
 			ScoreManager.init.finalBestScore = 0;
 			ScoreManager.init.bestScore = 0;
 			ScoreManager.init.currAdsCount = 0;
 			ScoreManager.init.coin = 0;
 		}
-
-		stream.Close();
 	}
 }

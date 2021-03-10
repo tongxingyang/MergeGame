@@ -8,15 +8,15 @@ using UnityEngine;
 using TMPro;
 
 class ScoreManager : MonoBehaviour {
-	public static readonly float DROP_SCORE = 1f;
-	public static readonly float MARGE_SCORE = 2f;
-	private static readonly float BASE_SCORE = 13f;
+	public static readonly int DROP_SCORE = 1;
+	public static readonly int MARGE_SCORE = 2;
+	private static readonly int BASE_SCORE = 13;
 	private static readonly int ADS_MAX_COUNT = 3;
 
 	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount, coinText, shopCoinText;
 
 	public static ScoreManager init = null;
-	public float finalBestScore;
+	public int finalBestScore;
 
 	private void Awake() {
 		if (init == null) {
@@ -40,7 +40,7 @@ class ScoreManager : MonoBehaviour {
 		}
 	}
 
-	private float _coin, _currScore, _bestScore;
+	private int _coin, _currScore, _bestScore;
 
 	//public float coin;
 	private void Start() {
@@ -49,7 +49,7 @@ class ScoreManager : MonoBehaviour {
 	}
 
 	public int coin {
-		get { return (int)_coin; }
+		get { return _coin; }
         set {
 			_coin = value;
 			coinText.text = string.Format("{0}", value);
@@ -57,7 +57,7 @@ class ScoreManager : MonoBehaviour {
 		}
     }
 
-	public float currScore {
+	public int currScore {
 		get { return _currScore; }
 		set {
 			_currScore = value;
@@ -65,7 +65,7 @@ class ScoreManager : MonoBehaviour {
 			scoreViewText.text = string.Format("{0}", value);
 		}
 	}
-	public float bestScore {
+	public int bestScore {
 		get { return _bestScore; }
 		set {
 			_bestScore = value;
@@ -83,7 +83,7 @@ class ScoreManager : MonoBehaviour {
 		currAdsCount++;
 	}
 
-	public void AddScore(float type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
+	public void AddScore(int type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
 
 		currScore += (type * (int)mergeLevel * BASE_SCORE);
 		if (bestScore < currScore)

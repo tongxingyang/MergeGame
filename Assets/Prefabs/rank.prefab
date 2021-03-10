@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1036631145681377199}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -102,7 +102,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1036631145681377199}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -237,8 +237,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1036631144175569037}
   - {fileID: 1036631145628020578}
+  - {fileID: 1036631144175569037}
   - {fileID: 1036631145973077765}
   - {fileID: 2064909431900073922}
   m_Father: {fileID: 0}
@@ -296,9 +296,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfddc0660ebe407ab212d52c9c939bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userRank: {fileID: 1036631145628020579}
   flag: {fileID: 1036631144175569038}
-  userName: {fileID: 1036631145628020579}
-  userScore: {fileID: 1036631145973077766}
+  userName: {fileID: 1036631145973077766}
+  userScore: {fileID: 8604884730619887554}
 --- !u!1 &1036631145973077764
 GameObject:
   m_ObjectHideFlags: 0

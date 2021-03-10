@@ -46,6 +46,9 @@ public class RankingSystem : MonoBehaviour {
 		}
 	}
 
+	private bool firstEntry = true;
+	private bool topClass = true;
+
 	private void Start() {
 		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 	}
@@ -54,16 +57,10 @@ public class RankingSystem : MonoBehaviour {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
 
-		if (null == key || key.Equals("")) {
-			SetUserRankingData();
-		} else {
-			LoadUserRankingByMyClass();
+		if (firstEntry) {
+			LoadUserRanking(false);
+			firstEntry = false;
 		}
-
-		if (rankList.childCount <= 1) {
-			LoadUserRankingByTopClass();
-        }
-
 	}
 
 	private void SetFlagOption() {
@@ -95,55 +92,30 @@ public class RankingSystem : MonoBehaviour {
 		User user = new User(flag, userName, int.Parse(bestScore.text));
 		string json = JsonUtility.ToJson(user);
 
-		if (null == key || key.Equals("")) {
+		if (!isKey()) {
 			key = databaseReference.Child(TITLE).Push().Key;
 		}
 
 		databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
-		LoadUserRankingByMyClass();
+		LoadUserRanking(false);
 	}
 
-	private void LoadUserRankingByTopClass() {
-		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
-			.OrderByChild(SCORE)
-			.LimitToLast(LIMIT_USER_DATA)
-			.ValueChanged += HandleValueChangedByTopClass;
-	}
-
-	private void LoadUserRankingByMyClass() {
-        FirebaseDatabase.DefaultInstance
-            .GetReference(TITLE)
-            .OrderByChild(SCORE)
-            .StartAt(int.Parse(bestScore.text))
-            .ValueChanged += HandleValueChangedByMyClass;
+	private bool isKey() {
+		return null != key && !key.Equals("");
     }
 
-	private void HandleValueChangedByMyClass(object sender, ValueChangedEventArgs arge) {
-		if (arge.DatabaseError != null) {
-			Debug.LogError(arge.DatabaseError.Message);
-			return;
-		};
+	private void LoadUserRanking(bool topClass) {
+		FirebaseDatabase.DefaultInstance.GetReference(TITLE);
+		databaseReference.OrderByChild(SCORE).ValueChanged += HandleValueChanged;
 
-		List<DataSnapshot> list = new List<DataSnapshot>();
-		list.AddRange(arge.Snapshot.Children);
-
-		foreach (DataSnapshot data in list) {
-			IDictionary rank = (IDictionary)data.Value;
-
-			if (key.Equals(arge.Snapshot.Key)) {
-				SetUserRankingData(list.Count.ToString(), int.Parse(rank[FLAG].ToString()),
-					rank[NAME].ToString(), rank[SCORE].ToString());
-
-				break;
-			}
-			//Debug.Log("????: " + rank[key].ToString() + " / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
+        if (topClass || !isKey()) {
+			databaseReference.LimitToLast(LIMIT_USER_DATA);
+		} else {
+			databaseReference.StartAt(int.Parse(bestScore.text));
 		}
-		if (list.Count < LIMIT_USER_DATA)
-			LoadUserRankingByTopClass();
-
 	}
 
-	private void HandleValueChangedByTopClass(object sender, ValueChangedEventArgs arge) {
+	private void HandleValueChanged(object sender, ValueChangedEventArgs arge) {
 		if (arge.DatabaseError != null) {
 			Debug.LogError(arge.DatabaseError.Message);
 			return;
@@ -153,18 +125,31 @@ public class RankingSystem : MonoBehaviour {
 		list.AddRange(arge.Snapshot.Children);
 		list.Reverse();
 
-		int rankingCount = 1;
 		DeleteCurrRankingObject();
+
+		int rankingCount = 1;
 		foreach (DataSnapshot data in list) {
 			IDictionary rank = (IDictionary)data.Value;
-			GameObject tempRank = Instantiate(rankPrefab);
-			tempRank.transform.SetParent(rankList);
-			tempRank.GetComponent<RectTransform>().localScale = Vector3.one;
-			tempRank.GetComponent<RankUserData>().SetRankData(rankingCount++,
-				flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
 
+			if (arge.Snapshot.Key.Equals(key) && topClass) {
+				SetUserRankingData(rankingCount.ToString(), int.Parse(rank[FLAG].ToString()),
+					rank[NAME].ToString(), rank[SCORE].ToString());
+
+				topClass = false;
+				LoadUserRanking(true);
+			}
+
+			if (rankingCount <= LIMIT_USER_DATA) {
+				GameObject tempRank = Instantiate(rankPrefab);
+				tempRank.transform.SetParent(rankList);
+				tempRank.GetComponent<RectTransform>().localScale = Vector3.one;
+				tempRank.GetComponent<RankUserData>().SetRankData(rankingCount++,
+					flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
+			}
 			Debug.Log($"????:{rank[FLAG]} / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
 		}
+
+		topClass = true;
 	}
 
 	private void DeleteCurrRankingObject() {

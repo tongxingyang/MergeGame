@@ -9,23 +9,19 @@ using Firebase.Database;
 using System.Text.RegularExpressions;
 
 public class RankingSystem : MonoBehaviour {
-	static readonly private string TITLE = "Ranking";
+	static readonly private string TITLE = "RANK";
 	static readonly private string FLAG = "flag";
 	static readonly private string NAME = "name";
 	static readonly private string SCORE = "score";
 	static readonly private int LIMIT_USER_DATA = 10;
 
-	public enum COUNTRY {
-		korea,
-		US
-    }
-
-	public string key = "";
+	public string key;
 	public Transform rankList;
 	public GameObject rankPrefab;
-	public List<Sprite> flags;
+	public Sprite[] flags;
 
 	public TextMeshProUGUI userRank;
+	public TextMeshProUGUI bestScore, rankScore;
 	public TMP_Dropdown userFlag;
 	public TMP_InputField userName;
 
@@ -39,118 +35,88 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	public class User {
-		public COUNTRY flag;
+		public int flag;
 		public string name;
 		public int score;
 
-		public User(COUNTRY flag, string name, int score) {
+		public User(int flag, string name, int score) {
 			this.flag = flag;
 			this.name = name;
 			this.score = score;
 		}
 	}
 
-	private int _myRank = 123;
-	public int myRank {
-		get { return _myRank; }
-        set {
-			if(value < 1) {
-				_myRank = 1;
-				return;
-            }
-			_myRank = value;
-			userRank.text = $"{value} ";
-		}
-    }
-	private int _myRankingScore = 123410;
-	public int myRankingScore {
-		get { return _myRankingScore; }
-        set {
-			if(value < 0 ) {
-				_myRankingScore = 0;
-				return;
-            }
-        }
-    }
-
-	private void OnEnable() {
-		//Need to DatabaseReference for write Data
+	private void Start() {
 		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-
-		SetUserNameTextField();
-		SetUserRank();
-		SetUserFlag();
-		OnLoad();
 	}
 
-	private void SetUserNameTextField() {
-		if (isGameData()) 
-			userName.text = DataManager.init.gameData.userName;
+    private void OnEnable() {
+		SetFlagOption();
+		bestScore.text = ScoreManager.init.bestScoreText.text;
 
+		if (null == key || key.Equals("")) {
+			SetUserRankingData();
+		} else {
+			LoadUserRankingByMyClass();
+		}
+
+		if (rankList.childCount <= 1) {
+			LoadUserRankingByTopClass();
+        }
+
+	}
+
+	private void SetFlagOption() {
+		var flagList = new List<Sprite>();
+		flagList.AddRange(flags);
+		userFlag.AddOptions(flagList);
+	}
+
+	private void SetUserRankingData(string rank = "-", int flag = 0, string name = "", string score = "0") {
+		userRank.text = rank;
+		userFlag.value = flag;
+		SetUserNameTextField(name);
+		rankScore.text = score;
+	}
+
+    private void SetUserNameTextField(string name) {
+		userName.text = name;
 		userName.characterLimit = 10;
 		userName.onValueChanged.AddListener(
-			(word) => userName.text = Regex.Replace(word, @"[^0-9a-zA-Z°¡-ÆR]", "")
+			(word) => userName.text = Regex.Replace(word, @"[^0-9a-zA-Z??-?R]", "")
 			);
 	}
 
-	private void SetUserRank() {
-		if (isGameData()) {
-			if (DataManager.init.gameData.userRank == 0)
-				userRank.text = "-";
-			else
-				userRank.text = DataManager.init.gameData.userRank.ToString();
-		} else {
-			userRank.text = "-";
-		}
-	}
-
-	private void SetUserFlag() {
-		userFlag.AddOptions(flags);
-		if (isGameData()) {
-			
-		}
-	}
-
 	public void OnSave() {
-		SaveUserRanking(COUNTRY.US, "Test01", 111111);
+		SaveUserRanking(userFlag.value, userName.text);
 	}
 
-	public void OnLoad() {
-		//if (myRank <= -1)
-			LoadUserRankingByTopClass();
-		//else
-			//LoadUserRankingByMyClass();
-	}
-
-	private void SaveUserRanking(COUNTRY country, string userName, int score) {
-		User user = new User(country, userName, Random.Range(10, 10000));
+	private void SaveUserRanking(int flag, string userName) {
+		User user = new User(flag, userName, int.Parse(bestScore.text));
 		string json = JsonUtility.ToJson(user);
 
-		if (null == key) {
+		if (null == key || key.Equals("")) {
 			key = databaseReference.Child(TITLE).Push().Key;
 		}
 
 		databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
+		LoadUserRankingByMyClass();
 	}
 
 	private void LoadUserRankingByTopClass() {
-		FirebaseDatabase.DefaultInstance
-			.GetReference(TITLE)
+		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
 			.OrderByChild(SCORE)
 			.LimitToLast(LIMIT_USER_DATA)
 			.ValueChanged += HandleValueChangedByTopClass;
 	}
 
 	private void LoadUserRankingByMyClass() {
-		FirebaseDatabase.DefaultInstance
-			.GetReference(TITLE)
-			.OrderByChild(SCORE)
-			.StartAt(myRankingScore)
-			.ValueChanged += HandleValueChangedByMyClass;
-	}
-	//-MVKWfnN8H8VEIIEmxCa
-
-
+        FirebaseDatabase.DefaultInstance
+            .GetReference(TITLE)
+            .OrderByChild(SCORE)
+            .StartAt(int.Parse(bestScore.text))
+            .ValueChanged += HandleValueChangedByMyClass;
+    }
 
 	private void HandleValueChangedByMyClass(object sender, ValueChangedEventArgs arge) {
 		if (arge.DatabaseError != null) {
@@ -161,25 +127,20 @@ public class RankingSystem : MonoBehaviour {
 		List<DataSnapshot> list = new List<DataSnapshot>();
 		list.AddRange(arge.Snapshot.Children);
 
-		myRank = list.Count;
-
-		if (myRank < LIMIT_USER_DATA) {
-			LoadUserRankingByTopClass();
-			return;
-		}
-		list.Reverse();
-
-		int count = 0;
 		foreach (DataSnapshot data in list) {
 			IDictionary rank = (IDictionary)data.Value;
-			GameObject tempRank = Instantiate(rankPrefab);
-			tempRank.transform.SetParent(rankList);
-			tempRank.GetComponent<RectTransform>().localScale = Vector3.one;
-			tempRank.GetComponent<RankUserData>().SetRankData(rank[FLAG], rank[NAME], rank[SCORE]);
 
-			Debug.Log($"????:{rank[FLAG]} / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
-			if (++count > LIMIT_USER_DATA) return;
+			if (key.Equals(arge.Snapshot.Key)) {
+				SetUserRankingData(list.Count.ToString(), int.Parse(rank[FLAG].ToString()),
+					rank[NAME].ToString(), rank[SCORE].ToString());
+
+				break;
+			}
+			//Debug.Log("????: " + rank[key].ToString() + " / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
 		}
+		if (list.Count < LIMIT_USER_DATA)
+			LoadUserRankingByTopClass();
+
 	}
 
 	private void HandleValueChangedByTopClass(object sender, ValueChangedEventArgs arge) {
@@ -192,27 +153,25 @@ public class RankingSystem : MonoBehaviour {
 		list.AddRange(arge.Snapshot.Children);
 		list.Reverse();
 
+		int rankingCount = 1;
+		DeleteCurrRankingObject();
 		foreach (DataSnapshot data in list) {
 			IDictionary rank = (IDictionary)data.Value;
 			GameObject tempRank = Instantiate(rankPrefab);
 			tempRank.transform.SetParent(rankList);
 			tempRank.GetComponent<RectTransform>().localScale = Vector3.one;
-			tempRank.GetComponent<RankUserData>().SetRankData(rank[FLAG], rank[NAME], rank[SCORE]);
+			tempRank.GetComponent<RankUserData>().SetRankData(rankingCount++,
+				flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
 
 			Debug.Log($"????:{rank[FLAG]} / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
 		}
 	}
 
-	private void CreateRankObj() {
-
+	private void DeleteCurrRankingObject() {
+		foreach(Transform iter in rankList.GetComponentsInChildren<Transform>()) {
+			if(iter.gameObject != rankList.gameObject) {
+				Destroy(iter.gameObject);
+			}
+        }
     }
-
-	private bool isGameData() {
-		if(null == DataManager.init.gameData) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
 }

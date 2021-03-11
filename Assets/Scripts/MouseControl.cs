@@ -47,11 +47,14 @@ public class MouseControl : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonDown(0)) {
-			ObjectControlWhenOnTouch();
+			if (!EventSystem.current.IsPointerOverGameObject())
+				ObjectControlWhenOnTouch();
 		} else if ( Input.GetMouseButton(0)) {
-			ObjectControlWhenOnTouch();
+			if (!EventSystem.current.IsPointerOverGameObject())
+				ObjectControlWhenOnTouch();
 		} else if (Input.GetMouseButtonUp(0)) {
-			OnTouchUp();
+			if (!EventSystem.current.IsPointerOverGameObject())
+				OnTouchUp();
 		}
 	}
 

@@ -20,7 +20,7 @@ public class MainObject : MonoBehaviour {
 
 	private Sprite sprite;
 	private Animator animator;
-	private Vector3 fixedPos, inCameraPos;
+	private Vector3 fixedPos, dynamicPos;
 
 	private bool isDrop = false;
 	private bool isFixed = false;
@@ -32,22 +32,20 @@ public class MainObject : MonoBehaviour {
 	}
 
 	private void Update() {
+		dynamicPos = transform.position;
+
         if (isFixed) {
-			this.transform.position = fixedPos;
+			dynamicPos = fixedPos;
         } else if (isDrop) {
 			MaxLine.init.WaringLine(this);
 		} else {
 			MaxLine.init.StopFlickerAnim();
         }
 
-		inCameraPos = Camera.main.WorldToViewportPoint(transform.position);
+		if (transform.position.x <= ObjectManager.init.backgroundLeft) dynamicPos.x = ObjectManager.init.backgroundLeft;
+		if (transform.position.x >= ObjectManager.init.backgroundRight) dynamicPos.x = ObjectManager.init.backgroundRight;
 
-		if (inCameraPos.x < 0f) inCameraPos.x = 0f;
-		if (inCameraPos.x > 1f) inCameraPos.x = 1f;
-		if (inCameraPos.y < 0f) inCameraPos.y = 0f;
-		if (inCameraPos.y > 1f) inCameraPos.y = 1f;
-
-		transform.position = Camera.main.ViewportToWorldPoint(inCameraPos);
+		transform.position = dynamicPos;
 	}
 
 	public void Setting() {
@@ -86,12 +84,12 @@ public class MainObject : MonoBehaviour {
 		Vector2 velocity = this.GetComponent<Rigidbody2D>().velocity;
 		Vector2 targetVelocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
 
-		if(this.transform.position.y > collision.transform.position.y) {
+		if(this.transform.position.y >= collision.transform.position.y) {
 			mergeObject(collision);
-		} else if(this.transform.position.y == collision.transform.position.y) {
-			if (velocity.sqrMagnitude > targetVelocity.sqrMagnitude) {
-				mergeObject(collision);
-			}
+		//} else if(this.transform.position.y == collision.transform.position.y) {
+		//	if (velocity.sqrMagnitude > targetVelocity.sqrMagnitude) {
+		//		mergeObject(collision);
+		//	}
 		}
 	}
 

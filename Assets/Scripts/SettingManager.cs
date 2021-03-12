@@ -52,10 +52,10 @@ public class SettingManager : MonoBehaviour {
 
 	public void EffectOn() {
 		if (isEffectOn) {
-			effectText.text = "?????? ????";
+			effectText.text = "효과음 끄기";
 			effectImg.texture = Resources.Load<Texture>("setting/iconEffect");
 		} else {
-			effectText.text = "?????? ????";
+			effectText.text = "효과음 켜기";
 			effectImg.texture = Resources.Load<Texture>("setting/iconMute");
 		}
 		UIManager.init.audioSource.mute = !isEffectOn;
@@ -64,11 +64,11 @@ public class SettingManager : MonoBehaviour {
 
 	public void BGMOn() {
 		if (isBGMOn) {
-			bgmText.text = "???????? ????";
+			bgmText.text = "배경음악 끄기";
 			bgmImg.texture = Resources.Load<Texture>("setting/iconBGM");
 		}
 		else {
-			bgmText.text = "???????? ????";
+			bgmText.text = "배경음악 켜기";
 			bgmImg.texture = Resources.Load<Texture>("setting/iconBGMMute");
 		}
 		CameraControl.init.audioSource.mute = !isBGMOn;

@@ -9,7 +9,7 @@ public class ObjectManager : MonoBehaviour {
 	private static readonly float INIT_Y_POSITION = 4;
 
 	public enum MergeLevel {
-		none, one, two, three, four, five, six, seven, eight, nine, ten, max
+		min, one, two, three, four, five, six, seven, eight, nine, max
 	}
 
 	public static ObjectManager init = null;
@@ -24,6 +24,18 @@ public class ObjectManager : MonoBehaviour {
 
 	public GameObject[] objects;
 	public GameObject background;
+	public float backgroundLeft {
+        get {
+			return -(background.GetComponent<SpriteRenderer>().sprite.rect.width
+				/ (background.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * 0.01f) * 0.005f);
+		}
+    }
+	public float backgroundRight {
+		get {
+			return background.GetComponent<SpriteRenderer>().sprite.rect.width
+				/ (background.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * 0.01f) * 0.005f;
+		}
+	}
 	public int currBackgroundNum;
 	public int currStyleNum;
 
@@ -51,6 +63,16 @@ public class ObjectManager : MonoBehaviour {
 		}
 	}
 
+	public void CreateMergeObject(MainObject target) {
+		if(target.mergeLevel == MergeLevel.max) {
+			StartCoroutine(nameof(UIManager.init.OnMaxLevelEffect));
+        }
+
+		GameObject tempObj = Instantiate(objects[(1+(int)target.mergeLevel)], target.transform.position, Quaternion.identity);
+		tempObj.GetComponent<MainObject>().Setting();
+		tempObj.transform.parent = objParent.transform;
+	}
+
 	public void RespawnCurrObject() {
 		currObject.GetComponent<MainObject>().Setting();
 		StartCoroutine(nameof(TimeToNextObject));
@@ -61,10 +83,7 @@ public class ObjectManager : MonoBehaviour {
 			return;
 
 		StartMergeAudio();
-
-		GameObject tempObj = Instantiate(objects[(int)target.mergeLevel], target.transform.position, Quaternion.identity);
-		tempObj.GetComponent<MainObject>().Setting();
-		tempObj.transform.parent = objParent.transform;
+		CreateMergeObject(target);
 
 		AddMergedObjectToGarbage(new GameObject[] { target.gameObject, curr.gameObject });
 		UIManager.init.AddScore(ScoreManager.MARGE_SCORE, target.mergeLevel);

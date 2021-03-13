@@ -148,6 +148,25 @@ public class ObjectManager : MonoBehaviour {
 		Sprite sprite = Resources.Load<Sprite>("obj/background" + wallNum);
 		currBackground.GetComponent<SpriteRenderer>().sprite = sprite;
 	}
+
+	public void RankUpItem() {
+		List<Transform> objectRange = new List<Transform>();
+		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
+			if (child.name == objParent.name)
+				continue;
+
+			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
+				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.two &&
+					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.six)
+					objectRange.Add(child);
+			}
+		}
+
+		int count = objectRange.Count < 1 ? 0 : 1;
+		while (count > 0) {
+			int range = Random.Range(0, objectRange.Count);
+		}
+	}
 	
 	public void DestroyItem() {
 		List<Transform> objectRange = new List<Transform>();
@@ -156,7 +175,9 @@ public class ObjectManager : MonoBehaviour {
 				continue;
 
 			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
-				objectRange.Add(child);
+				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.two &&
+					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.six)
+					objectRange.Add(child);
 			}
 		}
 
@@ -165,14 +186,11 @@ public class ObjectManager : MonoBehaviour {
 			count = objectRange.Count;
 		}
 
-		while(count > 0) {
+		while (count > 0) {
 			int range = Random.Range(0, objectRange.Count);
 
-			if(objectRange[range].GetComponent<Rigidbody2D>().gravityScale > 0) {
-				objectRange[range].GetComponent<MainObject>().DestroyItem();
-				count--;
-			}
+			objectRange[range].GetComponent<MainObject>().DestroyItem();
+			count--;
 		}
-		
 	}
 }

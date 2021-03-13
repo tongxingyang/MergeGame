@@ -6,6 +6,7 @@ public class MouseControl : MonoBehaviour {
 	public static MouseControl init = null;
 
 	public bool isGameStart = false;
+	public bool isTouchAction = true;
 
 	private void Awake() {
 		if (init == null) {
@@ -73,7 +74,7 @@ public class MouseControl : MonoBehaviour {
 			UIManager.init.lisensePanel.SetActive(false);
 		}
 
-		if (!isUITouch()) {
+		if (!isUITouch() && isTouchAction) {
 			GameManager.init.GameStart();
 			isGameStart = true;
 

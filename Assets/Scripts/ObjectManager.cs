@@ -64,13 +64,13 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public void CreateMergeObject(MainObject target) {
-		if(target.mergeLevel == MergeLevel.max) {
-			StartCoroutine(nameof(UIManager.init.OnMaxLevelEffect));
-        }
-
-		GameObject tempObj = Instantiate(objects[(1+(int)target.mergeLevel)], target.transform.position, Quaternion.identity);
+		GameObject tempObj = Instantiate(objects[(int)target.mergeLevel], target.transform.position, Quaternion.identity);
 		tempObj.GetComponent<MainObject>().Setting();
 		tempObj.transform.parent = objParent.transform;
+
+		if (tempObj.GetComponent<MainObject>().mergeLevel == MergeLevel.max) {
+			UIManager.init.OnMaxLevelPanel(tempObj);
+		}
 	}
 
 	public void RespawnCurrObject() {
@@ -81,6 +81,8 @@ public class ObjectManager : MonoBehaviour {
 	public void MergeObject(MainObject target, MainObject curr) {
 		if ((target.mergeLevel == MergeLevel.max) || GameManager.init.isGameOver) 
 			return;
+
+		target.mergeLevel += 1;
 
 		StartMergeAudio();
 		CreateMergeObject(target);
@@ -127,8 +129,9 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	private void StartMergeAudio() {
-		GetComponent<AudioSource>().Play();
-    }
+		UIManager.init.PlayEffectSouned();
+
+	}
 
 	public void ChangeObjectSpriteImage(int objNum) {
 		currStyleNum = objNum;
@@ -144,5 +147,32 @@ public class ObjectManager : MonoBehaviour {
 		currBackgroundNum = wallNum;
 		Sprite sprite = Resources.Load<Sprite>("obj/background" + wallNum);
 		currBackground.GetComponent<SpriteRenderer>().sprite = sprite;
+	}
+	
+	public void DestroyItem() {
+		List<Transform> objectRange = new List<Transform>();
+		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
+			if (child.name == objParent.name)
+				continue;
+
+			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
+				objectRange.Add(child);
+			}
+		}
+
+		int count = 2;
+		if(objectRange.Count < 2) {
+			count = objectRange.Count;
+		}
+
+		while(count > 0) {
+			int range = Random.Range(0, objectRange.Count);
+
+			if(objectRange[range].GetComponent<Rigidbody2D>().gravityScale > 0) {
+				objectRange[range].GetComponent<MainObject>().DestroyItem();
+				count--;
+			}
+		}
+		
 	}
 }

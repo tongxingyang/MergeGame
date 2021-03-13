@@ -34,6 +34,10 @@ public class ShoppingManager : MonoBehaviour{
 		Click(num, wallpaper);
 	}
 
+	public void DefClick(int num, ItemInfo product) {
+		Click(num, product);
+	}
+
     private void Start() {
 		InitImage(style);
 		InitImage(wallpaper);
@@ -47,16 +51,20 @@ public class ShoppingManager : MonoBehaviour{
 		}
 	}
 
-    private void Click(int num, ItemInfo[] products) {
-        if (!products[num].isBuy) {
+	private void Click(int num, ItemInfo[] products) {
+		if (!products[num].isBuy) {
 			IsBuy(products[num]);
 			return;
-		} else {
+		}
+		else {
 			InitImage(products);
 			SetProductUI(products[num], new Color(1, 1, 1, 1), Vector3.one);
 			ApplyItem(products[num]);
 			products[num].GetComponent<Image>().sprite = Resources.Load<Sprite>("uiOB");
 		}
+	}
+	private void Click(int num, ItemInfo product) {
+		IsBuy(product);
 	}
 
 	private void SetProductUI(ItemInfo product, Color color, Vector3 scale) {
@@ -78,7 +86,7 @@ public class ShoppingManager : MonoBehaviour{
 
 		OpenMessageUI(buyUI);
 		buyUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
-			item.priceText.text + "(??)?? ???? ???? ?????????????";
+			item.priceText.text + "(으)로 구매 하시겠습니까?";
 	}
 
 	private void OpenMessageUI(GameObject gameObject) {
@@ -104,7 +112,7 @@ public class ShoppingManager : MonoBehaviour{
 			StyleClick(currItem.productNum);
         } else if (currItem.productType == ItemInfo.ProductType.wallpaper) {
 			WallpaperClick(currItem.productNum);
-        }
+        } 
 
 		OpenMessageUI(buyMessageUI);
 		CloseMessageUI(buyUI);

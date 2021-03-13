@@ -4,9 +4,10 @@ using UnityEngine;
 
 
 public class MainObject : MonoBehaviour {
+	private static readonly float DESTROY_ITEM_DELAY = 1.5f;
 	private static readonly int GRAVITY_SCALE = 2;
-	private static readonly int DELETE_OBJ = Animator.StringToHash("delete");
 	private static readonly int FLICKER_OBJ = Animator.StringToHash("flicker");
+	private static readonly int DESTROY_MAX_LEVEL = Animator.StringToHash("destroy");
 
 	public ObjectManager.MergeLevel mergeLevel;
 
@@ -32,6 +33,10 @@ public class MainObject : MonoBehaviour {
 	}
 
 	private void Update() {
+		if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.destroymaxlevel") &&
+			animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f){
+			gameObject.SetActive(false);
+		}
 		dynamicPos = transform.position;
 
         if (isFixed) {
@@ -86,10 +91,6 @@ public class MainObject : MonoBehaviour {
 
 		if(this.transform.position.y >= collision.transform.position.y) {
 			mergeObject(collision);
-		//} else if(this.transform.position.y == collision.transform.position.y) {
-		//	if (velocity.sqrMagnitude > targetVelocity.sqrMagnitude) {
-		//		mergeObject(collision);
-		//	}
 		}
 	}
 
@@ -99,6 +100,7 @@ public class MainObject : MonoBehaviour {
 
 	public void ObjStateWhenGameOver() {
 		StartFlickerAnim();
+		GetComponent<Rigidbody2D>().gravityScale = 0;
 		fixedPos = this.transform.position;
 		isFixed = true;
 	}
@@ -111,7 +113,18 @@ public class MainObject : MonoBehaviour {
 		animator.SetBool(FLICKER_OBJ, true);
 	}
 
-	private void OnDisable() {
-		animator.SetBool(DELETE_OBJ, true);
+	public void DestroyObj() {
+		animator.SetTrigger(DESTROY_MAX_LEVEL);
+	}
+
+	public void DestroyItem() {
+		StartCoroutine(nameof(DestroyItemCor));
+	}
+
+	IEnumerator DestroyItemCor() {
+		ObjStateWhenGameOver();
+		yield return new WaitForSeconds(DESTROY_ITEM_DELAY);
+		DestroyObj();
+		UIManager.init.PlayDestroySound(); 
 	}
 }

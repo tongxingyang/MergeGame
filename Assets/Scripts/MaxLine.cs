@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class MaxLine : MonoBehaviour {
     private static readonly float DELAY_ANIMATION = 1f;
-    private static readonly float DELAY_GAMEOVER = 1.2f;
+    private static readonly float DELAY_GAMEOVER = 1.5f;
     private static readonly int isWaring = Animator.StringToHash("isWaring");
-
-    private GameObject temp;
 
     public static MaxLine init;
     private void Awake() {

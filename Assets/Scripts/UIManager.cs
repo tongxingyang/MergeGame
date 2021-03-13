@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
-	private static readonly float DESTROY_MAX_OBJECT_DELAY = 2.5f;
+	private static readonly float MAX_LEVEL_PANEL_OFF_DELAY = 2.5f;
+	private static readonly float DESTROY_MAX_OBJECT_DELAY = 1.0f;
 	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
 	private static readonly int SHOP_VAL = Animator.StringToHash("toMenu");
 
@@ -31,10 +32,13 @@ public class UIManager : MonoBehaviour {
 	public GameObject pausePanel;
 	public GameObject maxLevelEffectPanel;
 	public GameObject pauseBtn;
+	public GameObject rankingPanel;
 	
-
 	public AudioClip uiBtn;
 	public AudioClip gameOver;
+	public AudioClip maxlevel;
+	public AudioClip effectSound;
+	public AudioClip destroymaxlevel;
 
 	public AudioSource audioSource;
 
@@ -80,25 +84,49 @@ public class UIManager : MonoBehaviour {
 		audioSource.Play();
 	}
 
+	public void PlayEffectSouned() {
+		PlayAudioClip(effectSound);
+	}
+
+	public void PlayDestroySound() {
+		PlayAudioClip(destroymaxlevel);
+	}
+
 	public void OnSettingClick(bool isOn) {
 		settingPanel.SetActive(isOn);
 		MainUI.SetActive(!isOn);
+		MouseControl.init.isTouchAction = !isOn;
+		ObjectManager.init.objParent.SetActive(!isOn);
+
+		PlayAudioClip(uiBtn);
+	}
+	public void OnRankingClick(bool isOn) {
+		rankingPanel.SetActive(isOn);
+		MainUI.SetActive(!isOn);
+		MouseControl.init.isTouchAction = !isOn;
 		ObjectManager.init.objParent.SetActive(!isOn);
 
 		PlayAudioClip(uiBtn);
 	}
 
-	//010 8583 1642
-
-	public IEnumerator OnMaxLevelEffect(GameObject maxObject) {
+	public void OnMaxLevelPanel(GameObject obj) {
+		MaxLine.init.gameObject.SetActive(false);
+		PlayAudioClip(maxlevel);
 		maxLevelEffectPanel.SetActive(true);
-
 		maxLevelEffectPanel.transform.GetChild(1).GetComponent<Image>().sprite =
-			maxObject.GetComponent<SpriteRenderer>().sprite;
+			obj.GetComponent<SpriteRenderer>().sprite;
+
+		StartCoroutine(OnMaxLevelEffect(obj));
+	}
+
+	private IEnumerator OnMaxLevelEffect(GameObject obj) {
+		yield return new WaitForSeconds(MAX_LEVEL_PANEL_OFF_DELAY);
+		maxLevelEffectPanel.SetActive(false);
 
 		yield return new WaitForSeconds(DESTROY_MAX_OBJECT_DELAY);
-
-		maxLevelEffectPanel.SetActive(true);
-		maxObject.SetActive(false);
-    }
+		PlayDestroySound();
+		obj.GetComponent<CircleCollider2D>().enabled = false;
+		obj.GetComponent<MainObject>().DestroyObj();
+		MaxLine.init.gameObject.SetActive(true);
+	}
 }

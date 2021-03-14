@@ -117,7 +117,17 @@ public class MainObject : MonoBehaviour {
 		animator.SetTrigger(DESTROY_MAX_LEVEL);
 	}
 
-	public void DestroyItem() {
+	public void OnRankUpItem() {
+		StartCoroutine(nameof(RankUpCor));
+	}
+
+	IEnumerator RankUpCor() {
+		ObjStateWhenGameOver();
+		yield return new WaitForSeconds(DESTROY_ITEM_DELAY);
+		ObjectManager.init.CreateMergeObject(this);
+	}
+
+	public void OnDestroyItem() {
 		StartCoroutine(nameof(DestroyItemCor));
 	}
 

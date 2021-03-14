@@ -71,6 +71,8 @@ public class ObjectManager : MonoBehaviour {
 		if (tempObj.GetComponent<MainObject>().mergeLevel == MergeLevel.max) {
 			UIManager.init.OnMaxLevelPanel(tempObj);
 		}
+
+		StartMergeAudio();
 	}
 
 	public void RespawnCurrObject() {
@@ -83,8 +85,6 @@ public class ObjectManager : MonoBehaviour {
 			return;
 
 		target.mergeLevel += 1;
-
-		StartMergeAudio();
 		CreateMergeObject(target);
 
 		AddMergedObjectToGarbage(new GameObject[] { target.gameObject, curr.gameObject });
@@ -156,8 +156,8 @@ public class ObjectManager : MonoBehaviour {
 				continue;
 
 			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
-				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.two &&
-					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.six)
+				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.three &&
+					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.seven)
 					objectRange.Add(child);
 			}
 		}
@@ -165,6 +165,9 @@ public class ObjectManager : MonoBehaviour {
 		int count = objectRange.Count < 1 ? 0 : 1;
 		while (count > 0) {
 			int range = Random.Range(0, objectRange.Count);
+
+			objectRange[range].GetComponent<MainObject>().OnRankUpItem();
+			count--;
 		}
 	}
 	
@@ -175,8 +178,8 @@ public class ObjectManager : MonoBehaviour {
 				continue;
 
 			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
-				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.two &&
-					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.six)
+				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.one &&
+					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.seven)
 					objectRange.Add(child);
 			}
 		}
@@ -189,7 +192,7 @@ public class ObjectManager : MonoBehaviour {
 		while (count > 0) {
 			int range = Random.Range(0, objectRange.Count);
 
-			objectRange[range].GetComponent<MainObject>().DestroyItem();
+			objectRange[range].GetComponent<MainObject>().OnDestroyItem();
 			count--;
 		}
 	}

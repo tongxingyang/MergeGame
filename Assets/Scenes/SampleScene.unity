@@ -6704,14 +6704,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 224700563}
-        m_TargetAssemblyTypeName: ObjectManager, Assembly-CSharp
-        m_MethodName: CreateObject
+      - m_Target: {fileID: 446052670}
+        m_TargetAssemblyTypeName: ScoreManager, Assembly-CSharp
+        m_MethodName: AddCoin
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 8
+          m_IntArgument: 10000
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6964,7 +6964,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 923b97be98cd78c44994e46210a93068,
+      objectReference: {fileID: 21300000, guid: 52514412e79b14a3999853018e5fae2d,
         type: 3}
     - target: {fileID: 7047714515860036343, guid: f21e9a75d12dfbc46904e484ddd7ea53,
         type: 3}
@@ -7085,6 +7085,8 @@ MonoBehaviour:
   adsCount: {fileID: 0}
   coinText: {fileID: 1692905197}
   shopCoinText: {fileID: 877378351}
+  _rankupItemCount: {fileID: 2050594981}
+  _destroyItemCount: {fileID: 1276162444}
   finalBestScore: 0
 --- !u!4 &446052671
 Transform:
@@ -7537,7 +7539,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "5~9 \uB2E8\uACC4\uC758 \uACFC\uC77C\uC744 \uD55C \uB2E8\uACC4 \uC9C4\uD654\uC2DC\uD0B5\uB2C8\uB2E4!!"
+  m_text: "4~8 \uB2E8\uACC4\uC758 \uACFC\uC77C\uC744 \uB79C\uB364\uC73C\uB85C 1\uAC1C
+    \uC9C4\uD654\uC2DC\uD0B5\uB2C8\uB2E4!!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1d5e69e39e9318546b5c3ef88ce0bd86, type: 2}
   m_sharedMaterial: {fileID: -3071305796416178816, guid: 1d5e69e39e9318546b5c3ef88ce0bd86,
@@ -14987,6 +14990,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1536830916}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 156762536}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &907554499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19582,7 +19609,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7d59cb1dc8f52e742b318d1caf791006, type: 2}
   m_sharedMaterial: {fileID: 3407868806319671054, guid: 7d59cb1dc8f52e742b318d1caf791006,
@@ -21588,7 +21615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b262f2066d1de48999f847a5b26dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productNum: 0
+  productNum: 1
   productType: 2
   _isBuy: 0
   priceText: {fileID: 1732652276}
@@ -23936,8 +23963,8 @@ RectTransform:
   m_Father: {fileID: 2048820508}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3139391}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.686061}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -26019,7 +26046,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1675756640}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 224700563}
+        m_TargetAssemblyTypeName: ObjectManager, Assembly-CSharp
+        m_MethodName: RankUpItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1675756642
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26143,7 +26182,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 181992120}
   m_HandleRect: {fileID: 181992119}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 1.000002
   m_Size: 0.96011627
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -26548,8 +26587,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1044007313}
   m_HandleRect: {fileID: 1044007312}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.7140563
+  m_Value: 1.0000002
+  m_Size: 0.71405625
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -29273,7 +29312,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 575.5748}
   m_SizeDelta: {x: -0, y: 1833.397}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1895377551
@@ -30210,7 +30249,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1545322717}
   m_HandleRect: {fileID: 1545322716}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.6860609
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -31763,7 +31802,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7d59cb1dc8f52e742b318d1caf791006, type: 2}
   m_sharedMaterial: {fileID: 3407868806319671054, guid: 7d59cb1dc8f52e742b318d1caf791006,

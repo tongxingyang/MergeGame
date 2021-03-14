@@ -112,7 +112,16 @@ public class ShoppingManager : MonoBehaviour{
 			StyleClick(currItem.productNum);
         } else if (currItem.productType == ItemInfo.ProductType.wallpaper) {
 			WallpaperClick(currItem.productNum);
-        } 
+        } else if (currItem.productType == ItemInfo.ProductType.def) {
+			switch (currItem.productNum) {
+				case 0:
+					ScoreManager.init.destroyItemCount++;
+					break;
+				case 1:
+					ScoreManager.init.rankItemCount++;
+					break;
+			}
+		}
 
 		OpenMessageUI(buyMessageUI);
 		CloseMessageUI(buyUI);

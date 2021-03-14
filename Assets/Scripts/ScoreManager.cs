@@ -14,6 +14,8 @@ class ScoreManager : MonoBehaviour {
 	private static readonly int ADS_MAX_COUNT = 3;
 
 	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount, coinText, shopCoinText;
+	public TextMeshProUGUI _rankupItemCount, _destroyItemCount;
+
 
 	public static ScoreManager init = null;
 	public int finalBestScore;
@@ -46,6 +48,8 @@ class ScoreManager : MonoBehaviour {
 	private void Start() {
 		currScore = 0;
 		coin = 0;
+		destroyItemCount = 1;
+		rankItemCount = 1;
 	}
 
 	public int coin {
@@ -71,6 +75,15 @@ class ScoreManager : MonoBehaviour {
 			_bestScore = value;
 			bestScoreText.text = string.Format("{0}", value);
 		}
+	}
+
+	public int rankItemCount {
+		get { return int.Parse(_rankupItemCount.text); }
+		set { _rankupItemCount.text = value.ToString(); }
+	}
+	public int destroyItemCount {
+		get { return int.Parse(_destroyItemCount.text); }
+		set { _destroyItemCount.text = value.ToString(); }
 	}
 
 	public void setSaveBestScore() {

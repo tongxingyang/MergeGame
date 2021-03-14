@@ -103,15 +103,24 @@ public class AdsManager : MonoBehaviour {
         //rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
         //rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+        rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
 
         AdRequest request = new AdRequest.Builder().Build();
-        this.coinRewardedAd.LoadAd(request);
+        rewardedAd.LoadAd(request);
 
         return rewardedAd;
     }
     public void HandleRewardedAdClosed(object sender, EventArgs args) {
-        sender = CreateAndLoadRewardedAd();
+        var ads = (RewardedAd)sender;
+        ads = CreateAndLoadRewardedAd();
+
+        if (sender == destroyItemRewardedAd)
+            coinRewardedAd = CreateAndLoadRewardedAd();
     }
+
+    public void HandleRewardedAdLoaded(object sender, EventArgs args) {
+        Debug.Log(sender.GetType());
+	}
 
     public void UserChoseToWatchAd() {
         if (this.coinRewardedAd.IsLoaded()) {

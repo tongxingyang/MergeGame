@@ -114,6 +114,7 @@ public class MainObject : MonoBehaviour {
 	}
 
 	public void DestroyObj() {
+		this.GetComponent<CircleCollider2D>().enabled = false;
 		animator.SetTrigger(DESTROY_MAX_LEVEL);
 	}
 

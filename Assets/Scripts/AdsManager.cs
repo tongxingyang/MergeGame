@@ -5,10 +5,12 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 
 public class AdsManager : MonoBehaviour {
-    // and rewarded test ca-app-pub-3940256099942544/1033173712
     // and banner test ca-app-pub-3940256099942544/6300978111
-    private static readonly string ANDROID_REWARDED_ID = "ca-app-pub-7832687788012663/8243618613";
+    // and rewardedinterstitial test ca-app-pub-3940256099942544/1033173712
+    // and rewarded test ca-app-pub-3940256099942544/5224354917
     private static readonly string ANDROID_BANNER_ID = "ca-app-pub-7832687788012663/9321714808";
+    private static readonly string ANDROID_REWARDEDINTERSTITIAL_ID = "ca-app-pub-7832687788012663/8243618613";
+    private static readonly string ANDROID_REWARD_ID = "ca-app-pub-7832687788012663/3605180232";
 
     // and rewarded test ca-app-pub-3940256099942544/4411468910
     // and banner test ca-app-pub-3940256099942544/2934735716
@@ -33,7 +35,10 @@ public class AdsManager : MonoBehaviour {
 
     private BannerView bannerView;
     private RewardedInterstitialAd rewardedInterstitialAd;
-    //private RewardedAd rewardedAd;
+
+    private RewardedAd coinRewardedAd;
+    private RewardedAd rankUpItemRewardedAd;
+    private RewardedAd destroyItemRewardedAd;
 
     public void Start() {
         InitAd();
@@ -47,22 +52,26 @@ public class AdsManager : MonoBehaviour {
         MobileAds.Initialize(initStatus => {
         });
 
+        //Banner
         this.RequestBanner();
-        //this.rewardedAd = new RewardedAd(ANDROID_REWARDED_ID);
 
-        AdRequest request = new AdRequest.Builder().Build();
+        //Rewared
+        this.coinRewardedAd = CreateAndLoadRewardedAd();
+        this.rankUpItemRewardedAd = CreateAndLoadRewardedAd();
+        this.destroyItemRewardedAd = CreateAndLoadRewardedAd();
 
+        //RewardedInterstitial
 #if UNITY_ANDROID
-            string adUnitId = ANDROID_REWARDED_ID;
+        string RIAdUnitId = ANDROID_REWARDEDINTERSTITIAL_ID;
 #elif UNITY_IPHONE
         string adUnitId = iOS_REWARDED_ID;
 #else
         string adUnitId = "unexpected_platform";
 #endif
 
-        RewardedInterstitialAd.LoadAd(adUnitId, request, adLoadCallback);
-        //this.rewardedAd.LoadAd(request);
-        //this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+        AdRequest request = new AdRequest.Builder().Build();
+        RewardedInterstitialAd.LoadAd(RIAdUnitId, request, adLoadCallback);
+        //this.rewardedAd.OnAdOpening += HandleRewardedAdOpening;
     }
 
     private void adLoadCallback(RewardedInterstitialAd ad, string error) {
@@ -81,25 +90,34 @@ public class AdsManager : MonoBehaviour {
         ScoreManager.init.currAdsCount = 0;
     }
 
-    //public void HandleRewardedAdClosed(object sender, EventArgs args) {
-    //    this.CreateAndLoadRewardedAd();
-    //}
+    public RewardedAd CreateAndLoadRewardedAd() {
+#if UNITY_ANDROID
+        string RAdUnitId = ANDROID_REWARD_ID;
+#elif UNITY_IPHONE
+        string adUnitId = iOS_REWARDED_ID;
+#else
+        string adUnitId = "unexpected_platform";
+#endif
+        RewardedAd rewardedAd = new RewardedAd(ANDROID_REWARD_ID);
 
+        //rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
+        //rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
+        rewardedAd.OnAdClosed += HandleRewardedAdClosed;
 
+        AdRequest request = new AdRequest.Builder().Build();
+        this.coinRewardedAd.LoadAd(request);
 
-    //public void CreateAndLoadRewardedAd() {
-    //    this.rewardedAd = new RewardedAd(ANDROID_REWARDED_ID);
-    //    this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+        return rewardedAd;
+    }
+    public void HandleRewardedAdClosed(object sender, EventArgs args) {
+        sender = CreateAndLoadRewardedAd();
+    }
 
-    //    AdRequest request = new AdRequest.Builder().Build();
-    //    this.rewardedAd.LoadAd(request);
-    //}
-
-    //public void UserChoseToWatchAd() {
-    //    if (this.rewardedAd.IsLoaded() && !isPremium) {
-    //        this.rewardedAd.Show();
-    //    }
-    //}
+    public void UserChoseToWatchAd() {
+        if (this.coinRewardedAd.IsLoaded()) {
+            this.coinRewardedAd.Show();
+        }
+    }
 
 
     private void RequestBanner() {

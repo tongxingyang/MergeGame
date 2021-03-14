@@ -37,6 +37,8 @@ public class DataManager : MonoBehaviour {
 		gameData.adsCount = ScoreManager.init.currAdsCount;
 		gameData.bestScore = ScoreManager.init.finalBestScore;
 		gameData.coin = ScoreManager.init.coin;
+		gameData.rankupItemCount = ScoreManager.init.rankItemCount;
+		gameData.destroyItemCount = ScoreManager.init.destroyItemCount;
 
 		gameData.styleNum = ObjectManager.init.currStyleNum;
 		gameData.wallpaperNum = ObjectManager.init.currBackgroundNum;
@@ -70,6 +72,8 @@ public class DataManager : MonoBehaviour {
 			ScoreManager.init.bestScore = gameData.bestScore;
 			ScoreManager.init.currAdsCount = gameData.adsCount;
 			ScoreManager.init.coin = gameData.coin;
+			ScoreManager.init.rankItemCount = gameData.rankupItemCount;
+			ScoreManager.init.destroyItemCount = gameData.destroyItemCount;
 
 			for (int i = 0; i < ShoppingManager.init.style.Length; ++i) {
 				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];

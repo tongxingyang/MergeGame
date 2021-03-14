@@ -163,11 +163,14 @@ public class ObjectManager : MonoBehaviour {
 		}
 
 		int count = objectRange.Count < 1 ? 0 : 1;
-		while (count > 0) {
-			int range = Random.Range(0, objectRange.Count);
+		if(count > 0 && ScoreManager.init.rankItemCount > 0) {
+			ScoreManager.init.rankItemCount--;
+			while (count > 0) {
+				int range = Random.Range(0, objectRange.Count);
 
-			objectRange[range].GetComponent<MainObject>().OnRankUpItem();
-			count--;
+				objectRange[range].GetComponent<MainObject>().OnRankUpItem();
+				count--;
+			}
 		}
 	}
 	
@@ -189,11 +192,19 @@ public class ObjectManager : MonoBehaviour {
 			count = objectRange.Count;
 		}
 
-		while (count > 0) {
-			int range = Random.Range(0, objectRange.Count);
+		if(count > 0 && ScoreManager.init.destroyItemCount > 0) {
+			List<int> randDeduplication = new List<int>();
+			ScoreManager.init.destroyItemCount--;
+			while (count > 0) {
+				int range = Random.Range(0, objectRange.Count);
+				if (randDeduplication.Contains(range))
+					continue;
+				else
+					randDeduplication.Add(range);
 
-			objectRange[range].GetComponent<MainObject>().OnDestroyItem();
-			count--;
+				objectRange[range].GetComponent<MainObject>().OnDestroyItem();
+				count--;
+			}
 		}
 	}
 }

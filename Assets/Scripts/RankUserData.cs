@@ -16,5 +16,4 @@ public class RankUserData : MonoBehaviour {
         this.userName.text = name.ToString();
         this.userScore.text = score.ToString();
     }
-
 }

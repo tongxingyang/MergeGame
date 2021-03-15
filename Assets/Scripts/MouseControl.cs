@@ -75,7 +75,6 @@ public class MouseControl : MonoBehaviour {
 		}
 
 		if (!isUITouch() && isTouchAction) {
-
             if (!isGameStart) {
 				GameManager.init.GameStart();
 				isGameStart = true;

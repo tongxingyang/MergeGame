@@ -37,8 +37,8 @@ public class DataManager : MonoBehaviour {
 		gameData.adsCount = ScoreManager.init.currAdsCount;
 		gameData.bestScore = ScoreManager.init.finalBestScore;
 		gameData.coin = ScoreManager.init.coin;
-		gameData.rankupItemCount = ScoreManager.init.rankItemCount;
-		gameData.destroyItemCount = ScoreManager.init.destroyItemCount;
+		gameData.rankupItemCount = ScoreManager.init.rankItemCount <= 0 ? 0 : ScoreManager.init.rankItemCount;
+		gameData.destroyItemCount = ScoreManager.init.destroyItemCount <= 0 ? 0 : ScoreManager.init.destroyItemCount;
 
 		gameData.styleNum = ObjectManager.init.currStyleNum;
 		gameData.wallpaperNum = ObjectManager.init.currBackgroundNum;

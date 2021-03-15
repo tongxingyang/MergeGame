@@ -51,9 +51,6 @@ public class MaxLine : MonoBehaviour {
         }
     }
 
-    public void StartFlickerAnim() {
-    }
-
     public void StopFlickerAnim() {
         animator.SetBool(isWaring, false);
     }
@@ -75,7 +72,7 @@ public class MaxLine : MonoBehaviour {
         }
     }
 
-    public void setColor(bool isGameOver) {
+    public void SetColor(bool isGameOver) {
         animator.SetBool(isWaring, false);
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
         gameObject.SetActive(!isGameOver);

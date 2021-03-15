@@ -43,6 +43,8 @@ public class AdsManager : MonoBehaviour {
     private RewardedAd rankUpItemRewardedAd;
     private RewardedAd destroyItemRewardedAd;
 
+    private bool isPrevSoundOn = false;
+
     public void Start() {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => {
@@ -140,6 +142,7 @@ public class AdsManager : MonoBehaviour {
 #endif
         RewardedAd rewardedAd = new RewardedAd(adUnitId);
 
+        rewardedAd.OnAdOpening += HandleRewardedAdOpening;
         rewardedAd.OnAdClosed += HandleRewardedAdClosed;
         rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoaded;
 
@@ -172,9 +175,15 @@ public class AdsManager : MonoBehaviour {
     }
 
     public void HandleUserRankUpItemReward(object sender, Reward args) {
+        ObjectManager.init.RankUpItem(true);
     }
 
     public void HandleUserDestroyItemReward(object sender, Reward args) {
+        ObjectManager.init.DestroyItem(true);
+    }
+
+    public void HandleRewardedAdOpening(object sender, EventArgs args) {
+        SoundOff();
     }
 
     public void HandleRewardedAdClosed(object sender, EventArgs args) {
@@ -188,6 +197,8 @@ public class AdsManager : MonoBehaviour {
             destroyItemRewardedAd = CreateAndLoadRewardedAd();
             this.destroyItemRewardedAd.OnUserEarnedReward += HandleUserDestroyItemReward;
         }
+
+        SoundOn();
     }
 
     public void HandleRewardedAdFailedToLoaded(object sender, AdErrorEventArgs args) {
@@ -203,6 +214,17 @@ public class AdsManager : MonoBehaviour {
         finally {
             isPremium = true;
         }
+    }
+
+    private void SoundOn() {
+        if (isPrevSoundOn)
+            SettingManager.init.BGMOn(false);
+        isPrevSoundOn = false;
+    }
+
+    private void SoundOff() {
+        isPrevSoundOn = !SettingManager.init.isBGMOn;
+        SettingManager.init.BGMOn(true);
     }
 }
 

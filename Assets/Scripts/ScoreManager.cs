@@ -79,17 +79,39 @@ class ScoreManager : MonoBehaviour {
 	}
 
 	public int rankItemCount {
-		get { return int.Parse(_rankupItemCount.text); }
+		get {
+			if (_rankupItemCount.text.Equals("ADS"))
+				return 0;
+			else if (_rankupItemCount.text.Equals(""))
+				return -1;
+			else
+				return int.Parse(_rankupItemCount.text);
+		}
 		set {
-			if (value < 0) value = 0;
-			_rankupItemCount.text = value.ToString();
+			if (value == 0)
+				_rankupItemCount.text = "ADS";
+			else if (value < 0)
+				_rankupItemCount.text = "";
+			else
+				_rankupItemCount.text = value.ToString();
 		}
 	}
 	public int destroyItemCount {
-		get { return int.Parse(_destroyItemCount.text); }
+		get {
+			if (_destroyItemCount.text.Equals("ADS"))
+				return 0;
+			else if (_destroyItemCount.text.Equals(""))
+				return -1;
+			else
+				return int.Parse(_destroyItemCount.text);
+		}
 		set {
-			if (value < 0) value = 0;
-			_destroyItemCount.text = value.ToString();
+			if (value == 0)
+				_destroyItemCount.text = "ADS";
+			else if (value < 0)
+				_destroyItemCount.text = "";
+			else
+				_destroyItemCount.text = value.ToString();
 		}
 	}
 
@@ -119,6 +141,8 @@ class ScoreManager : MonoBehaviour {
 	private int totalDestroyItem;
 
 	public void SetGameStart() {
+		if (rankItemCount < 0) rankItemCount = 0;
+		if (destroyItemCount < 0) destroyItemCount = 0;
 		totalRankUpItem = rankItemCount;
 		totalDestroyItem = destroyItemCount;
 
@@ -127,7 +151,13 @@ class ScoreManager : MonoBehaviour {
     }
 
 	public void SetGameOver() {
+		if (totalRankUpItem == 1) totalRankUpItem++;
+		if (totalDestroyItem == 1) totalDestroyItem++;
+
 		rankItemCount = totalRankUpItem - (MAX_ITEM_ONEGAME - rankItemCount);
 		destroyItemCount = totalDestroyItem - (MAX_ITEM_ONEGAME - destroyItemCount);
+
+		if (rankItemCount < 0) rankItemCount = 0;
+		if (destroyItemCount < 0) destroyItemCount = 0;
 	}
 }

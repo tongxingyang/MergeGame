@@ -149,9 +149,16 @@ public class ObjectManager : MonoBehaviour {
 		currBackground.GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 
-	public void RankUpItem() {
-		if (ScoreManager.init.rankItemCount <= 0)
-			return;
+	public void RankUpItem(bool isPassWithAds = false) {
+		if (!isPassWithAds) {
+			if (ScoreManager.init.rankItemCount == 0) {
+				UIManager.init.OpenRankUpItemPanel();
+				return;
+			}
+			else if (ScoreManager.init.rankItemCount < 0) {
+				return;
+			}
+		}
 
 		List<Transform> objectRange = new List<Transform>();
 		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
@@ -174,12 +181,21 @@ public class ObjectManager : MonoBehaviour {
 				objectRange[range].GetComponent<MainObject>().OnRankUpItem();
 				count--;
 			}
+		} else if (isPassWithAds) {
+			ScoreManager.init.rankItemCount--;
 		}
 	}
 	
-	public void DestroyItem() {
-		if (ScoreManager.init.destroyItemCount <= 0)
-			return;
+	public void DestroyItem(bool isPassWithAds = false) {
+		if (!isPassWithAds) {
+			if (ScoreManager.init.destroyItemCount == 0) {
+				UIManager.init.OpenDestroyItemPanel();
+				return;
+			}
+			else if (ScoreManager.init.destroyItemCount < 0) {
+				return;
+			}
+		}
 
 		List<Transform> objectRange = new List<Transform>();
 		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
@@ -211,6 +227,8 @@ public class ObjectManager : MonoBehaviour {
 				objectRange[range].GetComponent<MainObject>().OnDestroyItem();
 				count--;
 			}
+		} else if (isPassWithAds) {
+			ScoreManager.init.destroyItemCount--;
 		}
 	}
 }

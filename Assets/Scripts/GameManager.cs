@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject premiumGround;
 
+	private bool isEnterGame = false;
+
 	private bool _isPremium;
 	public bool isPremium {
         get { return _isPremium; }
@@ -37,10 +39,12 @@ public class GameManager : MonoBehaviour {
 				ScoreManager.init.InitScore();
 			}
 
-			MaxLine.init.setColor(isGameOver);
+			MaxLine.init.SetColor(isGameOver);
 
-			if (!value)
+			if (!value) {
 				UIManager.init.setGameOverPanel(value);
+				isEnterGame = false;
+			}
 		}
 		get { return _isGameOver; }
 	}
@@ -52,11 +56,24 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		DontDestroyOnLoad(this.gameObject);
+	}
+
+	private void Update() {
+
+#if UNITY_ANDROID
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.Quit();
+		}
+#endif
 
 	}
 
 	public void GameStart() {
-		UIManager.init.IsGameStart(true);
+		if (!isEnterGame) {
+			isEnterGame = true;
+			ScoreManager.init.SetGameStart();
+			UIManager.init.IsGameStart(true);
+		}
 	}
 
 	public void GameRestart() {
@@ -66,7 +83,6 @@ public class GameManager : MonoBehaviour {
 
 	public void AtHome() {
 		if (Time.timeScale < 1f) Time.timeScale = 1f;
-
 		isGameOver = false;
 		UIManager.init.IsGameStart(false);
 		ScoreManager.init.SetGameOver();

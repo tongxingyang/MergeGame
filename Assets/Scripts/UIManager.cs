@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
+	private static readonly int COIN_ABOUT_SCORE = 75;
 	private static readonly int ADD_COIN_ADS_DELAY = 5;
 	private static readonly float MAX_LEVEL_PANEL_OFF_DELAY = 2.5f;
 	private static readonly float DESTROY_MAX_OBJECT_DELAY = 1.0f;
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour {
 	//public TextMeshProUGUI coin, shopCoin;
 	public Animator animator;
 	public GameObject gameOverPanel;
+	public GameObject resultCoinPanel;
 	public GameObject MainUI;
 	public GameObject menuPanel;
 	public GameObject settingPanel;
@@ -35,6 +37,9 @@ public class UIManager : MonoBehaviour {
 	public GameObject pauseBtn;
 	public GameObject rankingPanel;
 	public TextMeshProUGUI addCoinAdsTimerText;
+
+	public GameObject rankUpItemPanel;
+	public GameObject destroyItemPanel;
 
 	public AudioClip uiBtn;
 	public AudioClip gameOver;
@@ -66,29 +71,29 @@ public class UIManager : MonoBehaviour {
 	private DateTime _initTime;
 	public DateTime initTime {
 		get { return _initTime; }
-        set {
-			if((value - DateTime.Now).TotalSeconds > 0) {
+		set {
+			if ((value - DateTime.Now).TotalSeconds > 0) {
 				_initTime = value;
 				isEnableCoinAds = false;
-            }
-        }
-    }
+			}
+		}
+	}
 	private TimeSpan timer;
 
-    private void Update() {
+	private void Update() {
 		if (!isEnableCoinAds) {
 			timer = initTime - DateTime.Now;
 			addCoinAdsTimerText.text = timer.Minutes + ":" + string.Format("{0:D2}", timer.Seconds);
 
-			if(timer.TotalSeconds <= 0) {
+			if (timer.TotalSeconds <= 0) {
 				isEnableCoinAds = true;
-            }
+			}
 		}
-    }
+	}
 
-    public void AddScore(int type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
+	public void AddScore(int type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
 		ScoreManager.init.AddScore(type, mergeLevel);
-    }
+	}
 
 	public void setGameOverPanel(bool isOver) {
 		if (isOver) {
@@ -96,24 +101,40 @@ public class UIManager : MonoBehaviour {
 				PlayAudioClip(gameOver);
 
 			OpenPanel(gameOverPanel);
+			StartCoroutine(nameof(OpenCoinResult));
 			ScoreManager.init.setSaveBestScore();
 			//gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
 		} else {
 			gameOverPanel.SetActive(false);
 		}
-    }
+	}
 
 	public void IsGameStart(bool _active) {
 		pauseBtn.SetActive(_active);
 		menuPanel.SetActive(!_active);
 		settingPanel.SetActive(false);
-
-		ScoreManager.init.SetGameStart();
 	}
 
 	public void OpenPanel(GameObject gameObject) {
 		gameObject.SetActive(true);
 		animator.SetBool(OPEN_UI_ANIM, true);
+	}
+
+	private IEnumerator OpenCoinResult() {
+		int coin = GetCoinAboutScore();
+		resultCoinPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = coin.ToString();
+		yield return new WaitForSeconds(1.7f);
+		PlayAddCoinSound();
+		ScoreManager.init.AddCoin(coin);
+		resultCoinPanel.SetActive(true);
+	}
+
+	private int GetCoinAboutScore() {
+		try {
+			return (ScoreManager.init.currScore / COIN_ABOUT_SCORE);
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	public void PlayShopAnim(int val) {
@@ -176,11 +197,20 @@ public class UIManager : MonoBehaviour {
 		PlayDestroySound();
 		obj.GetComponent<CircleCollider2D>().enabled = false;
 		obj.GetComponent<MainObject>().DestroyObj();
-		MaxLine.init.gameObject.SetActive(true);
+		MaxLine.init.SetColor(false);
+		ScoreManager.init.currScore += 5000;
 	}
 
 	public void SetCoinAdsTimer() {
 		initTime = DateTime.Now.AddMinutes(ADD_COIN_ADS_DELAY);
 		isEnableCoinAds = false;
+	}
+
+	public void OpenRankUpItemPanel() {
+		rankUpItemPanel.SetActive(true);
+	}
+
+	public void OpenDestroyItemPanel() {
+		destroyItemPanel.SetActive(true);
 	}
 }

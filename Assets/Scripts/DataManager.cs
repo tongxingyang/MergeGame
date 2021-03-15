@@ -54,6 +54,7 @@ public class DataManager : MonoBehaviour {
 		gameData.isBGMVolum = CameraControl.init.audioSource.mute;
 		gameData.isEffectVolum = UIManager.init.audioSource.mute;
 
+		gameData.initTimer = UIManager.init.initTime;
 
 		binaryFormatter.Serialize(file, gameData);
 		file.Close();
@@ -86,6 +87,8 @@ public class DataManager : MonoBehaviour {
 
 			SettingManager.init.BGMOn(gameData.isBGMVolum);
 			SettingManager.init.EffectOn(gameData.isEffectVolum);
+
+			UIManager.init.initTime = gameData.initTimer;
 
 			file.Close();
 

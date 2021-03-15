@@ -150,6 +150,9 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public void RankUpItem() {
+		if (ScoreManager.init.rankItemCount <= 0)
+			return;
+
 		List<Transform> objectRange = new List<Transform>();
 		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
 			if (child.name == objParent.name)
@@ -163,7 +166,7 @@ public class ObjectManager : MonoBehaviour {
 		}
 
 		int count = objectRange.Count < 1 ? 0 : 1;
-		if(count > 0 && ScoreManager.init.rankItemCount > 0) {
+		if(count > 0) {
 			ScoreManager.init.rankItemCount--;
 			while (count > 0) {
 				int range = Random.Range(0, objectRange.Count);
@@ -175,6 +178,9 @@ public class ObjectManager : MonoBehaviour {
 	}
 	
 	public void DestroyItem() {
+		if (ScoreManager.init.destroyItemCount <= 0)
+			return;
+
 		List<Transform> objectRange = new List<Transform>();
 		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
 			if (child.name == objParent.name)
@@ -192,7 +198,7 @@ public class ObjectManager : MonoBehaviour {
 			count = objectRange.Count;
 		}
 
-		if(count > 0 && ScoreManager.init.destroyItemCount > 0) {
+		if(count > 0) {
 			List<int> randDeduplication = new List<int>();
 			ScoreManager.init.destroyItemCount--;
 			while (count > 0) {

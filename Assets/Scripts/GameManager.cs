@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour {
 
 		isGameOver = false;
 		UIManager.init.IsGameStart(false);
+		ScoreManager.init.SetGameOver();
 		ObjectManager.init.StopAllCoroutines();
 	}
 
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void BuyPremium() {
-		AdsManager.init.closeAds();
+		AdsManager.init.DestroyBannerAd();
 		premiumGround.SetActive(true);
 	}
 }

@@ -1,20 +1,23 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 
 public class AdsManager : MonoBehaviour {
-    // and banner test ca-app-pub-3940256099942544/6300978111
-    // and rewardedinterstitial test ca-app-pub-3940256099942544/1033173712
-    // and rewarded test ca-app-pub-3940256099942544/5224354917
-    private static readonly string ANDROID_BANNER_ID = "ca-app-pub-7832687788012663/9321714808";
-    private static readonly string ANDROID_REWARDEDINTERSTITIAL_ID = "ca-app-pub-7832687788012663/8243618613";
+    // Android
+    // 배너 광고   ca-app-pub-3940256099942544/6300978111
+    // 전면 광고   ca-app-pub-3940256099942544/1033173712
+    // 보상형 광고  ca-app-pub-3940256099942544/5224354917
+
+    // iOS
+    // 배너 광고   ca-app-pub-3940256099942544/2934735716
+    // 전면 광고   ca-app-pub-3940256099942544/4411468910
+    // 보상형 광고  ca-app-pub-3940256099942544/1712485313
+    private static readonly string AND_BANNER_ID = "ca-app-pub-7832687788012663/9321714808";
+    private static readonly string AND_INTERSTITIAL_ID = "ca-app-pub-7832687788012663/1332806899";
     private static readonly string ANDROID_REWARD_ID = "ca-app-pub-7832687788012663/3605180232";
 
-    // and rewarded test ca-app-pub-3940256099942544/4411468910
-    // and banner test ca-app-pub-3940256099942544/2934735716
-    private static readonly string iOS_REWARDED_ID = "ca-app-pub-7832687788012663/9661809356";
+    private static readonly string iOS_REWARDEDINTERSTITIAL_ID = "ca-app-pub-7832687788012663/9661809356";
     private static readonly string iOS_BANNER_ID = "ca-app-pub-7832687788012663/6504877560";
 
     public static AdsManager init = null;
@@ -34,105 +37,27 @@ public class AdsManager : MonoBehaviour {
     // ?????? ???? ????
 
     private BannerView bannerView;
-    private RewardedInterstitialAd rewardedInterstitialAd;
+    private InterstitialAd interstitialAd;
 
     private RewardedAd coinRewardedAd;
     private RewardedAd rankUpItemRewardedAd;
     private RewardedAd destroyItemRewardedAd;
 
     public void Start() {
-        InitAd();
-    }
-
-    private void InitAd() {
-
-        //deviceIds.Add("0e3d19f6ba4c353df7c54310bbd28a2f");
-
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => {
         });
 
-        //Banner
-        this.RequestBanner();
-
-        //Rewared
-        this.coinRewardedAd = CreateAndLoadRewardedAd();
-        this.rankUpItemRewardedAd = CreateAndLoadRewardedAd();
-        this.destroyItemRewardedAd = CreateAndLoadRewardedAd();
-
-        //RewardedInterstitial
-#if UNITY_ANDROID
-        string RIAdUnitId = ANDROID_REWARDEDINTERSTITIAL_ID;
-#elif UNITY_IPHONE
-        string adUnitId = iOS_REWARDED_ID;
-#else
-        string adUnitId = "unexpected_platform";
-#endif
-
-        AdRequest request = new AdRequest.Builder().Build();
-        RewardedInterstitialAd.LoadAd(RIAdUnitId, request, adLoadCallback);
-        //this.rewardedAd.OnAdOpening += HandleRewardedAdOpening;
+        RequestBannerAd();
+        RequestRewardedAd();
+        RquestInterstitialAd();
     }
 
-    private void adLoadCallback(RewardedInterstitialAd ad, string error) {
-        if(error == null) {
-            rewardedInterstitialAd = ad;
-        }
-    }
-
-    public void ShowRewardedInterstitialAd() {
-        if(rewardedInterstitialAd != null && !isPremium) {
-            rewardedInterstitialAd.Show(userEarnedRewardCallback);
-        }
-    }
-
-    private void userEarnedRewardCallback(Reward reward) {
-        ScoreManager.init.currAdsCount = 0;
-    }
-
-    public RewardedAd CreateAndLoadRewardedAd() {
-#if UNITY_ANDROID
-        string RAdUnitId = ANDROID_REWARD_ID;
-#elif UNITY_IPHONE
-        string adUnitId = iOS_REWARDED_ID;
-#else
-        string adUnitId = "unexpected_platform";
-#endif
-        RewardedAd rewardedAd = new RewardedAd(ANDROID_REWARD_ID);
-
-        //rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
-        //rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-        rewardedAd.OnAdClosed += HandleRewardedAdClosed;
-        rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
-
-        AdRequest request = new AdRequest.Builder().Build();
-        rewardedAd.LoadAd(request);
-
-        return rewardedAd;
-    }
-    public void HandleRewardedAdClosed(object sender, EventArgs args) {
-        var ads = (RewardedAd)sender;
-        ads = CreateAndLoadRewardedAd();
-
-        if (sender == destroyItemRewardedAd)
-            coinRewardedAd = CreateAndLoadRewardedAd();
-    }
-
-    public void HandleRewardedAdLoaded(object sender, EventArgs args) {
-        Debug.Log(sender.GetType());
-	}
-
-    public void UserChoseToWatchAd() {
-        if (this.coinRewardedAd.IsLoaded()) {
-            this.coinRewardedAd.Show();
-        }
-    }
-
-
-    private void RequestBanner() {
-        Debug.Log("isPremiim - " + isPremium);
+    private void RequestBannerAd() {
         if (!isPremium) {
-#if UNITY_ANDROID
+#if UNITY_EDITOR
+            string adUnitId = "unused";
+#elif UNITY_ANDROID
             string adUnitId = ANDROID_BANNER_ID;
 #elif UNITY_IPHONE
             string adUnitId = iOS_BANNER_ID;
@@ -140,46 +65,136 @@ public class AdsManager : MonoBehaviour {
             string adUnitId = "unexpected_platform";
 #endif
 
-            // Create a 320x50 banner at the top of the screen.
+            if(bannerView != null) {
+                bannerView.Destroy();
+            }
+
             this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
-            // Callback
-            this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
             this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
-            this.bannerView.OnAdOpening += this.HandleOnAdOpened;
-            this.bannerView.OnAdClosed += this.HandleOnAdClosed;
-            this.bannerView.OnAdLeavingApplication += this.HandleOnAdLeavingApplication;
 
-            // Create an empty ad request.
-            AdRequest request = new AdRequest.Builder().Build();
-
-            // Load the banner with the request.
-            this.bannerView.LoadAd(request);
+            this.bannerView.LoadAd(CreateAdRequest());
         }
     }
 
-    public void HandleOnAdLoaded(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdLoaded event received");
+    private AdRequest CreateAdRequest() {
+        return new AdRequest.Builder().Build();
     }
 
-    public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
-        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
-                            + args.Message);
+    private void RquestInterstitialAd() {
+#if UNITY_EDITOR
+        string adUnitId = "unused";
+#elif UNITY_ANDROID
+        string adUnitId = AND_INTERSTITIAL_ID;
+#elif UNITY_IPHONE
+        string adUnitId = iOS_REWARDEDINTERSTITIAL_ID;
+#else
+        string adUnitId = "unexpected_platform";
+#endif
+        if (interstitialAd != null) {
+            interstitialAd.Destroy();
+        }
+
+        this.interstitialAd = new InterstitialAd(adUnitId);
+
+        this.interstitialAd.OnAdClosed += this.HandleOnAdClosed;
+        this.interstitialAd.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
+
+        this.interstitialAd.LoadAd(CreateAdRequest());
     }
 
-    public void HandleOnAdOpened(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdOpened event received");
+    public void ShowInterstitialAd() {
+        if (interstitialAd.IsLoaded() && !isPremium) {
+            interstitialAd.Show();
+        }
     }
 
     public void HandleOnAdClosed(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdClosed event received");
+        RquestInterstitialAd();
     }
 
-    public void HandleOnAdLeavingApplication(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdLeavingApplication event received");
+    public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
+        Debug.Log($"{sender.ToString()} loaded is fail : {args.Message}");
     }
 
-    public void closeAds() {
+    private void RequestRewardedAd() {
+        this.coinRewardedAd = CreateAndLoadRewardedAd();
+        this.coinRewardedAd.OnUserEarnedReward += HandleUserCoinReward;
+
+        this.rankUpItemRewardedAd = CreateAndLoadRewardedAd();
+        this.rankUpItemRewardedAd.OnUserEarnedReward += HandleUserRankUpItemReward;
+
+        this.destroyItemRewardedAd = CreateAndLoadRewardedAd();
+        this.destroyItemRewardedAd.OnUserEarnedReward += HandleUserDestroyItemReward;
+    }
+
+    public RewardedAd CreateAndLoadRewardedAd() {
+#if UNITY_EDITOR
+        string adUnitId = "unused";
+#elif UNITY_ANDROID
+        string adUnitId = ANDROID_REWARD_ID;
+#elif UNITY_IPHONE
+        string adUnitId = iOS_REWARDEDINTERSTITIAL_ID;
+#else
+        string adUnitId = "unexpected_platform";
+#endif
+        RewardedAd rewardedAd = new RewardedAd(adUnitId);
+
+        rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+        rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoaded;
+
+        rewardedAd.LoadAd(CreateAdRequest());
+        return rewardedAd;
+    }
+
+    public void ShowAdCoinRewarded() {
+        if (this.coinRewardedAd.IsLoaded() && UIManager.init.isEnableCoinAds) {
+            this.coinRewardedAd.Show();
+        }
+    }
+
+    public void ShowAdRankUpItem() {
+        if (this.rankUpItemRewardedAd.IsLoaded()) {
+            this.rankUpItemRewardedAd.Show();
+        }
+    }
+
+    public void ShowAdDestroyItem() {
+        if (this.destroyItemRewardedAd.IsLoaded()) {
+            this.destroyItemRewardedAd.Show();
+        }
+    }
+
+    public void HandleUserCoinReward(object sender, Reward args) {
+        ScoreManager.init.AddCoin(300);
+        UIManager.init.PlayAddCoinSound();
+        UIManager.init.SetCoinAdsTimer();
+    }
+
+    public void HandleUserRankUpItemReward(object sender, Reward args) {
+    }
+
+    public void HandleUserDestroyItemReward(object sender, Reward args) {
+    }
+
+    public void HandleRewardedAdClosed(object sender, EventArgs args) {
+        if (sender == coinRewardedAd) {
+            coinRewardedAd = CreateAndLoadRewardedAd();
+            this.coinRewardedAd.OnUserEarnedReward += HandleUserCoinReward;
+        } else if (sender == rankUpItemRewardedAd) {
+            rankUpItemRewardedAd = CreateAndLoadRewardedAd();
+            this.rankUpItemRewardedAd.OnUserEarnedReward += HandleUserRankUpItemReward;
+        } else if (sender == destroyItemRewardedAd) {
+            destroyItemRewardedAd = CreateAndLoadRewardedAd();
+            this.destroyItemRewardedAd.OnUserEarnedReward += HandleUserDestroyItemReward;
+        }
+    }
+
+    public void HandleRewardedAdFailedToLoaded(object sender, AdErrorEventArgs args) {
+        Debug.Log($"{sender} loaded is fail : {args.Message}");
+    }
+
+    public void DestroyBannerAd() {
         try {
             this.bannerView.Destroy();
         } catch (Exception e) {

@@ -75,11 +75,13 @@ public class MouseControl : MonoBehaviour {
 		}
 
 		if (!isUITouch() && isTouchAction) {
-			GameManager.init.GameStart();
-			isGameStart = true;
+
+            if (!isGameStart) {
+				GameManager.init.GameStart();
+				isGameStart = true;
+			}
 
 			if (!isDropCurrObj) {
-
 				Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				mousePosition.y = currObject.transform.position.y;
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
+	private static readonly int ADD_COIN_ADS_DELAY = 5;
 	private static readonly float MAX_LEVEL_PANEL_OFF_DELAY = 2.5f;
 	private static readonly float DESTROY_MAX_OBJECT_DELAY = 1.0f;
 	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
@@ -33,17 +34,59 @@ public class UIManager : MonoBehaviour {
 	public GameObject maxLevelEffectPanel;
 	public GameObject pauseBtn;
 	public GameObject rankingPanel;
-	
+	public TextMeshProUGUI addCoinAdsTimerText;
+
 	public AudioClip uiBtn;
 	public AudioClip gameOver;
 	public AudioClip maxlevel;
 	public AudioClip effectSound;
 	public AudioClip destroymaxlevel;
+	public AudioClip addCoin;
 
 	public AudioSource audioSource;
 
+	private bool _isEnableCoinAds = true;
+	public bool isEnableCoinAds {
+		get { return _isEnableCoinAds; }
+		set {
+			_isEnableCoinAds = value;
+			if (value) {
+				addCoinAdsTimerText.gameObject.SetActive(false);
+				addCoinAdsTimerText.transform.parent.GetComponent<Button>().enabled = true;
+				addCoinAdsTimerText.transform.parent.GetComponent<RawImage>().color = Color.white;
+			} else {
+				addCoinAdsTimerText.gameObject.SetActive(true);
+				addCoinAdsTimerText.transform.parent.GetComponent<Button>().enabled = false;
+				addCoinAdsTimerText.transform.parent.GetComponent<RawImage>().color = new Color(1, 1, 1, 0.3f);
+			}
+		}
+	}
 
-	public void AddScore(int type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
+	[HideInInspector]
+	private DateTime _initTime;
+	public DateTime initTime {
+		get { return _initTime; }
+        set {
+			if((value - DateTime.Now).TotalSeconds > 0) {
+				_initTime = value;
+				isEnableCoinAds = false;
+            }
+        }
+    }
+	private TimeSpan timer;
+
+    private void Update() {
+		if (!isEnableCoinAds) {
+			timer = initTime - DateTime.Now;
+			addCoinAdsTimerText.text = timer.Minutes + ":" + string.Format("{0:D2}", timer.Seconds);
+
+			if(timer.TotalSeconds <= 0) {
+				isEnableCoinAds = true;
+            }
+		}
+    }
+
+    public void AddScore(int type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {
 		ScoreManager.init.AddScore(type, mergeLevel);
     }
 
@@ -64,6 +107,8 @@ public class UIManager : MonoBehaviour {
 		pauseBtn.SetActive(_active);
 		menuPanel.SetActive(!_active);
 		settingPanel.SetActive(false);
+
+		ScoreManager.init.SetGameStart();
 	}
 
 	public void OpenPanel(GameObject gameObject) {
@@ -90,6 +135,10 @@ public class UIManager : MonoBehaviour {
 
 	public void PlayDestroySound() {
 		PlayAudioClip(destroymaxlevel);
+	}
+
+	public void PlayAddCoinSound() {
+		PlayAudioClip(addCoin);
 	}
 
 	public void OnSettingClick(bool isOn) {
@@ -128,5 +177,10 @@ public class UIManager : MonoBehaviour {
 		obj.GetComponent<CircleCollider2D>().enabled = false;
 		obj.GetComponent<MainObject>().DestroyObj();
 		MaxLine.init.gameObject.SetActive(true);
+	}
+
+	public void SetCoinAdsTimer() {
+		initTime = DateTime.Now.AddMinutes(ADD_COIN_ADS_DELAY);
+		isEnableCoinAds = false;
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,5 +23,7 @@ namespace DataInfo {
 		public bool isBGMVolum;
 
 		public bool isPremium = false;
+
+		public DateTime initTimer;
 	}
 }

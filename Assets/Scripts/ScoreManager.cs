@@ -12,6 +12,7 @@ class ScoreManager : MonoBehaviour {
 	public static readonly int MARGE_SCORE = 2;
 	private static readonly int BASE_SCORE = 13;
 	private static readonly int ADS_MAX_COUNT = 3;
+	private static readonly int MAX_ITEM_ONEGAME = 2;
 
 	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount, coinText, shopCoinText;
 	public TextMeshProUGUI _rankupItemCount, _destroyItemCount;
@@ -29,15 +30,15 @@ class ScoreManager : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	private int _currAdsCount = 1;
+	private int _currAdsCount = 0;
 	public int currAdsCount {
 		get {
 			return _currAdsCount;
 		}
 		set {
-			if (value > ADS_MAX_COUNT) {
-				currAdsCount = 2;
-				AdsManager.init.ShowRewardedInterstitialAd();
+			if (value >= ADS_MAX_COUNT) {
+				currAdsCount = 0;
+				AdsManager.init.ShowInterstitialAd();
 			} else _currAdsCount = value;
 		}
 	}
@@ -79,11 +80,17 @@ class ScoreManager : MonoBehaviour {
 
 	public int rankItemCount {
 		get { return int.Parse(_rankupItemCount.text); }
-		set { _rankupItemCount.text = value.ToString(); }
+		set {
+			if (value < 0) value = 0;
+			_rankupItemCount.text = value.ToString();
+		}
 	}
 	public int destroyItemCount {
 		get { return int.Parse(_destroyItemCount.text); }
-		set { _destroyItemCount.text = value.ToString(); }
+		set {
+			if (value < 0) value = 0;
+			_destroyItemCount.text = value.ToString();
+		}
 	}
 
 	public void setSaveBestScore() {
@@ -105,5 +112,22 @@ class ScoreManager : MonoBehaviour {
 
 	public void AddCoin(int num) {
 		coin += num;
+		UIManager.init.PlayAddCoinSound();
     }
+
+	private int totalRankUpItem;
+	private int totalDestroyItem;
+
+	public void SetGameStart() {
+		totalRankUpItem = rankItemCount;
+		totalDestroyItem = destroyItemCount;
+
+		if (totalRankUpItem > MAX_ITEM_ONEGAME) rankItemCount = MAX_ITEM_ONEGAME;
+		if (totalDestroyItem > MAX_ITEM_ONEGAME) destroyItemCount = MAX_ITEM_ONEGAME;
+    }
+
+	public void SetGameOver() {
+		rankItemCount = totalRankUpItem - (MAX_ITEM_ONEGAME - rankItemCount);
+		destroyItemCount = totalDestroyItem - (MAX_ITEM_ONEGAME - destroyItemCount);
+	}
 }

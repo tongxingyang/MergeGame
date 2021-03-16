@@ -13,6 +13,9 @@ namespace DataInfo {
 		public int destroyItemCount;
 
 		public string key;
+		public int rankFlag;
+		public string rankName;
+		public int rankScore;
 
 		public bool[] styleProducts;
 		public bool[] wallpaperProducts;
@@ -23,6 +26,7 @@ namespace DataInfo {
 		public bool isBGMVolum;
 
 		public bool isPremium = false;
+		public bool isDoubleCoin = false;
 
 		public DateTime initTimer;
 	}

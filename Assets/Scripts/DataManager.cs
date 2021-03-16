@@ -50,6 +50,7 @@ public class DataManager : MonoBehaviour {
 		}
 
 		gameData.isPremium = GameManager.init.isPremium;
+		gameData.isDoubleCoin = GameManager.init.isDoubleCoin;
 
 		gameData.isBGMVolum = CameraControl.init.audioSource.mute;
 		gameData.isEffectVolum = UIManager.init.audioSource.mute;
@@ -84,6 +85,7 @@ public class DataManager : MonoBehaviour {
 			ShoppingManager.init.ApplyItem(ShoppingManager.init.wallpaper[gameData.wallpaperNum]);
 
 			GameManager.init.isPremium = gameData.isPremium;
+			GameManager.init.isDoubleCoin = gameData.isDoubleCoin;
 
 			SettingManager.init.BGMOn(gameData.isBGMVolum);
 			SettingManager.init.EffectOn(gameData.isEffectVolum);

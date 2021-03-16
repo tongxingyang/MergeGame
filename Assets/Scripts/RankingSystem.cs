@@ -14,7 +14,7 @@ public class RankingSystem : MonoBehaviour {
 	static readonly private string FLAG = "flag";
 	static readonly private string NAME = "name";
 	static readonly private string SCORE = "score";
-	static readonly private int LIMIT_USER_DATA = 10;
+	static readonly private int LIMIT_USER_DATA = 5;
 
 	public string key;
 	public Transform rankList;
@@ -30,6 +30,8 @@ public class RankingSystem : MonoBehaviour {
 
 	private bool isCoolTime = false;
 	private bool firstEntry = true;
+	private int rankingCount = 0;
+	private int myRankingCount = 1;
 
 	DatabaseReference databaseReference;
 	private void Awake() {
@@ -50,6 +52,8 @@ public class RankingSystem : MonoBehaviour {
 		}
 	}
 
+	private User currUserData;
+
 	private void Start() {
 		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 	}
@@ -58,11 +62,17 @@ public class RankingSystem : MonoBehaviour {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
 		key = DataManager.init.gameData.key ?? "";
+
 		DataManager.init.tempData.key = key;
 
 		isCoolTime = false;
 		if (firstEntry) {
-			LoadUserRanking(false);
+			currUserData = new User(
+				DataManager.init.gameData.rankFlag,
+				DataManager.init.gameData.rankName,
+				DataManager.init.gameData.rankScore);
+
+			LoadUserRanking();
 			firstEntry = false;
 		}
 	}
@@ -88,9 +98,9 @@ public class RankingSystem : MonoBehaviour {
 			);
 	}
 
-	public void OnSave() {
+	public void UploadUserData() {
 		if (!isCoolTime) {
-			SaveUserRanking(userFlag.value, userName.text);
+			UploadUserDataWithFirebase(userFlag.value, userName.text);
 			StartCoroutine(nameof(BtnDelay));
 		}
 	}
@@ -101,8 +111,14 @@ public class RankingSystem : MonoBehaviour {
 		isCoolTime = false;
 	}
 
-	private void SaveUserRanking(int flag, string userName) {
+	private void UploadUserDataWithFirebase(int flag, string userName) {
 		User user = new User(flag, userName, int.Parse(bestScore.text));
+		currUserData = user;
+
+		DataManager.init.tempData.rankFlag = currUserData.flag;
+		DataManager.init.tempData.rankName = currUserData.name;
+		DataManager.init.tempData.rankScore = currUserData.score;
+
 		string json = JsonUtility.ToJson(user);
 
 		if (!isKey()) {
@@ -111,51 +127,54 @@ public class RankingSystem : MonoBehaviour {
 		}
 
 		databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
-		LoadUserRanking(false);
+		LoadUserRanking();
 	}
 
 	private bool isKey() {
 		return null != key && !key.Equals("");
     }
 
-	private void LoadUserRanking(bool _topClass) {
+	private void LoadUserRanking() {
+		DeleteCurrRankingObject();
+		rankingCount = LIMIT_USER_DATA;
 		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
 			.OrderByChild(SCORE)
-			.ValueChanged += HandleValueChanged;
+			.LimitToLast(LIMIT_USER_DATA)
+			.ChildAdded += HandleChildAddedRanking;
 	}
 
-	private void HandleValueChanged(object sender, ValueChangedEventArgs arge) {
+	private void LoadMyData() {
+		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
+			.OrderByChild(SCORE)
+			.StartAt(currUserData.score)
+			.ChildAdded += HandleChildAddedUserData;
+	}
+
+	private void HandleChildAddedRanking(object sender, ChildChangedEventArgs arge) {
 		if (arge.DatabaseError != null) {
 			Debug.LogError(arge.DatabaseError.Message);
 			return;
 		};
 
-		List<DataSnapshot> list = new List<DataSnapshot>();
-		list.AddRange(arge.Snapshot.Children);
+		IDictionary rank = (IDictionary)arge.Snapshot.Value;
 
-		list.Reverse();
-		DeleteCurrRankingObject();
+		GameObject tempRank = Instantiate(rankPrefab, rankList);
+		tempRank.transform.SetAsFirstSibling();
+		tempRank.GetComponent<RankUserData>().SetRankData(rankingCount--,
+			flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
+		Debug.Log("AllRank");
 
-		int rankingCount = 1;
-		foreach (DataSnapshot data in list) {
-			IDictionary rank = (IDictionary)data.Value;
-
-			if (data.Key.Equals(key)) {
-				SetUserRankingData(rankingCount.ToString(), int.Parse(rank[FLAG].ToString()),
-					rank[NAME].ToString(), rank[SCORE].ToString());
-			}
-
-
-			if (rankingCount <= LIMIT_USER_DATA) {
-				GameObject tempRank = Instantiate(rankPrefab);
-				tempRank.transform.SetParent(rankList);
-				tempRank.GetComponent<RectTransform>().localScale = Vector3.one;
-				tempRank.GetComponent<RankUserData>().SetRankData(rankingCount++,
-					flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
-			}
-			//Debug.Log($"????:{rank[FLAG]} / ????:{rank[NAME]} / ??????:{rank[SCORE]}");
-		}
+		if (rankingCount <= 1)
+			LoadMyData();
 	}
+	private void HandleChildAddedUserData(object sender, ChildChangedEventArgs arge) {
+		if (arge.DatabaseError != null) {
+			Debug.LogError(arge.DatabaseError.Message);
+			return;
+		};
+		Debug.Log($"my rank : {myRankingCount++}");
+	}
+
 
 	private void DeleteCurrRankingObject() {
 		foreach(Transform iter in rankList.GetComponentsInChildren<Transform>()) {

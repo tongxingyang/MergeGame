@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject maxLevelEffectPanel;
 	public GameObject pauseBtn;
 	public GameObject rankingPanel;
+	public GameObject buyMessagePanel;
 	public TextMeshProUGUI addCoinAdsTimerText;
 
 	public GameObject rankUpItemPanel;
@@ -105,6 +106,7 @@ public class UIManager : MonoBehaviour {
 			ScoreManager.init.setSaveBestScore();
 			//gameOverPanel.GetComponentInChildren<CircleProgressBar>().StartProgress();
 		} else {
+			resultCoinPanel.SetActive(false);
 			gameOverPanel.SetActive(false);
 		}
 	}
@@ -131,7 +133,10 @@ public class UIManager : MonoBehaviour {
 
 	private int GetCoinAboutScore() {
 		try {
-			return (ScoreManager.init.currScore / COIN_ABOUT_SCORE);
+			if (GameManager.init.isDoubleCoin)
+				return (ScoreManager.init.currScore / COIN_ABOUT_SCORE) * 2;
+			else
+				return (ScoreManager.init.currScore / COIN_ABOUT_SCORE);
 		} catch (Exception e) {
 			return 0;
 		}
@@ -146,6 +151,8 @@ public class UIManager : MonoBehaviour {
 	}
 
 	private void PlayAudioClip(AudioClip audioClip) {
+		if (audioSource.clip == maxlevel && audioSource.isPlaying) return;
+
 		audioSource.clip = audioClip;
 		audioSource.Play();
 	}

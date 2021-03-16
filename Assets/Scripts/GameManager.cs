@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public bool isDoubleCoin;
+
 	private bool _isGameOver;
 	public bool isGameOver {
 		set {

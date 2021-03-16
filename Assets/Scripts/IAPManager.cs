@@ -5,7 +5,10 @@ using UnityEngine.Purchasing;
 
 public class IAPManager : MonoBehaviour, IStoreListener {
 	public const string PREMIUM = "premium";
-	public const string AND_PREMIUM = "premium";
+	public const string DOUBLE_COIN = "com.bognstudio.mergegame.doublecoin";
+	public const string COIN_DUMMY = "com.bognstudio.mergegame.coindummy";
+	public const string COIN_POKET = "com.bognstudio.mergegame.coinpoket";
+	public const string COIN_BOX = "com.bognstudio.mergegame.coinbox";
 
 	private static IAPManager _init;
 	public static IAPManager init {
@@ -39,9 +42,32 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 		var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
 		builder.AddProduct(
-			PREMIUM, ProductType.NonConsumable,
-			new IDs() {
-				{ AND_PREMIUM, GooglePlay.Name }
+			PREMIUM, ProductType.NonConsumable, new IDs() {
+				{ PREMIUM, GooglePlay.Name }
+			}
+		);
+
+		builder.AddProduct(
+			DOUBLE_COIN, ProductType.NonConsumable, new IDs() {
+				{ DOUBLE_COIN, GooglePlay.Name }
+			}
+		);
+
+		builder.AddProduct(
+			COIN_DUMMY, ProductType.Consumable, new IDs() {
+				{ COIN_DUMMY, GooglePlay.Name }
+			}
+		);
+
+		builder.AddProduct(
+			COIN_POKET, ProductType.Consumable, new IDs() {
+				{ COIN_POKET, GooglePlay.Name }
+			}
+		);
+
+		builder.AddProduct(
+			COIN_BOX, ProductType.Consumable, new IDs() {
+				{ COIN_BOX, GooglePlay.Name }
 			}
 		);
 
@@ -49,32 +75,56 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 	}
 
 	public void OnInitialized(IStoreController controller, IExtensionProvider extension) {
-		Debug.Log("IAP??????");
+		Debug.Log("IAP initalized");
 		storeController = controller;
 		extensionProvider = extension;
 
 		if (HadPurchased(PREMIUM)) {
 			GameManager.init.isPremium = true;
 		}
+		
+		if (HadPurchased(DOUBLE_COIN)) {
+			GameManager.init.isDoubleCoin = true;
+		}
 	}
 
 	public void OnInitializeFailed(InitializationFailureReason error) {
-		Debug.LogError($"IAP?????? ???? {error}");
+		Debug.LogError($"IAP failed : {error}");
 	}
 
-	//???? ???? ???? ????
+	//purchased reward
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent) {
-		Debug.Log($"????????{purchaseEvent.purchasedProduct.definition.id}");
+		Debug.Log($"PurchaseResult : {purchaseEvent.purchasedProduct.definition.id}");
 
-		if(purchaseEvent.purchasedProduct.definition.id == PREMIUM) {
-			GameManager.init.isPremium = true;
+		switch (purchaseEvent.purchasedProduct.definition.id) {
+			case PREMIUM:
+				GameManager.init.isPremium = true;
+				UIManager.init.OpenPanel(UIManager.init.buyMessagePanel);
+				break;
+
+			case DOUBLE_COIN:
+				GameManager.init.isDoubleCoin = true;
+				UIManager.init.OpenPanel(UIManager.init.buyMessagePanel);
+				break;
+
+			case COIN_DUMMY:
+				ScoreManager.init.AddCoin(2000);
+				break;
+
+			case COIN_POKET:
+				ScoreManager.init.AddCoin(8000);
+				break;
+
+			case COIN_BOX:
+				ScoreManager.init.AddCoin(14000);
+				break;
 		}
 
 		return PurchaseProcessingResult.Complete;
 	}
 
 	public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) {
-		Debug.LogError($"???? {product.definition.id}, {failureReason}");
+		Debug.LogError($"PurchaseFailed : {product.definition.id}, {failureReason}");
 	}
 
 	public void Purchase(string productId) {
@@ -83,21 +133,21 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 		var product = storeController.products.WithID(productId);
 
 		if(product != null && product.availableToPurchase) {
-			Debug.Log($"???????? = {product.definition.id}");
+			Debug.Log($"productID : {product.definition.id}");
 			storeController.InitiatePurchase(product);
 		} else {
-			Debug.Log($"???? ???? ???? {productId}");
+			Debug.Log($"not productId {productId}");
 		}
 	}
 
 	public void RestorePurchase() {
 		if (!isInit) return;
 		if(Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer) {
-			Debug.Log("???? ????");
+			Debug.Log("restorePurchase");
 
 			var appleExt = extensionProvider.GetExtension<IAppleExtensions>();
 			appleExt.RestoreTransactions(
-				result => Debug.Log($"???? ???? ???? ???? - {result}"));
+				result => Debug.Log($"restorePurchase result - {result}"));
 		}
 	}
 

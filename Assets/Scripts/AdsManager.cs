@@ -15,7 +15,7 @@ public class AdsManager : MonoBehaviour {
     // 보상형 광고  ca-app-pub-3940256099942544/1712485313
     private static readonly string AND_BANNER_ID = "ca-app-pub-7832687788012663/9321714808";
     private static readonly string AND_INTERSTITIAL_ID = "ca-app-pub-7832687788012663/1332806899";
-    private static readonly string ANDROID_REWARD_ID = "ca-app-pub-7832687788012663/3605180232";
+    private static readonly string AND_REWARD_ID = "ca-app-pub-7832687788012663/3605180232";
 
     private static readonly string iOS_REWARDEDINTERSTITIAL_ID = "ca-app-pub-7832687788012663/9661809356";
     private static readonly string iOS_BANNER_ID = "ca-app-pub-7832687788012663/6504877560";
@@ -57,10 +57,8 @@ public class AdsManager : MonoBehaviour {
 
     private void RequestBannerAd() {
         if (!isPremium) {
-#if UNITY_EDITOR
-            string adUnitId = "unused";
-#elif UNITY_ANDROID
-            string adUnitId = ANDROID_BANNER_ID;
+#if UNITY_ANDROID
+            string adUnitId = AND_BANNER_ID;
 #elif UNITY_IPHONE
             string adUnitId = iOS_BANNER_ID;
 #else
@@ -84,9 +82,7 @@ public class AdsManager : MonoBehaviour {
     }
 
     private void RquestInterstitialAd() {
-#if UNITY_EDITOR
-        string adUnitId = "unused";
-#elif UNITY_ANDROID
+#if UNITY_ANDROID
         string adUnitId = AND_INTERSTITIAL_ID;
 #elif UNITY_IPHONE
         string adUnitId = iOS_REWARDEDINTERSTITIAL_ID;
@@ -131,10 +127,8 @@ public class AdsManager : MonoBehaviour {
     }
 
     public RewardedAd CreateAndLoadRewardedAd() {
-#if UNITY_EDITOR
-        string adUnitId = "unused";
-#elif UNITY_ANDROID
-        string adUnitId = ANDROID_REWARD_ID;
+#if UNITY_ANDROID
+        string adUnitId = AND_REWARD_ID;
 #elif UNITY_IPHONE
         string adUnitId = iOS_REWARDEDINTERSTITIAL_ID;
 #else

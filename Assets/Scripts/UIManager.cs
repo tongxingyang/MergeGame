@@ -37,7 +37,11 @@ public class UIManager : MonoBehaviour {
 	public GameObject pauseBtn;
 	public GameObject rankingPanel;
 	public GameObject buyMessagePanel;
+	public GameObject itemUnavailableMessage;
 	public TextMeshProUGUI addCoinAdsTimerText;
+
+	public Button rankItemBtn;
+	public Button destroyItemBtn;
 
 	public GameObject rankUpItemPanel;
 	public GameObject destroyItemPanel;
@@ -113,6 +117,8 @@ public class UIManager : MonoBehaviour {
 
 	public void IsGameStart(bool _active) {
 		pauseBtn.SetActive(_active);
+		rankItemBtn.enabled = _active;
+		destroyItemBtn.enabled = _active;
 		menuPanel.SetActive(!_active);
 		settingPanel.SetActive(false);
 	}
@@ -138,6 +144,7 @@ public class UIManager : MonoBehaviour {
 			else
 				return (ScoreManager.init.currScore / COIN_ABOUT_SCORE);
 		} catch (Exception e) {
+			Debug.LogError(e.StackTrace);
 			return 0;
 		}
 	}
@@ -171,6 +178,7 @@ public class UIManager : MonoBehaviour {
 
 	public void OnSettingClick(bool isOn) {
 		settingPanel.SetActive(isOn);
+		SettingManager.init.SetText();
 		MainUI.SetActive(!isOn);
 		MouseControl.init.isTouchAction = !isOn;
 		ObjectManager.init.objParent.SetActive(!isOn);

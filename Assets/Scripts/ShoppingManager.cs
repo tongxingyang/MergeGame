@@ -86,7 +86,7 @@ public class ShoppingManager : MonoBehaviour{
 
 		OpenMessageUI(buyUI);
 		buyUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
-			item.priceText.text + "(으)로 구매 하시겠습니까?";
+			item.priceText.text + LocalizationManager.init.GetLocalizedValue("buy");
 	}
 
 	private void OpenMessageUI(GameObject gameObject) {

@@ -14,7 +14,7 @@ public class RankingSystem : MonoBehaviour {
 	static readonly private string FLAG = "flag";
 	static readonly private string NAME = "name";
 	static readonly private string SCORE = "score";
-	static readonly private int LIMIT_USER_DATA = 5;
+	static readonly private int LIMIT_USER_DATA = 100;
 
 	public string key;
 	public Transform rankList;
@@ -72,6 +72,11 @@ public class RankingSystem : MonoBehaviour {
 				DataManager.init.gameData.rankName,
 				DataManager.init.gameData.rankScore);
 
+			DataManager.init.tempData.rankFlag = currUserData.flag;
+			DataManager.init.tempData.rankName = currUserData.name;
+			DataManager.init.tempData.rankScore = currUserData.score;
+			SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
+
 			LoadUserRanking();
 			firstEntry = false;
 		}
@@ -83,11 +88,11 @@ public class RankingSystem : MonoBehaviour {
 		userFlag.AddOptions(flagList);
 	}
 
-	private void SetUserRankingData(string rank = "-", int flag = 0, string name = "", string score = "0") {
+	private void SetUserRankingData(string rank = "-", int flag = 0, string name = "", int score = 0) {
 		userRank.text = rank;
 		userFlag.value = flag;
 		SetUserNameTextField(name);
-		rankScore.text = score;
+		rankScore.text = score.ToString();
 	}
 
     private void SetUserNameTextField(string name) {
@@ -141,9 +146,12 @@ public class RankingSystem : MonoBehaviour {
 			.OrderByChild(SCORE)
 			.LimitToLast(LIMIT_USER_DATA)
 			.ChildAdded += HandleChildAddedRanking;
+
+		LoadMyData();
 	}
 
 	private void LoadMyData() {
+		myRankingCount = 1;
 		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
 			.OrderByChild(SCORE)
 			.StartAt(currUserData.score)
@@ -163,18 +171,17 @@ public class RankingSystem : MonoBehaviour {
 		tempRank.GetComponent<RankUserData>().SetRankData(rankingCount--,
 			flags[int.Parse(rank[FLAG].ToString())], rank[NAME], rank[SCORE]);
 		Debug.Log("AllRank");
-
-		if (rankingCount <= 1)
-			LoadMyData();
 	}
+
 	private void HandleChildAddedUserData(object sender, ChildChangedEventArgs arge) {
 		if (arge.DatabaseError != null) {
 			Debug.LogError(arge.DatabaseError.Message);
 			return;
 		};
-		Debug.Log($"my rank : {myRankingCount++}");
-	}
 
+		userRank.text = myRankingCount++.ToString();
+		//SetUserRankingData(myRankingCount++.ToString());
+	}
 
 	private void DeleteCurrRankingObject() {
 		foreach(Transform iter in rankList.GetComponentsInChildren<Transform>()) {

@@ -22,7 +22,7 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 		}
 	}
 
-	private IStoreController storeController;
+	protected IStoreController storeController;
 	private IExtensionProvider extensionProvider;
 
 	public bool isInit => storeController != null && extensionProvider != null;

@@ -24,6 +24,7 @@ public class ObjectManager : MonoBehaviour {
 
 	public GameObject[] objects;
 	public GameObject background;
+
 	public float backgroundLeft {
         get {
 			return -(background.GetComponent<SpriteRenderer>().sprite.rect.width
@@ -149,8 +150,8 @@ public class ObjectManager : MonoBehaviour {
 		currBackground.GetComponent<SpriteRenderer>().sprite = sprite;
 	}
 
-	public void RankUpItem(bool isPassWithAds = false) {
-		if (!isPassWithAds) {
+	public void RankUpItem(bool isAdsRewarded = false) {
+		if (!isAdsRewarded) {
 			if (ScoreManager.init.rankItemCount == 0) {
 				UIManager.init.OpenRankUpItemPanel();
 				return;
@@ -173,6 +174,10 @@ public class ObjectManager : MonoBehaviour {
 		}
 
 		int count = objectRange.Count < 1 ? 0 : 1;
+		if (count <= 0) {
+			UIManager.init.itemUnavailableMessage.SetActive(true);
+			return;
+		}
 		if(count > 0) {
 			ScoreManager.init.rankItemCount--;
 			while (count > 0) {
@@ -181,13 +186,13 @@ public class ObjectManager : MonoBehaviour {
 				objectRange[range].GetComponent<MainObject>().OnRankUpItem();
 				count--;
 			}
-		} else if (isPassWithAds) {
+		} else if (isAdsRewarded) {
 			ScoreManager.init.rankItemCount--;
 		}
 	}
 	
-	public void DestroyItem(bool isPassWithAds = false) {
-		if (!isPassWithAds) {
+	public void DestroyItem(bool isAdsRewarded = false) {
+		if (!isAdsRewarded) {
 			if (ScoreManager.init.destroyItemCount == 0) {
 				UIManager.init.OpenDestroyItemPanel();
 				return;
@@ -214,7 +219,12 @@ public class ObjectManager : MonoBehaviour {
 			count = objectRange.Count;
 		}
 
-		if(count > 0) {
+		if (count <= 0) {
+			UIManager.init.itemUnavailableMessage.SetActive(true);
+			return;
+		}
+
+		if (count > 0) {
 			List<int> randDeduplication = new List<int>();
 			ScoreManager.init.destroyItemCount--;
 			while (count > 0) {
@@ -227,7 +237,7 @@ public class ObjectManager : MonoBehaviour {
 				objectRange[range].GetComponent<MainObject>().OnDestroyItem();
 				count--;
 			}
-		} else if (isPassWithAds) {
+		} else if (isAdsRewarded) {
 			ScoreManager.init.destroyItemCount--;
 		}
 	}

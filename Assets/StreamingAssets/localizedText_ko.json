@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "동영상을 보고 300개의 코인을 받을 수 있습니다."
+    },
+    {
+      "key": "noCoin",
+      "value": "코인이 부족합니다!!"
+    },
+    {
+      "key": "cancel",
+      "value": "취소"
+    },
+    {
+      "key": "viewAds",
+      "value": "동영상 보기"
+    },
+    {
+      "key": "confirm",
+      "value": "확인"
+    },
+    {
+      "key": "use",
+      "value": "사용하기"
+    },
+    {
+      "key": "setting",
+      "value": "설정"
+    },
+    {
+      "key": "effectsoff",
+      "value": "효과음 끄기"
+    },
+    {
+      "key": "effectson",
+      "value": "효과음 켜기"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "배경음악 끄기"
+    },
+    {
+      "key": "backgroundon",
+      "value": "배경음악 켜기"
+    },
+    {
+      "key": "language",
+      "value": "한국어"
+    },
+    {
+      "key": "credit",
+      "value": "크레딧"
+    },
+    {
+      "key": "normal",
+      "value": "일반"
+    },
+    {
+      "key": "product1key",
+      "value": "프리미엄 업그레이드"
+    },
+    {
+      "key": "product1value",
+      "value": "광고를 제거하고 게임을 더 편안하게 즐기세요!"
+    },
+    {
+      "key": "product2key",
+      "value": "더블 코인"
+    },
+    {
+      "key": "product2value",
+      "value": "게임에서 얻는 코인을 두배로 만들어줍니다. 평생!!"
+    },
+    {
+      "key": "product3key",
+      "value": "코인 더미"
+    },
+    {
+      "key": "product3value",
+      "value": "2,000코인이 즉시 추가됩니다!"
+    },
+    {
+      "key": "product4key",
+      "value": "코인 주머니"
+    },
+    {
+      "key": "product4value",
+      "value": "8,000코인이 즉시 추가됩니다! 할인된 가격을 누려보세요."
+    },
+    {
+      "key": "product5key",
+      "value": "코인 상자"
+    },
+    {
+      "key": "product5value",
+      "value": "14,000코인이 즉시 추가됩니다! 더 높은 할인율을 경험해보세요!"
+    },
+    {
+      "key": "product6key",
+      "value": "파괴"
+    },
+    {
+      "key": "product6value",
+      "value": "2~8 단계의 과일을 랜덤으로 2개 파괴합니다!"
+    },
+    {
+      "key": "product7key",
+      "value": "진화"
+    },
+    {
+      "key": "product7value",
+      "value": "4~8 단계의 과일을 랜덤으로 1개 진화시킵니다!!"
+    },
+    {
+      "key": "onlock",
+      "value": "잠금 해제"
+    },
+    {
+      "key": "buy",
+      "value": "(으)로 구매 하시겠습니까?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "구매 성공!!"
+    },
+    {
+      "key": "style",
+      "value": "스타일"
+    },
+    {
+      "key": "background",
+      "value": "배경"
+    },
+    {
+      "key": "noFruit",
+      "value": "조건에 맞는 과일이 없습니다."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "아이템이 부족합니다. 동영상을 보고 파괴 아이템을 1회 사용하시겠습니까?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "아이템이 부족합니다. 동영상을 보고 진화 아이템을 1회 사용하시겠습니까?"
+    }
+  ]
+}

@@ -57,6 +57,8 @@ public class DataManager : MonoBehaviour {
 
 		gameData.initTimer = UIManager.init.initTime;
 
+		gameData.lastLanguageFileName = LocalizationManager.init.lastLanguageFileName;
+
 		binaryFormatter.Serialize(file, gameData);
 		file.Close();
 	}
@@ -91,6 +93,8 @@ public class DataManager : MonoBehaviour {
 			SettingManager.init.EffectOn(gameData.isEffectVolum);
 
 			UIManager.init.initTime = gameData.initTimer;
+
+			LocalizationManager.init.lastLanguageFileName = gameData.lastLanguageFileName ?? "";
 
 			file.Close();
 

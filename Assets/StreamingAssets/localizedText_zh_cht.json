@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "觀看視頻並獲得300個硬幣。"
+    },
+    {
+      "key": "noCoin",
+      "value": "沒有足夠的硬幣！"
+    },
+    {
+      "key": "cancel",
+      "value": "取消"
+    },
+    {
+      "key": "viewAds",
+      "value": "觀看視頻"
+    },
+    {
+      "key": "confirm",
+      "value": "確認"
+    },
+    {
+      "key": "use",
+      "value": "使用"
+    },
+    {
+      "key": "setting",
+      "value": "設定值"
+    },
+    {
+      "key": "effectsoff",
+      "value": "效果關閉"
+    },
+    {
+      "key": "effectson",
+      "value": "對的影響"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "關閉背景音樂"
+    },
+    {
+      "key": "backgroundon",
+      "value": "開啟背景音樂"
+    },
+    {
+      "key": "language",
+      "value": "繁体中文"
+    },
+    {
+      "key": "credit",
+      "value": "信用"
+    },
+    {
+      "key": "normal",
+      "value": "普通的"
+    },
+    {
+      "key": "product1key",
+      "value": "高級升級"
+    },
+    {
+      "key": "product1value",
+      "value": "刪除廣告並更舒適地享受遊戲。"
+    },
+    {
+      "key": "product2key",
+      "value": "雙硬幣"
+    },
+    {
+      "key": "product2value",
+      "value": "它使您在遊戲中獲得的金幣翻倍。永遠！！"
+    },
+    {
+      "key": "product3key",
+      "value": "堆硬幣"
+    },
+    {
+      "key": "product3value",
+      "value": "立即添加2,000個硬幣。"
+    },
+    {
+      "key": "product4key",
+      "value": "零錢袋"
+    },
+    {
+      "key": "product4value",
+      "value": "立即添加8,000個硬幣。享受折扣價。"
+    },
+    {
+      "key": "product5key",
+      "value": "投幣箱"
+    },
+    {
+      "key": "product5value",
+      "value": "立即添加14,000個硬幣。體驗更高的折扣率！"
+    },
+    {
+      "key": "product6key",
+      "value": "毀滅"
+    },
+    {
+      "key": "product6value",
+      "value": "從2級到8級隨機破壞2個水果！"
+    },
+    {
+      "key": "product7key",
+      "value": "進化"
+    },
+    {
+      "key": "product7value",
+      "value": "從4到8個階段隨機進化一個水果！"
+    },
+    {
+      "key": "onlock",
+      "value": "開鎖"
+    },
+    {
+      "key": "buy",
+      "value": "硬幣。你想買嗎？"
+    },
+    {
+      "key": "buySuccess",
+      "value": "購買成功！！"
+    },
+    {
+      "key": "style",
+      "value": "風格"
+    },
+    {
+      "key": "background",
+      "value": "背景"
+    },
+    {
+      "key": "noFruit",
+      "value": "沒有符合條件的水果。"
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "沒有足夠的物品。您想觀看視頻並使用銷毀物品一次嗎？"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "沒有足夠的物品。您想觀看視頻並使用一次演進項目嗎？"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "Bahasa Indonesia"
+    },
+    {
+      "key": "noCoin",
+      "value": "Koin tidak cukup !!"
+    },
+    {
+      "key": "cancel",
+      "value": "membatalkan"
+    },
+    {
+      "key": "viewAds",
+      "value": "Tonton videonya"
+    },
+    {
+      "key": "confirm",
+      "value": "Konfirmasi"
+    },
+    {
+      "key": "use",
+      "value": "Menggunakan"
+    },
+    {
+      "key": "setting",
+      "value": "Pengaturan"
+    },
+    {
+      "key": "effectsoff",
+      "value": "efek mati"
+    },
+    {
+      "key": "effectson",
+      "value": "efek pada"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "musik latar mati"
+    },
+    {
+      "key": "backgroundon",
+      "value": "musik latar aktif"
+    },
+    {
+      "key": "language",
+      "value": "Bahasa Indonesia"
+    },
+    {
+      "key": "credit",
+      "value": "Kredit"
+    },
+    {
+      "key": "normal",
+      "value": "Normal"
+    },
+    {
+      "key": "product1key",
+      "value": "Peningkatan premium"
+    },
+    {
+      "key": "product1value",
+      "value": "Hapus iklan dan nikmati permainan dengan lebih nyaman."
+    },
+    {
+      "key": "product2key",
+      "value": "Koin ganda"
+    },
+    {
+      "key": "product2value",
+      "value": "Ini menggandakan koin yang Anda dapatkan dalam permainan. selama-lamanya!!"
+    },
+    {
+      "key": "product3key",
+      "value": "Tumpukan koin"
+    },
+    {
+      "key": "product3value",
+      "value": "2,000 koin ditambahkan segera."
+    },
+    {
+      "key": "product4key",
+      "value": "Kantong koin"
+    },
+    {
+      "key": "product4value",
+      "value": "8,000 koin ditambahkan segera. Nikmati harga diskon."
+    },
+    {
+      "key": "product5key",
+      "value": "Kotak koin"
+    },
+    {
+      "key": "product5value",
+      "value": "14,000 koin ditambahkan segera. Rasakan tingkat diskon yang lebih tinggi!"
+    },
+    {
+      "key": "product6key",
+      "value": "Penghancuran"
+    },
+    {
+      "key": "product6value",
+      "value": "Hancurkan 2 buah dari level 2 hingga 8 secara acak!"
+    },
+    {
+      "key": "product7key",
+      "value": "Evolusi"
+    },
+    {
+      "key": "product7value",
+      "value": "Kembangkan satu buah secara acak dari 4 menjadi 8 tahap !!"
+    },
+    {
+      "key": "onlock",
+      "value": "Membuka kunci"
+    },
+    {
+      "key": "buy",
+      "value": "koin. Apakah Anda ingin membelinya?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "Pembelian sukses !!"
+    },
+    {
+      "key": "style",
+      "value": "Gaya"
+    },
+    {
+      "key": "background",
+      "value": "Latar Belakang"
+    },
+    {
+      "key": "noFruit",
+      "value": "Tidak ada buah yang memenuhi syarat."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "Item tidak cukup. Apakah Anda ingin menonton video dan menggunakan item pemusnahan satu kali?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "Item tidak cukup. Apakah Anda ingin menonton video dan menggunakan item evolusi sekali?"
+    }
+  ]
+}

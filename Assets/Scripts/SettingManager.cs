@@ -26,7 +26,6 @@ public class SettingManager : MonoBehaviour {
 			effectImg = effect.transform.GetChild(1).GetComponent<RawImage>();
 			bgmText = BGM.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 			bgmImg = BGM.transform.GetChild(1).GetComponent<RawImage>();
-
 		}
 		else if (init != this) {
 			Destroy(this.gameObject);
@@ -51,27 +50,36 @@ public class SettingManager : MonoBehaviour {
 	}
 
 	public void EffectOn() {
-		if (isEffectOn) {
-			effectText.text = "효과음 끄기";
-			effectImg.texture = Resources.Load<Texture>("setting/iconEffect");
-		} else {
-			effectText.text = "효과음 켜기";
-			effectImg.texture = Resources.Load<Texture>("setting/iconMute");
-		}
 		UIManager.init.audioSource.mute = !isEffectOn;
 		isEffectOn = !isEffectOn;
+
+		SetText();
 	}
 
 	public void BGMOn() {
-		if (isBGMOn) {
-			bgmText.text = "배경음악 끄기";
-			bgmImg.texture = Resources.Load<Texture>("setting/iconBGM");
-		}
-		else {
-			bgmText.text = "배경음악 켜기";
-			bgmImg.texture = Resources.Load<Texture>("setting/iconBGMMute");
-		}
 		CameraControl.init.audioSource.mute = !isBGMOn;
 		isBGMOn = !isBGMOn;
+
+		SetText();
+	}
+
+	public void SetText() {
+		if (UIManager.init.settingPanel.activeSelf) {
+			if (isBGMOn) {
+				bgmText.text = LocalizationManager.init.GetLocalizedValue("backgroundon");
+				bgmImg.texture = Resources.Load<Texture>("setting/iconBGMMute");
+			} else {
+				bgmText.text = LocalizationManager.init.GetLocalizedValue("backgroundoff");
+				bgmImg.texture = Resources.Load<Texture>("setting/iconBGM");
+			}
+
+			if (isEffectOn) {
+				effectText.text = LocalizationManager.init.GetLocalizedValue("effectson");
+				effectImg.texture = Resources.Load<Texture>("setting/iconMute");
+			} else {
+				effectText.text = LocalizationManager.init.GetLocalizedValue("effectsoff");
+				effectImg.texture = Resources.Load<Texture>("setting/iconEffect");
+			}
+		}
 	}
 }

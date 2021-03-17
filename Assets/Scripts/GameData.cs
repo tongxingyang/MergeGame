@@ -28,6 +28,8 @@ namespace DataInfo {
 		public bool isPremium = false;
 		public bool isDoubleCoin = false;
 
+		public string lastLanguageFileName;
+
 		public DateTime initTimer;
 	}
 }

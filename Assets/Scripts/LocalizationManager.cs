@@ -1,12 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
 
 public class LocalizationManager : MonoBehaviour {
-
-
     public static LocalizationManager init;
 
     private string _lastLanguageFileName;
@@ -22,47 +19,35 @@ public class LocalizationManager : MonoBehaviour {
         }
 	}
 
+    private TextAsset textData;
     private Dictionary<string, string> localizedText;
     private string missingTextString = "Localized text not found";
 
-
-    // Start is called before the first frame update
-    void Awake() {
-
-        //싱글톤 패턴
+    private void Awake() {
         if (init == null) {
             init = this;
         } else if (init != this) {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 
-	private void Start() {
-
-    }
-
-	public void LoadLocalizedText(string fileName) {
+    public void LoadLocalizedText(string fileName) {
         _lastLanguageFileName = fileName;
 
+        //fileName += ".json";
+        textData = Resources.Load<TextAsset>("localized/" + fileName);
+
         localizedText = new Dictionary<string, string>();
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
-        filePath += ".json";
-        if (File.Exists(filePath)) {
-            string dataAsJson = File.ReadAllText(filePath); //json파일을 읽어서 string으로 뽑음
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);    //deserialization
 
-            //전체 아이템들에 대해서
-            for (int i = 0; i < loadedData.items.Length; i++) {
-                localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
-            }
+        LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(textData.ToString());
 
-            //localizationText 데이터 불러오기 완료
-            Debug.Log("Data loaded. Dictionary containts :" + localizedText.Count + " entries");
-
-        } else {
-            //파일이 존재하지않음
-            Debug.LogError("Cannot find file");
+        for (int i = 0; i < loadedData.items.Length; ++i) {
+            localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
         }
+
+        Debug.Log("Data loaded. Dictionary containts :" + localizedText.Count + " entries");
+
     }
 
     public string GetLocalizedValue(string key) {

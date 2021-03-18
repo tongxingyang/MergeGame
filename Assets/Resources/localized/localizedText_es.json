@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "Mira el video y obtén 300 monedas."
+    },
+    {
+      "key": "noCoin",
+      "value": "No hay suficientes monedas!!"
+    },
+    {
+      "key": "cancel",
+      "value": "cancelar"
+    },
+    {
+      "key": "viewAds",
+      "value": "Ver el vídeo"
+    },
+    {
+      "key": "confirm",
+      "value": "Confirmar"
+    },
+    {
+      "key": "use",
+      "value": "Usar"
+    },
+    {
+      "key": "setting",
+      "value": "Ajustes"
+    },
+    {
+      "key": "effectsoff",
+      "value": "efectos desactivados"
+    },
+    {
+      "key": "effectson",
+      "value": "efectos sobre"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "música de fondo apagada"
+    },
+    {
+      "key": "backgroundon",
+      "value": "música de fondo encendida"
+    },
+    {
+      "key": "language",
+      "value": "Español"
+    },
+    {
+      "key": "credit",
+      "value": "Crédito"
+    },
+    {
+      "key": "normal",
+      "value": "Normal"
+    },
+    {
+      "key": "product1key",
+      "value": "Actualización premium"
+    },
+    {
+      "key": "product1value",
+      "value": "Elimina anuncios y disfruta del juego con mayor comodidad."
+    },
+    {
+      "key": "product2key",
+      "value": "Moneda doble"
+    },
+    {
+      "key": "product2value",
+      "value": "Duplica las monedas que obtienes en el juego. Siempre!!"
+    },
+    {
+      "key": "product3key",
+      "value": "Pila de monedas"
+    },
+    {
+      "key": "product3value",
+      "value": "Se agregan 2,000 monedas inmediatamente."
+    },
+    {
+      "key": "product4key",
+      "value": "Bolsillo para monedas"
+    },
+    {
+      "key": "product4value",
+      "value": "Se añaden 8,000 monedas inmediatamente. Disfrute de un precio con descuento."
+    },
+    {
+      "key": "product5key",
+      "value": "Caja de monedas"
+    },
+    {
+      "key": "product5value",
+      "value": "Se añaden 14,000 monedas inmediatamente. ¡Experimente una tasa de descuento más alta!"
+    },
+    {
+      "key": "product6key",
+      "value": "Destrucción"
+    },
+    {
+      "key": "product6value",
+      "value": "Destruye 2 frutas del nivel 2 al 8 al azar!"
+    },
+    {
+      "key": "product7key",
+      "value": "Evolución"
+    },
+    {
+      "key": "product7value",
+      "value": "Evoluciona aleatoriamente una fruta de 4 a 8 etapas!"
+    },
+    {
+      "key": "onlock",
+      "value": "desbloquear"
+    },
+    {
+      "key": "buy",
+      "value": "monedas. Quieres comprarlo?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "Compra exitosa!!"
+    },
+    {
+      "key": "style",
+      "value": "Estilo"
+    },
+    {
+      "key": "background",
+      "value": "Fondo"
+    },
+    {
+      "key": "noFruit",
+      "value": "No hay fruta que cumpla con las condiciones."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "No hay suficientes elementos. Le gustaría ver el video y usar el elemento de destrucción una vez?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "No hay suficientes elementos. Le gustaría ver el video y usar el elemento de evolución una vez?"
+    }
+  ]
+}

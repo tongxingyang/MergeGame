@@ -9,8 +9,6 @@ public class DataManager : MonoBehaviour {
 
 	public static DataManager init = null;
 	private void Awake() {
-		dataPath = Application.persistentDataPath + "/gameData.dat";
-
 		if (init == null) {
 			init = this;
 		} else if (init != this) {
@@ -24,6 +22,9 @@ public class DataManager : MonoBehaviour {
 	public DataInfo.GameData tempData;
 
 	private void Start() {
+
+		dataPath = Application.persistentDataPath + "/gameData.dat";
+		tempData = new DataInfo.GameData();
 		Load();
 	}
 
@@ -60,11 +61,14 @@ public class DataManager : MonoBehaviour {
 		gameData.lastLanguageFileName = LocalizationManager.init.lastLanguageFileName;
 
 		binaryFormatter.Serialize(file, gameData);
+
 		file.Close();
 	}
 
 	public void Load() {
+
 		if (File.Exists(dataPath)) {
+
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			FileStream file = File.OpenRead(dataPath);
 
@@ -99,6 +103,7 @@ public class DataManager : MonoBehaviour {
 			file.Close();
 
 		} else {
+			LocalizationManager.init.lastLanguageFileName = "";
 			ScoreManager.init.finalBestScore = 0;
 			ScoreManager.init.bestScore = 0;
 			ScoreManager.init.currAdsCount = 0;

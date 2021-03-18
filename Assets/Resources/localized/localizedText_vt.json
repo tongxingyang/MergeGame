@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "Xem video và nhận 300 xu."
+    },
+    {
+      "key": "noCoin",
+      "value": "Không đủ xu!!"
+    },
+    {
+      "key": "cancel",
+      "value": "hủy bỏ"
+    },
+    {
+      "key": "viewAds",
+      "value": "Xem video"
+    },
+    {
+      "key": "confirm",
+      "value": "Xác nhận"
+    },
+    {
+      "key": "use",
+      "value": "Để sử dụng"
+    },
+    {
+      "key": "setting",
+      "value": "Cài đặt"
+    },
+    {
+      "key": "effectsoff",
+      "value": "hiệu ứng tắt"
+    },
+    {
+      "key": "effectson",
+      "value": "Ảnh hưởng lên"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "nhạc nền tắt"
+    },
+    {
+      "key": "backgroundon",
+      "value": "bật nhạc nền"
+    },
+    {
+      "key": "language",
+      "value": "Tiếng Việt"
+    },
+    {
+      "key": "credit",
+      "value": "tín dụng"
+    },
+    {
+      "key": "normal",
+      "value": "Bình thường"
+    },
+    {
+      "key": "product1key",
+      "value": "Nâng cấp cao cấp"
+    },
+    {
+      "key": "product1value",
+      "value": "Loại bỏ quảng cáo và tận hưởng trò chơi một cách thoải mái hơn."
+    },
+    {
+      "key": "product2key",
+      "value": "Đồng xu gấp đôi"
+    },
+    {
+      "key": "product2value",
+      "value": "Nó nhân đôi số tiền bạn nhận được trong trò chơi. mãi mãi!!"
+    },
+    {
+      "key": "product3key",
+      "value": "Đống xu"
+    },
+    {
+      "key": "product3value",
+      "value": "2,000 xu được thêm ngay lập tức."
+    },
+    {
+      "key": "product4key",
+      "value": "Túi tiền xu"
+    },
+    {
+      "key": "product4value",
+      "value": "8,000 xu được thêm ngay lập tức. Được hưởng mức giá chiết khấu."
+    },
+    {
+      "key": "product5key",
+      "value": "Hộp tiền xu"
+    },
+    {
+      "key": "product5value",
+      "value": "14,000 xu được thêm ngay lập tức. Trải nghiệm mức chiết khấu cao hơn!"
+    },
+    {
+      "key": "product6key",
+      "value": "Sự phá hủy"
+    },
+    {
+      "key": "product6value",
+      "value": "Phá hủy 2 trái cây từ cấp độ 2 đến 8 một cách ngẫu nhiên!"
+    },
+    {
+      "key": "product7key",
+      "value": "Sự phát triển"
+    },
+    {
+      "key": "product7value",
+      "value": "Phát triển ngẫu nhiên một loại trái cây từ 4 đến 8 giai đoạn !!"
+    },
+    {
+      "key": "onlock",
+      "value": "Mở khóa"
+    },
+    {
+      "key": "buy",
+      "value": "đồng xu. Bạn có muốn mua nó không?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "Mua hàng thành công !!"
+    },
+    {
+      "key": "style",
+      "value": "Phong cách"
+    },
+    {
+      "key": "background",
+      "value": "Lý lịch"
+    },
+    {
+      "key": "noFruit",
+      "value": "Không có trái cây nào đáp ứng đủ các điều kiện."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "Không có đủ mặt hàng. Bạn có muốn xem video và sử dụng vật phẩm hủy diệt một lần không?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "Không có đủ mặt hàng. Bạn có muốn xem video và sử dụng vật phẩm tiến hóa một lần không?"
+    }
+  ]
+}

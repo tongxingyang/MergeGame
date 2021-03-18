@@ -60,17 +60,17 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
-	private void Update() {
+//    private void Update() {
 
-#if UNITY_ANDROID
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			Application.Quit();
-		}
-#endif
+//#if UNITY_ANDROID
+//        if (Input.GetKeyDown(KeyCode.Escape)) {
+//            Application.Quit();
+//        }
+//#endif
 
-	}
+//    }
 
-	public void GameStart() {
+    public void GameStart() {
 		if (!isEnterGame) {
 			isEnterGame = true;
 			ScoreManager.init.SetGameStart();
@@ -109,7 +109,13 @@ public class GameManager : MonoBehaviour {
 		DataManager.init.Save();
 	}
 
-	public void BuyPremium() {
+    private void OnApplicationPause(bool pause) {
+		if (pause) {
+			DataManager.init.Save();
+		}
+	}
+
+    public void BuyPremium() {
 		AdsManager.init.DestroyBannerAd();
 		premiumGround.SetActive(true);
 	}

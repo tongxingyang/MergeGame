@@ -105,6 +105,7 @@ public class RankingSystem : MonoBehaviour {
 
 	public void UploadUserData() {
 		if (!isCoolTime) {
+			myRankingCount = 1;
 			UploadUserDataWithFirebase(userFlag.value, userName.text);
 			StartCoroutine(nameof(BtnDelay));
 		}
@@ -132,6 +133,7 @@ public class RankingSystem : MonoBehaviour {
 		}
 
 		databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
+
 		LoadUserRanking();
 	}
 
@@ -151,7 +153,6 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	private void LoadMyData() {
-		myRankingCount = 1;
 		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
 			.OrderByChild(SCORE)
 			.StartAt(currUserData.score)

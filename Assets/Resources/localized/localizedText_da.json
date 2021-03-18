@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "Se videoen, og få 300 mønter."
+    },
+    {
+      "key": "noCoin",
+      "value": "Ikke nok mønter !!"
+    },
+    {
+      "key": "cancel",
+      "value": "afbestille"
+    },
+    {
+      "key": "viewAds",
+      "value": "Se videoen"
+    },
+    {
+      "key": "confirm",
+      "value": "Bekræfte"
+    },
+    {
+      "key": "use",
+      "value": "At bruge"
+    },
+    {
+      "key": "setting",
+      "value": "Indstillinger"
+    },
+    {
+      "key": "effectsoff",
+      "value": "effekter slukket"
+    },
+    {
+      "key": "effectson",
+      "value": "effekter på"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "baggrundsmusik slukket"
+    },
+    {
+      "key": "backgroundon",
+      "value": "baggrundsmusik på"
+    },
+    {
+      "key": "language",
+      "value": "Danske"
+    },
+    {
+      "key": "credit",
+      "value": "Kredit"
+    },
+    {
+      "key": "normal",
+      "value": "Normal"
+    },
+    {
+      "key": "product1key",
+      "value": "Premium opgradering"
+    },
+    {
+      "key": "product1value",
+      "value": "Fjern annoncer, og nyd spillet mere behageligt."
+    },
+    {
+      "key": "product2key",
+      "value": "Dobbelt mønt"
+    },
+    {
+      "key": "product2value",
+      "value": "Det fordobler de mønter, du får i spillet. for evigt!!"
+    },
+    {
+      "key": "product3key",
+      "value": "Bunke med mønter"
+    },
+    {
+      "key": "product3value",
+      "value": "2,000 mønter tilføjes straks."
+    },
+    {
+      "key": "product4key",
+      "value": "Møntlomme"
+    },
+    {
+      "key": "product4value",
+      "value": "8,000 mønter tilføjes straks. Nyd en nedsat pris."
+    },
+    {
+      "key": "product5key",
+      "value": "Møntkasse"
+    },
+    {
+      "key": "product5value",
+      "value": "14,000 mønter tilføjes straks. Oplev en højere diskonteringssats!"
+    },
+    {
+      "key": "product6key",
+      "value": "Ødelæggelse"
+    },
+    {
+      "key": "product6value",
+      "value": "Ødelæg 2 frugter fra niveau 2 til 8 tilfældigt!"
+    },
+    {
+      "key": "product7key",
+      "value": "Udvikling"
+    },
+    {
+      "key": "product7value",
+      "value": "Tilfældigt udvikle en frugt fra 4 til 8 faser !!"
+    },
+    {
+      "key": "onlock",
+      "value": "Lås op"
+    },
+    {
+      "key": "buy",
+      "value": "mønter. Vil du gerne købe det?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "Køb succes !!"
+    },
+    {
+      "key": "style",
+      "value": "Stil"
+    },
+    {
+      "key": "background",
+      "value": "Baggrund"
+    },
+    {
+      "key": "noFruit",
+      "value": "Der er ingen frugt, der opfylder betingelserne."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "Der er ikke nok varer. Vil du se videoen og bruge ødelæggelsesemnet en gang?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "Der er ikke nok varer. Kunne du tænke dig at se videoen og bruge evolutionen en gang?"
+    }
+  ]
+}

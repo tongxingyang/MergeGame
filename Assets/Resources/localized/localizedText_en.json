@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "Watch the video and get 300 coins."
+    },
+    {
+      "key": "noCoin",
+      "value": "Not enough coins!!"
+    },
+    {
+      "key": "cancel",
+      "value": "cancel"
+    },
+    {
+      "key": "viewAds",
+      "value": "Watch the video"
+    },
+    {
+      "key": "confirm",
+      "value": "Confirm"
+    },
+    {
+      "key": "use",
+      "value": "To use"
+    },
+    {
+      "key": "setting",
+      "value": "Settings"
+    },
+    {
+      "key": "effectsoff",
+      "value": "Effects off"
+    },
+    {
+      "key": "effectson",
+      "value": "Effects on"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "Background music off"
+    },
+    {
+      "key": "backgroundon",
+      "value": "Background music on"
+    },
+    {
+      "key": "language",
+      "value": "English"
+    },
+    {
+      "key": "credit",
+      "value": "Credit"
+    },
+    {
+      "key": "normal",
+      "value": "Normal"
+    },
+    {
+      "key": "product1key",
+      "value": "Premium upgrade"
+    },
+    {
+      "key": "product1value",
+      "value": "Remove ads and enjoy the game more comfortably."
+    },
+    {
+      "key": "product2key",
+      "value": "Double coin"
+    },
+    {
+      "key": "product2value",
+      "value": "It doubles the coins you get in the game. forever!!"
+    },
+    {
+      "key": "product3key",
+      "value": "Pile of coins"
+    },
+    {
+      "key": "product3value",
+      "value": "2,000 coins are added immediately."
+    },
+    {
+      "key": "product4key",
+      "value": "Coin pocket"
+    },
+    {
+      "key": "product4value",
+      "value": "8,000 coins are added immediately. Enjoy a discounted price."
+    },
+    {
+      "key": "product5key",
+      "value": "Coin box"
+    },
+    {
+      "key": "product5value",
+      "value": "14,000 coins are added immediately. Experience a higher discount rate!"
+    },
+    {
+      "key": "product6key",
+      "value": "Destruction"
+    },
+    {
+      "key": "product6value",
+      "value": "Destroy 2 fruits from level 2 to 8 at random!"
+    },
+    {
+      "key": "product7key",
+      "value": "Evolution"
+    },
+    {
+      "key": "product7value",
+      "value": "Randomly evolve one fruit from 4 to 8 stages!!"
+    },
+    {
+      "key": "onlock",
+      "value": "Unlock"
+    },
+    {
+      "key": "buy",
+      "value": "coins. Would you like to buy it?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "Purchase success!!"
+    },
+    {
+      "key": "style",
+      "value": "Style"
+    },
+    {
+      "key": "background",
+      "value": "Background"
+    },
+    {
+      "key": "noFruit",
+      "value": "There is no fruit that meets the conditions."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "There are not enough items. Would you like to watch the video and use the destruction item once?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "There are not enough items. Would you like to watch the video and use the evolution item once?"
+    }
+  ]
+}

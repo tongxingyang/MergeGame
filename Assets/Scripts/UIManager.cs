@@ -55,6 +55,8 @@ public class UIManager : MonoBehaviour {
 
 	public AudioSource audioSource;
 
+	public TextMeshProUGUI errorLogPanel;
+
 	private bool _isEnableCoinAds = true;
 	public bool isEnableCoinAds {
 		get { return _isEnableCoinAds; }

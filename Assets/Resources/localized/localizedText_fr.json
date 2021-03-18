@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "key": "movie",
+      "value": "Regardez la vidéo et obtenez 300 pièces."
+    },
+    {
+      "key": "noCoin",
+      "value": "Pas assez de pièces!!"
+    },
+    {
+      "key": "cancel",
+      "value": "Annuler"
+    },
+    {
+      "key": "viewAds",
+      "value": "Voir la vidéo"
+    },
+    {
+      "key": "confirm",
+      "value": "Confirmer"
+    },
+    {
+      "key": "use",
+      "value": "Utiliser"
+    },
+    {
+      "key": "setting",
+      "value": "Réglages"
+    },
+    {
+      "key": "effectsoff",
+      "value": "effets désactivés"
+    },
+    {
+      "key": "effectson",
+      "value": "effets sur"
+    },
+    {
+      "key": "backgroundoff",
+      "value": "musique de fond désactivée"
+    },
+    {
+      "key": "backgroundon",
+      "value": "musique de fond sur"
+    },
+    {
+      "key": "language",
+      "value": "Français"
+    },
+    {
+      "key": "credit",
+      "value": "Crédit"
+    },
+    {
+      "key": "normal",
+      "value": "Normal"
+    },
+    {
+      "key": "product1key",
+      "value": "Surclassement Premium"
+    },
+    {
+      "key": "product1value",
+      "value": "Supprimez les publicités et profitez du jeu plus confortablement."
+    },
+    {
+      "key": "product2key",
+      "value": "Double pièce"
+    },
+    {
+      "key": "product2value",
+      "value": "Il double les pièces que vous obtenez dans le jeu. pour toujours!!"
+    },
+    {
+      "key": "product3key",
+      "value": "Pile de pièces"
+    },
+    {
+      "key": "product3value",
+      "value": "2000 pièces sont ajoutées immédiatement."
+    },
+    {
+      "key": "product4key",
+      "value": "Poche à monnaie"
+    },
+    {
+      "key": "product4value",
+      "value": "8000 pièces sont ajoutées immédiatement. Profitez d'un prix réduit."
+    },
+    {
+      "key": "product5key",
+      "value": "Boîte à monnaie"
+    },
+    {
+      "key": "product5value",
+      "value": "14000 pièces sont ajoutées immédiatement. Bénéficiez d'un taux d'actualisation plus élevé!"
+    },
+    {
+      "key": "product6key",
+      "value": "Destruction"
+    },
+    {
+      "key": "product6value",
+      "value": "Détruisez 2 fruits du niveau 2 à 8 au hasard!"
+    },
+    {
+      "key": "product7key",
+      "value": "Évolution"
+    },
+    {
+      "key": "product7value",
+      "value": "Faites évoluer au hasard un fruit de 4 à 8 étapes !!"
+    },
+    {
+      "key": "onlock",
+      "value": "Ouvrir"
+    },
+    {
+      "key": "buy",
+      "value": "pièces de monnaie. Souhaitez-vous l'acheter?"
+    },
+    {
+      "key": "buySuccess",
+      "value": "Achat de succès !!"
+    },
+    {
+      "key": "style",
+      "value": "Style"
+    },
+    {
+      "key": "background",
+      "value": "Fond"
+    },
+    {
+      "key": "noFruit",
+      "value": "Aucun fruit ne remplit les conditions."
+    },
+    {
+      "key": "noDestroyItem",
+      "value": "Il n'y a pas assez d'articles. Souhaitez-vous regarder la vidéo et utiliser l'objet de destruction une fois?"
+    },
+    {
+      "key": "noRankUpItem",
+      "value": "Il n'y a pas assez d'articles. Souhaitez-vous regarder la vidéo et utiliser l'élément d'évolution une fois?"
+    }
+  ]
+}

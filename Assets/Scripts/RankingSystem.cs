@@ -61,7 +61,9 @@ public class RankingSystem : MonoBehaviour {
     private void OnEnable() {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
-		key = DataManager.init.gameData.key ?? "";
+
+		if (!isKey())
+			key = DataManager.init.gameData.key ?? "";
 
 		DataManager.init.tempData.key = key;
 

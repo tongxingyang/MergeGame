@@ -161,17 +161,7 @@ public class ObjectManager : MonoBehaviour {
 			}
 		}
 
-		List<Transform> objectRange = new List<Transform>();
-		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
-			if (child.name == objParent.name)
-				continue;
-
-			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
-				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.three &&
-					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.seven)
-					objectRange.Add(child);
-			}
-		}
+		List < Transform > objectRange = TargetOfItem(MergeLevel.three, MergeLevel.seven);
 
 		int count = objectRange.Count < 1 ? 0 : 1;
 		if (count <= 0) {
@@ -202,17 +192,7 @@ public class ObjectManager : MonoBehaviour {
 			}
 		}
 
-		List<Transform> objectRange = new List<Transform>();
-		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
-			if (child.name == objParent.name)
-				continue;
-
-			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
-				if (child.GetComponent<MainObject>().mergeLevel >= MergeLevel.one &&
-					child.GetComponent<MainObject>().mergeLevel <= MergeLevel.seven)
-					objectRange.Add(child);
-			}
-		}
+		List<Transform> objectRange = TargetOfItem(MergeLevel.one, MergeLevel.seven);
 
 		int count = 2;
 		if(objectRange.Count < 2) {
@@ -226,6 +206,7 @@ public class ObjectManager : MonoBehaviour {
 
 		if (count > 0) {
 			List<int> randDeduplication = new List<int>();
+
 			ScoreManager.init.destroyItemCount--;
 			while (count > 0) {
 				int range = Random.Range(0, objectRange.Count);
@@ -241,4 +222,65 @@ public class ObjectManager : MonoBehaviour {
 			ScoreManager.init.destroyItemCount--;
 		}
 	}
+
+	public List<Transform> TargetOfItem(MergeLevel minLevel, MergeLevel maxLevel) {
+		List<Transform> objectRange = new List<Transform>();
+
+		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
+			if (child.name == objParent.name)
+				continue;
+
+			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
+				if (child.GetComponent<MainObject>().mergeLevel >= minLevel &&
+					child.GetComponent<MainObject>().mergeLevel <= maxLevel)
+					objectRange.Add(child);
+			}
+		}
+		TargetOfItemFadeIn();
+		return objectRange;
+	}
+
+	public List<Transform> NotTargetOfItem(MergeLevel minLevel, MergeLevel maxLevel) {
+		List<Transform> objectRange = new List<Transform>();
+
+		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
+			if (child.name == objParent.name)
+				continue;
+
+			if (child.gameObject.activeSelf && child.GetComponent<Rigidbody2D>().gravityScale > 0) {
+				if (child.GetComponent<MainObject>().mergeLevel > minLevel ||
+					child.GetComponent<MainObject>().mergeLevel < maxLevel)
+					objectRange.Add(child);
+			}
+		}
+
+		return objectRange;
+	}
+
+	public void TargetOfItemFadeOutOnRankUp() {
+		List<Transform> objectRange = NotTargetOfItem(MergeLevel.seven, MergeLevel.three);
+
+		foreach (Transform obj in objectRange) {
+			obj.GetComponent<MainObject>().IsFadeOut(true);
+		}
+	}
+
+	public void TargetOfItemFadeOutOnDestroy() {
+		List<Transform> objectRange = NotTargetOfItem(MergeLevel.seven, MergeLevel.one);
+
+		foreach (Transform obj in objectRange) {
+			obj.GetComponent<MainObject>().IsFadeOut(true);
+		}
+	}
+
+	public void TargetOfItemFadeIn() {
+
+		foreach (Transform child in objParent.GetComponentsInChildren<Transform>()) {
+			if (child.name == objParent.name)
+				continue;
+
+			child.GetComponent<MainObject>().IsFadeOut(false);
+		}
+	}
+
 }

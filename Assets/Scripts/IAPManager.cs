@@ -99,12 +99,10 @@ public class IAPManager : MonoBehaviour, IStoreListener {
 		switch (purchaseEvent.purchasedProduct.definition.id) {
 			case PREMIUM:
 				GameManager.init.isPremium = true;
-				UIManager.init.OpenPanel(UIManager.init.buyMessagePanel);
 				break;
 
 			case DOUBLE_COIN:
 				GameManager.init.isDoubleCoin = true;
-				UIManager.init.OpenPanel(UIManager.init.buyMessagePanel);
 				break;
 
 			case COIN_DUMMY:

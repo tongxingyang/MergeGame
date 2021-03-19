@@ -8,6 +8,7 @@ public class MainObject : MonoBehaviour {
 	private static readonly int GRAVITY_SCALE = 2;
 	private static readonly int FLICKER_OBJ = Animator.StringToHash("flicker");
 	private static readonly int DESTROY_MAX_LEVEL = Animator.StringToHash("destroy");
+	private static readonly int FADE_OUT = Animator.StringToHash("fadeout");
 
 	public ObjectManager.MergeLevel mergeLevel;
 
@@ -116,6 +117,13 @@ public class MainObject : MonoBehaviour {
 	public void DestroyObj() {
 		this.GetComponent<CircleCollider2D>().enabled = false;
 		animator.SetTrigger(DESTROY_MAX_LEVEL);
+	}
+
+	public void IsFadeOut(bool isFadeOut) {
+		if(isFadeOut)
+			animator.SetBool(FADE_OUT, true);
+		else
+			animator.SetBool(FADE_OUT, false);
 	}
 
 	public void OnRankUpItem() {

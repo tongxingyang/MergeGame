@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
-	private static readonly int COIN_ABOUT_SCORE = 75;
-	private static readonly int ADD_COIN_ADS_DELAY = 5;
+	private static readonly int COIN_ABOUT_SCORE = 55;
+	private static readonly double ADD_COIN_ADS_DELAY = 3;
 	private static readonly float MAX_LEVEL_PANEL_OFF_DELAY = 2.5f;
 	private static readonly float DESTROY_MAX_OBJECT_DELAY = 1.0f;
 	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
@@ -38,7 +38,13 @@ public class UIManager : MonoBehaviour {
 	public GameObject rankingPanel;
 	public GameObject buyMessagePanel;
 	public GameObject itemUnavailableMessage;
-	public TextMeshProUGUI addCoinAdsTimerText;
+	public Button adsCoinAddBtn;
+	public GameObject addCoinAdsTimerText;
+
+	public GameObject rankUpItemPanelOnMain;
+	public GameObject destroyItemPanelOnMain;
+	public GameObject rankUpItemPanelOnGame;
+	public GameObject destroyItemPanelOnGame;
 
 	public Button rankItemBtn;
 	public Button destroyItemBtn;
@@ -57,19 +63,19 @@ public class UIManager : MonoBehaviour {
 
 	public TextMeshProUGUI errorLogPanel;
 
-	private bool _isEnableCoinAds = true;
+	private bool _isEnableCoinAds;
 	public bool isEnableCoinAds {
 		get { return _isEnableCoinAds; }
 		set {
 			_isEnableCoinAds = value;
 			if (value) {
-				addCoinAdsTimerText.gameObject.SetActive(false);
-				addCoinAdsTimerText.transform.parent.GetComponent<Button>().enabled = true;
-				addCoinAdsTimerText.transform.parent.GetComponent<RawImage>().color = Color.white;
+				adsCoinAddBtn.enabled = true;
+				adsCoinAddBtn.GetComponent<RawImage>().color = Color.white;
+				addCoinAdsTimerText.SetActive(false);
 			} else {
-				addCoinAdsTimerText.gameObject.SetActive(true);
-				addCoinAdsTimerText.transform.parent.GetComponent<Button>().enabled = false;
-				addCoinAdsTimerText.transform.parent.GetComponent<RawImage>().color = new Color(1, 1, 1, 0.3f);
+				addCoinAdsTimerText.SetActive(true);
+				adsCoinAddBtn.enabled = false;
+				adsCoinAddBtn.GetComponent<RawImage>().color = new Color(1, 1, 1, 0.3f);
 			}
 		}
 	}
@@ -79,6 +85,7 @@ public class UIManager : MonoBehaviour {
 	public DateTime initTime {
 		get { return _initTime; }
 		set {
+			_initTime = value;
 			if ((value - DateTime.Now).TotalSeconds > 0) {
 				_initTime = value;
 				isEnableCoinAds = false;
@@ -87,10 +94,15 @@ public class UIManager : MonoBehaviour {
 	}
 	private TimeSpan timer;
 
-	private void Update() {
+    private void Start() {
+		rankItemBtn.onClick.AddListener(OpenRankUpItemPanelOnMain);
+		destroyItemBtn.onClick.AddListener(OpenDestroyItemPanelOnMain);
+	}
+
+    private void Update() {
 		if (!isEnableCoinAds) {
 			timer = initTime - DateTime.Now;
-			addCoinAdsTimerText.text = timer.Minutes + ":" + string.Format("{0:D2}", timer.Seconds);
+			addCoinAdsTimerText.GetComponent<TextMeshProUGUI>().text = timer.Minutes + ":" + string.Format("{0:D2}", timer.Seconds);
 
 			if (timer.TotalSeconds <= 0) {
 				isEnableCoinAds = true;
@@ -118,9 +130,18 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void IsGameStart(bool _active) {
+		rankItemBtn.onClick.RemoveAllListeners();
+		destroyItemBtn.onClick.RemoveAllListeners();
+
+		if (_active) {
+			rankItemBtn.onClick.AddListener(OpenRankUpItemPanelOnGame);
+			destroyItemBtn.onClick.AddListener(OpenDestroyItemPanelOnGame);
+		} else {
+			rankItemBtn.onClick.AddListener(OpenRankUpItemPanelOnMain);
+			destroyItemBtn.onClick.AddListener(OpenDestroyItemPanelOnMain);
+		}
+
 		pauseBtn.SetActive(_active);
-		rankItemBtn.enabled = _active;
-		destroyItemBtn.enabled = _active;
 		menuPanel.SetActive(!_active);
 		settingPanel.SetActive(false);
 	}
@@ -223,11 +244,31 @@ public class UIManager : MonoBehaviour {
 		isEnableCoinAds = false;
 	}
 
+	//ads message panel
 	public void OpenRankUpItemPanel() {
 		rankUpItemPanel.SetActive(true);
 	}
 
 	public void OpenDestroyItemPanel() {
 		destroyItemPanel.SetActive(true);
+	}
+	//-----------------
+
+	private void OpenRankUpItemPanelOnMain() {
+		rankUpItemPanelOnMain.SetActive(true);
+	}
+
+	private void OpenRankUpItemPanelOnGame() {
+		rankUpItemPanelOnGame.SetActive(true);
+		ObjectManager.init.TargetOfItemFadeOutOnRankUp();
+	}
+
+	private void OpenDestroyItemPanelOnMain() {
+		destroyItemPanelOnMain.SetActive(true);
+	}
+
+	private void OpenDestroyItemPanelOnGame() {
+		destroyItemPanelOnGame.SetActive(true);
+		ObjectManager.init.TargetOfItemFadeOutOnDestroy();
 	}
 }

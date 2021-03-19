@@ -88,11 +88,13 @@ class ScoreManager : MonoBehaviour {
 				return int.Parse(_rankupItemCount.text);
 		}
 		set {
+			UIManager.init.rankItemBtn.enabled = true;
 			if (value == 0)
 				_rankupItemCount.text = "ADS";
-			else if (value < 0)
+			else if (value < 0) {
 				_rankupItemCount.text = "";
-			else
+				UIManager.init.rankItemBtn.enabled = false;
+			} else
 				_rankupItemCount.text = value.ToString();
 		}
 	}
@@ -106,11 +108,13 @@ class ScoreManager : MonoBehaviour {
 				return int.Parse(_destroyItemCount.text);
 		}
 		set {
+			UIManager.init.destroyItemBtn.enabled = true;
 			if (value == 0)
 				_destroyItemCount.text = "ADS";
-			else if (value < 0)
+			else if (value < 0) {
 				_destroyItemCount.text = "";
-			else
+				UIManager.init.destroyItemBtn.enabled = false;
+			} else
 				_destroyItemCount.text = value.ToString();
 		}
 	}

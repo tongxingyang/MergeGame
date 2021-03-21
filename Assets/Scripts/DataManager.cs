@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class DataManager : MonoBehaviour {
+	static readonly private string TITLE = "RANK";
 
 	public static DataManager init = null;
 	private void Awake() {
@@ -63,6 +64,12 @@ public class DataManager : MonoBehaviour {
 		binaryFormatter.Serialize(file, gameData);
 
 		file.Close();
+
+		if(gameData.key != null && !gameData.key.Equals("")) {
+
+			GameManager.init.databaseReference.Child(TITLE).Child(gameData.key).
+				SetValueAsync(gameData.coin);
+		}
 	}
 
 	public void Load() {

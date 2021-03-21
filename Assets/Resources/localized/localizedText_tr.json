@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Yeterli öğe yok. Videoyu izlemek ve evrim öğesini bir kez kullanmak ister misiniz?"
+    },
+    {
+      "key": "gameover",
+      "value": "Oyundan çık?"
     }
   ]
 }

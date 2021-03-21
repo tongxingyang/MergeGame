@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-using Firebase;
 using Firebase.Database;
 using System.Text.RegularExpressions;
 
@@ -28,12 +26,9 @@ public class RankingSystem : MonoBehaviour {
 
 	public static RankingSystem init = null;
 
-	private bool isCoolTime = false;
-	private bool firstEntry = true;
 	private int rankingCount = 0;
 	private int myRankingCount = 1;
 
-	DatabaseReference databaseReference;
 	private void Awake() {
 		if (init == null) {
 			init = this;
@@ -54,34 +49,30 @@ public class RankingSystem : MonoBehaviour {
 
 	private User currUserData;
 
-	private void Start() {
-		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-	}
-
-    private void OnEnable() {
+	private void OnEnable() {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
-
 		if (!isKey())
 			key = DataManager.init.gameData.key ?? "";
 
 		DataManager.init.tempData.key = key;
 
-		isCoolTime = false;
-		if (firstEntry) {
+		string name = DataManager.init.tempData.rankName ?? "";
+		if (!name.Equals("")) {
+			currUserData = new User(
+				DataManager.init.tempData.rankFlag,
+				DataManager.init.tempData.rankName,
+				DataManager.init.tempData.rankScore);
+		} else {
 			currUserData = new User(
 				DataManager.init.gameData.rankFlag,
 				DataManager.init.gameData.rankName,
 				DataManager.init.gameData.rankScore);
-
-			DataManager.init.tempData.rankFlag = currUserData.flag;
-			DataManager.init.tempData.rankName = currUserData.name;
-			DataManager.init.tempData.rankScore = currUserData.score;
-			SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
-
-			LoadUserRanking();
-			firstEntry = false;
 		}
+
+		SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
+
+		LoadUserRanking();
 	}
 
 	private void SetFlagOption() {
@@ -95,48 +86,41 @@ public class RankingSystem : MonoBehaviour {
 		userFlag.value = flag;
 		SetUserNameTextField(name);
 		rankScore.text = score.ToString();
+
+		DataManager.init.tempData.rankFlag = flag;
+		DataManager.init.tempData.rankName = name;
+		DataManager.init.tempData.rankScore = score;
 	}
 
     private void SetUserNameTextField(string name) {
 		userName.text = name;
 		userName.characterLimit = 10;
 		userName.onValueChanged.AddListener(
-			(word) => userName.text = Regex.Replace(word, @"[^0-9a-zA-Z??-?R]", "")
+			(word) => userName.text = Regex.Replace(word, @"[^0-9a-zA-Z¤¡-¤¾°¡-ÆR??-?R]", "")
 			);
 	}
 
 	public void UploadUserData() {
-		if (!isCoolTime) {
-			myRankingCount = 1;
-			UploadUserDataWithFirebase(userFlag.value, userName.text);
-			StartCoroutine(nameof(BtnDelay));
-		}
-	}
-
-	private IEnumerator BtnDelay() {
-		isCoolTime = true;
-		yield return new WaitForSeconds(UPLOAD_BOTTON_DELAY);
-		isCoolTime = false;
+		UploadUserDataWithFirebase(userFlag.value, userName.text);
 	}
 
 	private void UploadUserDataWithFirebase(int flag, string userName) {
-		User user = new User(flag, userName, int.Parse(bestScore.text));
+		User user = new User(flag, userName, int.Parse(ScoreManager.init.bestScoreText.text));
 		currUserData = user;
-
-		DataManager.init.tempData.rankFlag = currUserData.flag;
-		DataManager.init.tempData.rankName = currUserData.name;
-		DataManager.init.tempData.rankScore = currUserData.score;
+		SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
 
 		string json = JsonUtility.ToJson(user);
 
 		if (!isKey()) {
-			key = databaseReference.Child(TITLE).Push().Key;
+			key = GameManager.init.databaseReference.Child(TITLE).Push().Key;
 			DataManager.init.tempData.key = key ?? "";
 		}
 
-		databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
-
-		LoadUserRanking();
+		GameManager.init.databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json).ContinueWith(task => {
+			if (task.IsCompleted) {
+				LoadUserRanking();
+			}
+		});
 	}
 
 	private bool isKey() {
@@ -155,13 +139,18 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	private void LoadMyData() {
-		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
-			.OrderByChild(SCORE)
-			.StartAt(currUserData.score)
-			.ChildAdded += HandleChildAddedUserData;
+		myRankingCount = 1;
+		if (isKey()) {
+			FirebaseDatabase.DefaultInstance.GetReference(TITLE)
+				.OrderByChild(SCORE)
+				.StartAt(currUserData.score)
+				.ChildAdded += HandleChildAddedUserData;
+		}
 	}
 
 	private void HandleChildAddedRanking(object sender, ChildChangedEventArgs arge) {
+		if (rankingCount <= 0) return;
+
 		if (arge.DatabaseError != null) {
 			Debug.LogError(arge.DatabaseError.Message);
 			return;

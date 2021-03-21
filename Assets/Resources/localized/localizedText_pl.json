@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Nie ma wystarczającej liczby elementów. Czy chciałbyś obejrzeć film i raz użyć przedmiotu ewolucji?"
+    },
+    {
+      "key": "gameover",
+      "value": "Zakończyć grę?"
     }
   ]
 }

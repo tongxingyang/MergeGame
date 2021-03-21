@@ -71,6 +71,9 @@ TextureImporter:
   - first:
       213: 6686447341911776480
     second: objects3_11
+  - first:
+      213: 825987990714549256
+    second: objects3_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -188,9 +191,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 58
-        y: 929
-        width: 70
-        height: 70
+        y: 919
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,10 +211,10 @@ TextureImporter:
       name: objects3_1
       rect:
         serializedVersion: 2
-        x: 168
-        y: 908
-        width: 59
-        height: 99
+        x: 169
+        y: 898
+        width: 63
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,10 +232,10 @@ TextureImporter:
       name: objects3_2
       rect:
         serializedVersion: 2
-        x: 214
-        y: 907
-        width: 55
-        height: 100
+        x: 219
+        y: 899
+        width: 61
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,10 +253,10 @@ TextureImporter:
       name: objects3_3
       rect:
         serializedVersion: 2
-        x: 324
-        y: 877
-        width: 130
-        height: 131
+        x: 226
+        y: 897
+        width: 13
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,10 +274,10 @@ TextureImporter:
       name: objects3_4
       rect:
         serializedVersion: 2
-        x: 506
-        y: 848
-        width: 150
-        height: 152
+        x: 324
+        y: 867
+        width: 140
+        height: 141
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,10 +295,10 @@ TextureImporter:
       name: objects3_5
       rect:
         serializedVersion: 2
-        x: 726
-        y: 776
-        width: 210
-        height: 210
+        x: 506
+        y: 839
+        width: 160
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,10 +316,10 @@ TextureImporter:
       name: objects3_6
       rect:
         serializedVersion: 2
-        x: 984
-        y: 760
-        width: 240
-        height: 240
+        x: 726
+        y: 756
+        width: 230
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -334,8 +337,8 @@ TextureImporter:
       name: objects3_7
       rect:
         serializedVersion: 2
-        x: 1285
-        y: 747
+        x: 984
+        y: 740
         width: 260
         height: 260
       alignment: 0
@@ -355,10 +358,10 @@ TextureImporter:
       name: objects3_8
       rect:
         serializedVersion: 2
-        x: 1629
-        y: 670
-        width: 330
-        height: 330
+        x: 1284
+        y: 716
+        width: 292
+        height: 292
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -376,10 +379,10 @@ TextureImporter:
       name: objects3_9
       rect:
         serializedVersion: 2
-        x: 58
-        y: 92
-        width: 422
-        height: 420
+        x: 1635
+        y: 659
+        width: 360
+        height: 361
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -397,10 +400,10 @@ TextureImporter:
       name: objects3_10
       rect:
         serializedVersion: 2
-        x: 596
-        y: 68
-        width: 530
-        height: 532
+        x: 56
+        y: 72
+        width: 442
+        height: 440
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -418,10 +421,10 @@ TextureImporter:
       name: objects3_11
       rect:
         serializedVersion: 2
-        x: 1285
-        y: 25
-        width: 620
-        height: 620
+        x: 596
+        y: 50
+        width: 550
+        height: 550
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -431,6 +434,27 @@ TextureImporter:
       bones: []
       spriteID: 0ec91006e680bcc50800000000000000
       internalID: 6686447341911776480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: objects3_12
+      rect:
+        serializedVersion: 2
+        x: 1285
+        y: 15
+        width: 620
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 804874783bf767b00800000000000000
+      internalID: 825987990714549256
       vertices: []
       indices: 
       edges: []

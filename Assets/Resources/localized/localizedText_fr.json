@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Il n'y a pas assez d'articles. Souhaitez-vous regarder la vidéo et utiliser l'élément d'évolution une fois?"
+    },
+    {
+      "key": "gameover",
+      "value": "Quitter le jeu?"
     }
   ]
 }

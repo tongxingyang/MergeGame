@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Det finns inte tillräckligt med föremål. Vill du titta på videon och använda evolutionsobjektet en gång?"
+    },
+    {
+      "key": "gameover",
+      "value": "Avsluta spelet?"
     }
   ]
 }

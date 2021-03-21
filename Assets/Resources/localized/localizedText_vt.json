@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Không có đủ mặt hàng. Bạn có muốn xem video và sử dụng vật phẩm tiến hóa một lần không?"
+    },
+    {
+      "key": "gameover",
+      "value": "Thoát khỏi trò chơi?"
     }
   ]
 }

@@ -158,19 +158,24 @@ public class AdsManager : MonoBehaviour {
 
     public void ShowAdRankUpItem() {
         if (this.rankUpItemRewardedAd.IsLoaded()) {
-            this.rankUpItemRewardedAd.Show();
+            if(ObjectManager.init.TargetOfRankUpItem().Count <= 0)
+                UIManager.init.itemUnavailableMessage.SetActive(true);
+            else 
+                this.rankUpItemRewardedAd.Show();
         }
     }
 
     public void ShowAdDestroyItem() {
         if (this.destroyItemRewardedAd.IsLoaded()) {
-            this.destroyItemRewardedAd.Show();
+            if (ObjectManager.init.TargetOfDestroyItem().Count <= 0)
+                UIManager.init.itemUnavailableMessage.SetActive(true);
+            else 
+                this.destroyItemRewardedAd.Show();
         }
     }
 
     public void HandleUserCoinReward(object sender, Reward args) {
         ScoreManager.init.AddCoin(300);
-        UIManager.init.PlayAddCoinSound();
         UIManager.init.SetCoinAdsTimer();
     }
 

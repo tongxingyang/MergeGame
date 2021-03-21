@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Firebase.Database;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	private static readonly float GAME_OVER_DELAY = 2.3f;
 
+	public DatabaseReference databaseReference;
+
 	public static GameManager init = null;
 
 	public GameObject premiumGround;
 
-	private bool isEnterGame = false;
+	public bool isEnterGame = false;
 
 	private bool _isPremium;
 	public bool isPremium {
@@ -58,17 +61,9 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		DontDestroyOnLoad(this.gameObject);
+
+		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 	}
-
-//    private void Update() {
-
-//#if UNITY_ANDROID
-//        if (Input.GetKeyDown(KeyCode.Escape)) {
-//            Application.Quit();
-//        }
-//#endif
-
-//    }
 
     public void GameStart() {
 		if (!isEnterGame) {
@@ -118,5 +113,9 @@ public class GameManager : MonoBehaviour {
     public void BuyPremium() {
 		AdsManager.init.DestroyBannerAd();
 		premiumGround.SetActive(true);
+	}
+
+	public void QuitGame() {
+		Application.Quit();
 	}
 }

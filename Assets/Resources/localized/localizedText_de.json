@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Es sind nicht genügend Artikel vorhanden. Möchten Sie das Video ansehen und den Evolutionsgegenstand einmal verwenden?"
+    },
+    {
+      "key": "gameover",
+      "value": "Das Spiel verlassen?"
     }
   ]
 }

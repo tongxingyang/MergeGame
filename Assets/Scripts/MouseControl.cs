@@ -8,6 +8,9 @@ public class MouseControl : MonoBehaviour {
 	public bool isGameStart = false;
 	public bool isTouchAction = true;
 
+	private bool isUIClicking;
+	private bool isGameClicking;
+
 	private void Awake() {
 		if (init == null) {
 			init = this;
@@ -47,26 +50,25 @@ public class MouseControl : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetMouseButtonDown(0)) {
-			if (!EventSystem.current.IsPointerOverGameObject())
+		 else if (Input.GetMouseButtonDown(0)) {
 				ObjectControlWhenOnTouch();
 		} else if ( Input.GetMouseButton(0)) {
-			if (!EventSystem.current.IsPointerOverGameObject())
 				ObjectControlWhenOnTouch();
 		} else if (Input.GetMouseButtonUp(0)) {
-			if (!EventSystem.current.IsPointerOverGameObject())
 				OnTouchUp();
 		}
 	}
 
 	private void OnTouchUp() {
-		if (isGameStart && !isUITouch()) {
+		if (isGameStart && !isUITouch() && !isUIClicking) {
 			if (!isDropCurrObj) {
 				SetCurrObject();
 				ObjectManager.init.RespawnCurrObject();
 				isGameStart = false;
 			}
 		}
+		isUIClicking = false;
+		isGameClicking = false;
 	}
 
 	private void ObjectControlWhenOnTouch() {
@@ -74,7 +76,9 @@ public class MouseControl : MonoBehaviour {
 			UIManager.init.lisensePanel.SetActive(false);
 		}
 
-		if (!isUITouch() && isTouchAction) {
+		if (!isUITouch() && isTouchAction && !isUIClicking) {
+			isGameClicking = true;
+
             if (!isGameStart) {
 				GameManager.init.GameStart();
 				isGameStart = true;
@@ -86,12 +90,14 @@ public class MouseControl : MonoBehaviour {
 
 				currObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
 			}
+		} else {
+			isUIClicking = true;
 		}
 	}
 
 	private bool isUITouch() {
 		try {
-			return EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+			return (EventSystem.current.IsPointerOverGameObject() || EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) && !isGameClicking);
 		} catch {
 			return false;
 		}
@@ -105,5 +111,9 @@ public class MouseControl : MonoBehaviour {
 		} else {
 			this.gameObject.SetActive(true);
 		}
+	}
+
+	public void IsTouchAction(bool action) {
+		isTouchAction = action;
 	}
 }

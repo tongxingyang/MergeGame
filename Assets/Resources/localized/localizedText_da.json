@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Der er ikke nok varer. Kunne du tænke dig at se videoen og bruge evolutionen en gang?"
+    },
+    {
+      "key": "gameover",
+      "value": "Afslut spillet?"
     }
   ]
 }

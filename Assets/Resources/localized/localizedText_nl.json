@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Er zijn niet genoeg items. Wil je de video bekijken en het evolution-item een ​​keer gebruiken?"
+    },
+    {
+      "key": "gameover",
+      "value": "Het spel beëindigen?"
     }
   ]
 }

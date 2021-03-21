@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "There are not enough items. Would you like to watch the video and use the evolution item once?"
+    },
+    {
+      "key": "gameover",
+      "value": "Quit the game?"
     }
   ]
 }

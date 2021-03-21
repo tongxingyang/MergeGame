@@ -7,7 +7,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour {
 	private static readonly int COIN_ABOUT_SCORE = 55;
-	private static readonly double ADD_COIN_ADS_DELAY = 3;
+	private static readonly double ADD_COIN_ADS_DELAY = 5;
 	private static readonly float MAX_LEVEL_PANEL_OFF_DELAY = 2.5f;
 	private static readonly float DESTROY_MAX_OBJECT_DELAY = 1.0f;
 	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour {
 
 	//public TextMeshProUGUI coin, shopCoin;
 	public Animator animator;
+	public GameObject gameoverMessage;
 	public GameObject gameOverPanel;
 	public GameObject resultCoinPanel;
 	public GameObject MainUI;
@@ -63,20 +64,24 @@ public class UIManager : MonoBehaviour {
 
 	public TextMeshProUGUI errorLogPanel;
 
-	private bool _isEnableCoinAds;
+	private bool _isEnableCoinAds = true;
 	public bool isEnableCoinAds {
 		get { return _isEnableCoinAds; }
 		set {
-			_isEnableCoinAds = value;
 			if (value) {
+				//adsCoinAddBtn.transform.GetChild(0).gameObject.SetActive(false);
 				adsCoinAddBtn.enabled = true;
 				adsCoinAddBtn.GetComponent<RawImage>().color = Color.white;
-				addCoinAdsTimerText.SetActive(false);
 			} else {
-				addCoinAdsTimerText.SetActive(true);
+				try {
+				//	adsCoinAddBtn.transform.GetChild(0).gameObject.SetActive(true);
+				} catch (NullReferenceException e) {
+					UIManager.init.errorLogPanel.text += e.StackTrace;
+				}
 				adsCoinAddBtn.enabled = false;
 				adsCoinAddBtn.GetComponent<RawImage>().color = new Color(1, 1, 1, 0.3f);
 			}
+			_isEnableCoinAds = value;
 		}
 	}
 
@@ -99,13 +104,27 @@ public class UIManager : MonoBehaviour {
 		destroyItemBtn.onClick.AddListener(OpenDestroyItemPanelOnMain);
 	}
 
-    private void Update() {
+	private void Update() {
 		if (!isEnableCoinAds) {
 			timer = initTime - DateTime.Now;
-			addCoinAdsTimerText.GetComponent<TextMeshProUGUI>().text = timer.Minutes + ":" + string.Format("{0:D2}", timer.Seconds);
+			if (addCoinAdsTimerText.activeSelf)
+				addCoinAdsTimerText.GetComponent<TextMeshProUGUI>().text = timer.Minutes + ":" + string.Format("{0:D2}", timer.Seconds);
 
 			if (timer.TotalSeconds <= 0) {
 				isEnableCoinAds = true;
+			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (GameManager.init.isEnterGame) {
+				if (!menuPanel.activeSelf) {
+					GameManager.init.isPauseGame(!pausePanel.activeSelf);
+				}
+			}
+			else {
+				if (MainUI.activeSelf) {
+					gameoverMessage.SetActive(!gameoverMessage.activeSelf);
+				}
 			}
 		}
 	}
@@ -270,5 +289,16 @@ public class UIManager : MonoBehaviour {
 	private void OpenDestroyItemPanelOnGame() {
 		destroyItemPanelOnGame.SetActive(true);
 		ObjectManager.init.TargetOfItemFadeOutOnDestroy();
+	}
+
+	public void SendToeMail() {
+		string Emailadd = "ssunine21@gmail.com";
+		string Emailname = EscapeURL("문의사항");
+
+		Application.OpenURL("mailto:" + Emailadd + "?subject=" + Emailname);
+	}
+
+	private string EscapeURL(string url) {
+		return WWW.EscapeURL(url).Replace("+", "%20");
 	}
 }

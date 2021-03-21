@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "Non ci sono abbastanza articoli. Ti piacerebbe guardare il video e utilizzare l'oggetto evoluzione una volta?"
+    },
+    {
+      "key": "gameover",
+      "value": "Uscire dal gioco?"
     }
   ]
 }

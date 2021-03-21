@@ -161,7 +161,7 @@ public class ObjectManager : MonoBehaviour {
 			}
 		}
 
-		List < Transform > objectRange = TargetOfItem(MergeLevel.three, MergeLevel.seven);
+		List < Transform > objectRange = TargetOfRankUpItem();
 
 		int count = objectRange.Count < 1 ? 0 : 1;
 		if (count <= 0) {
@@ -192,7 +192,7 @@ public class ObjectManager : MonoBehaviour {
 			}
 		}
 
-		List<Transform> objectRange = TargetOfItem(MergeLevel.one, MergeLevel.seven);
+		List<Transform> objectRange = TargetOfDestroyItem();
 
 		int count = 2;
 		if(objectRange.Count < 2) {
@@ -223,6 +223,13 @@ public class ObjectManager : MonoBehaviour {
 		}
 	}
 
+	public List<Transform> TargetOfRankUpItem() {
+		return TargetOfItem(MergeLevel.three, MergeLevel.seven);
+	}
+	public List<Transform> TargetOfDestroyItem() {
+		return TargetOfItem(MergeLevel.one, MergeLevel.seven);
+	}
+
 	public List<Transform> TargetOfItem(MergeLevel minLevel, MergeLevel maxLevel) {
 		List<Transform> objectRange = new List<Transform>();
 
@@ -239,6 +246,7 @@ public class ObjectManager : MonoBehaviour {
 		TargetOfItemFadeIn();
 		return objectRange;
 	}
+
 
 	public List<Transform> NotTargetOfItem(MergeLevel minLevel, MergeLevel maxLevel) {
 		List<Transform> objectRange = new List<Transform>();

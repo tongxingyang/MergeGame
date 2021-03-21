@@ -143,6 +143,10 @@
     {
       "key": "noRankUpItem",
       "value": "没有足够的物品。您想观看视频并使用一次演进项目吗？"
+    },
+    {
+      "key": "gameover",
+      "value": "退出游戏吗？"
     }
   ]
 }

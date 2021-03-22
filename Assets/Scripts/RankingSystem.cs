@@ -18,14 +18,14 @@ public class RankingSystem : MonoBehaviour {
 	public Sprite[] flags;
 
 	public TextMeshProUGUI userRank;
-	public TextMeshProUGUI bestScore, rankScore;
+	public TextMeshProUGUI bestScore;
 	public TMP_Dropdown userFlag;
 	public TMP_InputField userName;
 
 	public static RankingSystem init = null;
 
 	private int rankingCount = 0;
-	private int myRankingCount = 1;
+	private int myRankingCount = 0;
 
 	private void Awake() {
 		if (init == null) {
@@ -38,10 +38,9 @@ public class RankingSystem : MonoBehaviour {
 	private void OnEnable() {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
-
 		string name = DataManager.init.tempData.rankName ?? "";
 
-		if (!name.Equals("")) {
+		if (DataManager.init.tempData.rankName != null) {
 			currUserData = new User(
 				SystemInfo.deviceModel,
 				DataManager.init.tempData.rankFlag,
@@ -58,7 +57,6 @@ public class RankingSystem : MonoBehaviour {
 		}
 
 		SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
-
 		LoadUserRanking();
 	}
 
@@ -72,7 +70,6 @@ public class RankingSystem : MonoBehaviour {
 		userRank.text = rank;
 		userFlag.value = flag;
 		SetUserNameTextField(name);
-		rankScore.text = score.ToString();
 
 		DataManager.init.tempData.rankFlag = flag;
 		DataManager.init.tempData.rankName = name;
@@ -92,17 +89,19 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	private void UploadUserDataWithFirebase(int flag, string userName) {
-		User user = new User(SystemInfo.deviceModel, flag, userName, int.Parse(ScoreManager.init.bestScoreText.text), ScoreManager.init.coin);
+		User user = new User(
+			SystemInfo.deviceModel, 
+			flag, 
+			userName, 
+			int.Parse(ScoreManager.init.bestScoreText.text), 
+			ScoreManager.init.coin
+			);
+
 		currUserData = user;
-		SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
+		GameManager.init.SetFirebaseData(user);
 
-		string json = JsonUtility.ToJson(user);
-
-		GameManager.init.databaseReference.Child(TITLE).Child(GameManager.init.key).SetRawJsonValueAsync(json).ContinueWith(task => {
-			if (task.IsCompleted) {
-				LoadUserRanking();
-			}
-		});
+		LoadUserRanking();
+		SetUserRankingData((--myRankingCount).ToString(), currUserData.flag, currUserData.name, currUserData.score);
 	}
 
 	private void LoadUserRanking() {
@@ -117,7 +116,7 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	private void LoadMyData() {
-		myRankingCount = 1;
+		myRankingCount = 0;
 		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
 			.OrderByChild(SCORE)
 			.StartAt(currUserData.score)
@@ -147,7 +146,7 @@ public class RankingSystem : MonoBehaviour {
 			return;
 		};
 
-		userRank.text = myRankingCount++.ToString();
+		userRank.text = (++myRankingCount).ToString();
 	}
 
 	private void DeleteCurrRankingObject() {

@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase.Database;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class DataManager : MonoBehaviour {
 	static readonly private string TITLE = "RANK";
+	static readonly private string COIN = "coin";
+	static readonly private string SCORE = "score";
 
 	public static DataManager init = null;
 	private void Awake() {
 		if (init == null) {
 			init = this;
-		} else if (init != this) {
+		}
+		else if (init != this) {
 			Destroy(this.gameObject);
 		}
 		DontDestroyOnLoad(this.gameObject);
@@ -46,6 +50,7 @@ public class DataManager : MonoBehaviour {
 		gameData.wallpaperNum = ObjectManager.init.currBackgroundNum;
 		gameData.styleProducts = new bool[ShoppingManager.init.style.Length];
 		gameData.wallpaperProducts = new bool[ShoppingManager.init.wallpaper.Length];
+
 		for (int i = 0; i < gameData.styleProducts.Length; ++i) {
 			gameData.styleProducts[i] = ShoppingManager.init.style[i].isBuy;
 			gameData.wallpaperProducts[i] = ShoppingManager.init.wallpaper[i].isBuy;
@@ -61,6 +66,7 @@ public class DataManager : MonoBehaviour {
 
 		gameData.lastLanguageFileName = LocalizationManager.init.lastLanguageFileName;
 		gameData.key = GameManager.init.key;
+
 		binaryFormatter.Serialize(file, gameData);
 
 		file.Close();
@@ -90,6 +96,7 @@ public class DataManager : MonoBehaviour {
 				ShoppingManager.init.style[i].isBuy = gameData.styleProducts[i];
 				ShoppingManager.init.wallpaper[i].isBuy = gameData.wallpaperProducts[i];
 			}
+
 			ShoppingManager.init.ApplyItem(ShoppingManager.init.style[gameData.styleNum]);
 			ShoppingManager.init.ApplyItem(ShoppingManager.init.wallpaper[gameData.wallpaperNum]);
 
@@ -104,13 +111,16 @@ public class DataManager : MonoBehaviour {
 
 			if (gameData.key.Equals("")) {
 				InitFirebaseData();
-			} else {
-				SetFirebaseData();
+			}
+			else {
+				GameManager.init.key = gameData.key;
+				LoadFirebaseDate();
 			}
 
 			file.Close();
 
-		} else {
+		}
+		else {
 			LocalizationManager.init.lastLanguageFileName = "";
 			ScoreManager.init.finalBestScore = 0;
 			ScoreManager.init.bestScore = 0;
@@ -121,9 +131,26 @@ public class DataManager : MonoBehaviour {
 		}
 	}
 
+	private void LoadFirebaseDate() {
+		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
+			.OrderByKey()
+			.EqualTo(gameData.key)
+			.ChildAdded += HandleChildAddedUserData;
+	}
+	private void HandleChildAddedUserData(object sender, ChildChangedEventArgs arge) {
+		if (arge.DatabaseError != null) {
+			Debug.LogError(arge.DatabaseError.Message);
+			return;
+		};
+
+		IDictionary data = (IDictionary)arge.Snapshot.Value;
+		ScoreManager.init.coin = int.Parse(data[COIN].ToString());
+		ScoreManager.init.bestScore = int.Parse(data[SCORE].ToString());
+		ScoreManager.init.finalBestScore = int.Parse(data[SCORE].ToString());
+	}
+
 	public void InitFirebaseData() {
 		GameManager.init.key = GameManager.init.databaseReference.Child(TITLE).Push().Key;
-
 		User user = new User(SystemInfo.deviceModel, 0, "", int.Parse(ScoreManager.init.bestScoreText.text), gameData.coin);
 		string json = JsonUtility.ToJson(user);
 		GameManager.init.databaseReference.Child(TITLE).Child(GameManager.init.key).SetRawJsonValueAsync(json);
@@ -134,11 +161,9 @@ public class DataManager : MonoBehaviour {
 			SystemInfo.deviceModel,
 			gameData.rankFlag,
 			gameData.rankName,
-			gameData.rankScore,
-			gameData.coin);
-
-		string json = JsonUtility.ToJson(user);
-		GameManager.init.databaseReference.Child(TITLE).Child(gameData.key).SetRawJsonValueAsync(json);
-		GameManager.init.key = gameData.key;
+			gameData.bestScore,
+			gameData.coin
+			);
+		GameManager.init.SetFirebaseData(user);
 	}
 }

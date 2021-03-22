@@ -121,6 +121,7 @@ class ScoreManager : MonoBehaviour {
 
 	public void setSaveBestScore() {
 		finalBestScore = bestScore;
+		GameManager.init.ScoreFirebaseSync(finalBestScore);
 	}
 
 	public void InitScore() {
@@ -138,6 +139,7 @@ class ScoreManager : MonoBehaviour {
 
 	public void AddCoin(int num) {
 		coin += num;
+		GameManager.init.CoinFirebaseSync(coin);
 		UIManager.init.PlayAddCoinSound();
     }
 

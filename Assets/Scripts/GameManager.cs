@@ -5,6 +5,9 @@ using Firebase.Database;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+	static readonly private string TITLE = "RANK";
+	static readonly private string COIN = "coin";
+	static readonly private string SCORE = "score";
 	private static readonly float GAME_OVER_DELAY = 2.3f;
 
 	public DatabaseReference databaseReference;
@@ -122,5 +125,20 @@ public class GameManager : MonoBehaviour {
 
 	private bool isKey() {
 		return null != key && !key.Equals("");
+	}
+
+	public void SetFirebaseData(User user) {
+		if (!key.Equals("")) {
+			string json = JsonUtility.ToJson(user);
+			databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json);
+		}
+	}
+
+	public void CoinFirebaseSync(int num) {
+		databaseReference.Child(TITLE).Child(key).Child(COIN).SetValueAsync(num);
+	}
+
+	public void ScoreFirebaseSync(int num) {
+		databaseReference.Child(TITLE).Child(key).Child(SCORE).SetValueAsync(num);
 	}
 }

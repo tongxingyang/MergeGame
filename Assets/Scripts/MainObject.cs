@@ -78,6 +78,16 @@ public class MainObject : MonoBehaviour {
 		}
 	}
 
+	private void OnCollisionStay2D(Collision2D collision) {
+		if (!collision.gameObject.CompareTag("Untagged"))
+			isDrop = true;
+
+		if (isBothObjects(collision.gameObject) && !isMerging) {
+			isMerging = true;
+			targetPosCheckAndMerge(collision.gameObject);
+		}
+	}
+
 	private bool isBothObjects(GameObject collision) {
 		if (collision.CompareTag("object") && CompareTag("object")) {
 			if (this.mergeLevel == collision.GetComponent<MainObject>().mergeLevel)

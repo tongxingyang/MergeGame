@@ -60,16 +60,12 @@ public class DataManager : MonoBehaviour {
 		gameData.initTimer = UIManager.init.initTime;
 
 		gameData.lastLanguageFileName = LocalizationManager.init.lastLanguageFileName;
-
+		gameData.key = GameManager.init.key;
 		binaryFormatter.Serialize(file, gameData);
 
 		file.Close();
 
-		if(gameData.key != null && !gameData.key.Equals("")) {
-
-			GameManager.init.databaseReference.Child(TITLE).Child(gameData.key).
-				SetValueAsync(gameData.coin);
-		}
+		SetFirebaseData();
 	}
 
 	public void Load() {
@@ -104,8 +100,13 @@ public class DataManager : MonoBehaviour {
 			SettingManager.init.EffectOn(gameData.isEffectVolum);
 
 			UIManager.init.initTime = gameData.initTimer;
-
 			LocalizationManager.init.lastLanguageFileName = gameData.lastLanguageFileName ?? "";
+
+			if (gameData.key.Equals("")) {
+				InitFirebaseData();
+			} else {
+				SetFirebaseData();
+			}
 
 			file.Close();
 
@@ -115,6 +116,29 @@ public class DataManager : MonoBehaviour {
 			ScoreManager.init.bestScore = 0;
 			ScoreManager.init.currAdsCount = 0;
 			ScoreManager.init.coin = 0;
+
+			InitFirebaseData();
 		}
+	}
+
+	public void InitFirebaseData() {
+		GameManager.init.key = GameManager.init.databaseReference.Child(TITLE).Push().Key;
+
+		User user = new User(SystemInfo.deviceModel, 0, "", int.Parse(ScoreManager.init.bestScoreText.text), gameData.coin);
+		string json = JsonUtility.ToJson(user);
+		GameManager.init.databaseReference.Child(TITLE).Child(GameManager.init.key).SetRawJsonValueAsync(json);
+	}
+
+	public void SetFirebaseData() {
+		User user = new User(
+			SystemInfo.deviceModel,
+			gameData.rankFlag,
+			gameData.rankName,
+			gameData.rankScore,
+			gameData.coin);
+
+		string json = JsonUtility.ToJson(user);
+		GameManager.init.databaseReference.Child(TITLE).Child(gameData.key).SetRawJsonValueAsync(json);
+		GameManager.init.key = gameData.key;
 	}
 }

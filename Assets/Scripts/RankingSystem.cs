@@ -7,14 +7,12 @@ using Firebase.Database;
 using System.Text.RegularExpressions;
 
 public class RankingSystem : MonoBehaviour {
-	static readonly private float UPLOAD_BOTTON_DELAY = 5f;
 	static readonly private string TITLE = "RANK";
 	static readonly private string FLAG = "flag";
 	static readonly private string NAME = "name";
 	static readonly private string SCORE = "score";
 	static readonly private int LIMIT_USER_DATA = 100;
 
-	public string key;
 	public Transform rankList;
 	public GameObject rankPrefab;
 	public Sprite[] flags;
@@ -35,39 +33,28 @@ public class RankingSystem : MonoBehaviour {
 		}
 	}
 
-	public class User {
-		public int flag;
-		public string name;
-		public int score;
-
-		public User(int flag, string name, int score) {
-			this.flag = flag;
-			this.name = name;
-			this.score = score;
-		}
-	}
-
 	private User currUserData;
 
 	private void OnEnable() {
 		SetFlagOption();
 		bestScore.text = ScoreManager.init.bestScoreText.text;
-		if (!isKey())
-			key = DataManager.init.gameData.key ?? "";
-
-		DataManager.init.tempData.key = key;
 
 		string name = DataManager.init.tempData.rankName ?? "";
+
 		if (!name.Equals("")) {
 			currUserData = new User(
+				SystemInfo.deviceModel,
 				DataManager.init.tempData.rankFlag,
 				DataManager.init.tempData.rankName,
-				DataManager.init.tempData.rankScore);
+				DataManager.init.tempData.rankScore,
+				ScoreManager.init.coin);
 		} else {
 			currUserData = new User(
+				SystemInfo.deviceModel,
 				DataManager.init.gameData.rankFlag,
 				DataManager.init.gameData.rankName,
-				DataManager.init.gameData.rankScore);
+				DataManager.init.gameData.rankScore,
+				ScoreManager.init.coin);
 		}
 
 		SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
@@ -105,27 +92,18 @@ public class RankingSystem : MonoBehaviour {
 	}
 
 	private void UploadUserDataWithFirebase(int flag, string userName) {
-		User user = new User(flag, userName, int.Parse(ScoreManager.init.bestScoreText.text));
+		User user = new User(SystemInfo.deviceModel, flag, userName, int.Parse(ScoreManager.init.bestScoreText.text), ScoreManager.init.coin);
 		currUserData = user;
 		SetUserRankingData("-", currUserData.flag, currUserData.name, currUserData.score);
 
 		string json = JsonUtility.ToJson(user);
 
-		if (!isKey()) {
-			key = GameManager.init.databaseReference.Child(TITLE).Push().Key;
-			DataManager.init.tempData.key = key ?? "";
-		}
-
-		GameManager.init.databaseReference.Child(TITLE).Child(key).SetRawJsonValueAsync(json).ContinueWith(task => {
+		GameManager.init.databaseReference.Child(TITLE).Child(GameManager.init.key).SetRawJsonValueAsync(json).ContinueWith(task => {
 			if (task.IsCompleted) {
 				LoadUserRanking();
 			}
 		});
 	}
-
-	private bool isKey() {
-		return null != key && !key.Equals("");
-    }
 
 	private void LoadUserRanking() {
 		DeleteCurrRankingObject();
@@ -140,12 +118,10 @@ public class RankingSystem : MonoBehaviour {
 
 	private void LoadMyData() {
 		myRankingCount = 1;
-		if (isKey()) {
-			FirebaseDatabase.DefaultInstance.GetReference(TITLE)
-				.OrderByChild(SCORE)
-				.StartAt(currUserData.score)
-				.ChildAdded += HandleChildAddedUserData;
-		}
+		FirebaseDatabase.DefaultInstance.GetReference(TITLE)
+			.OrderByChild(SCORE)
+			.StartAt(currUserData.score)
+			.ChildAdded += HandleChildAddedUserData;
 	}
 
 	private void HandleChildAddedRanking(object sender, ChildChangedEventArgs arge) {
@@ -172,7 +148,6 @@ public class RankingSystem : MonoBehaviour {
 		};
 
 		userRank.text = myRankingCount++.ToString();
-		//SetUserRankingData(myRankingCount++.ToString());
 	}
 
 	private void DeleteCurrRankingObject() {

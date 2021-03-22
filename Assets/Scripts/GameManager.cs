@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 
 	public DatabaseReference databaseReference;
 
+	public string key = "";
 	public static GameManager init = null;
 
 	public GameObject premiumGround;
@@ -117,5 +118,9 @@ public class GameManager : MonoBehaviour {
 
 	public void QuitGame() {
 		Application.Quit();
+	}
+
+	private bool isKey() {
+		return null != key && !key.Equals("");
 	}
 }

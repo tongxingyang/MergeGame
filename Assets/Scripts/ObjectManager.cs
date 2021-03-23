@@ -51,7 +51,8 @@ public class ObjectManager : MonoBehaviour {
 		objParent = new GameObject("objParent");
 		garbageObjectContainer = new Queue<GameObject>();
 
-		currBackground = Instantiate(background);
+		if (currBackground == null)
+			currBackground = Instantiate(background);
 
 		CreateObject(0);
 	}

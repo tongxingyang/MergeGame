@@ -12,6 +12,7 @@ class ScoreManager : MonoBehaviour {
 	public static readonly int MARGE_SCORE = 2;
 	private static readonly int BASE_SCORE = 13;
 	private static readonly int ADS_MAX_COUNT = 3;
+	private static readonly int EVALUTION_MAX_COUNT = 8;
 	private static readonly int MAX_ITEM_ONEGAME = 2;
 
 	public TextMeshProUGUI currScoreText, bestScoreText, scoreViewText, adsCount, coinText, shopCoinText;
@@ -29,6 +30,18 @@ class ScoreManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad(this.gameObject);
 	}
+	private int _currEvalutionCount = 0;
+	public int currEvalutionCount {
+		get {
+			return _currEvalutionCount;
+		}
+		set {
+			if (value == EVALUTION_MAX_COUNT) {
+				UIManager.init.evalutionMassage.SetActive(true);
+			}
+			_currEvalutionCount = value;
+		}
+	}
 
 	private int _currAdsCount = 0;
 	public int currAdsCount {
@@ -37,7 +50,7 @@ class ScoreManager : MonoBehaviour {
 		}
 		set {
 			if (value >= ADS_MAX_COUNT) {
-				currAdsCount = 0;
+				_currAdsCount = 0;
 				AdsManager.init.ShowInterstitialAd();
 			} else _currAdsCount = value;
 		}
@@ -128,6 +141,7 @@ class ScoreManager : MonoBehaviour {
 		bestScore = finalBestScore;
 		currScore = 0;
 		currAdsCount++;
+		currEvalutionCount++;
 	}
 
 	public void AddScore(int type, ObjectManager.MergeLevel mergeLevel = ObjectManager.MergeLevel.one) {

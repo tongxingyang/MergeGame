@@ -40,6 +40,7 @@ public class DataManager : MonoBehaviour {
 		gameData = new DataInfo.GameData();
 		gameData = tempData;
 
+		gameData.evalutionCount = ScoreManager.init.currEvalutionCount;
 		gameData.adsCount = ScoreManager.init.currAdsCount;
 		gameData.bestScore = ScoreManager.init.finalBestScore;
 		gameData.coin = ScoreManager.init.coin;
@@ -87,6 +88,7 @@ public class DataManager : MonoBehaviour {
 
 			ScoreManager.init.finalBestScore = gameData.bestScore;
 			ScoreManager.init.bestScore = gameData.bestScore;
+			ScoreManager.init.currEvalutionCount = gameData.evalutionCount;
 			ScoreManager.init.currAdsCount = gameData.adsCount;
 			ScoreManager.init.coin = gameData.coin;
 			ScoreManager.init.rankItemCount = gameData.rankupItemCount;

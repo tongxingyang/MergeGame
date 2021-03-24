@@ -1,148 +1,156 @@
 {
-  "items": [
-    {
-      "key": "movie",
-      "value": ""
-    },
-    {
-      "key": "noCoin",
-      "value": ""
-    },
-    {
-      "key": "cancel",
-      "value": ""
-    },
-    {
-      "key": "viewAds",
-      "value": ""
-    },
-    {
-      "key": "confirm",
-      "value": ""
-    },
-    {
-      "key": "use",
-      "value": ""
-    },
-    {
-      "key": "setting",
-      "value": ""
-    },
-    {
-      "key": "effectsoff",
-      "value": ""
-    },
-    {
-      "key": "effectson",
-      "value": ""
-    },
-    {
-      "key": "backgroundoff",
-      "value": ""
-    },
-    {
-      "key": "backgroundon",
-      "value": ""
-    },
-    {
-      "key": "language",
-      "value": ""
-    },
-    {
-      "key": "credit",
-      "value": ""
-    },
-    {
-      "key": "normal",
-      "value": ""
-    },
-    {
-      "key": "product1key",
-      "value": ""
-    },
-    {
-      "key": "product1value",
-      "value": ""
-    },
-    {
-      "key": "product2key",
-      "value": ""
-    },
-    {
-      "key": "product2value",
-      "value": ""
-    },
-    {
-      "key": "product3key",
-      "value": ""
-    },
-    {
-      "key": "product3value",
-      "value": ""
-    },
-    {
-      "key": "product4key",
-      "value": ""
-    },
-    {
-      "key": "product4value",
-      "value": ""
-    },
-    {
-      "key": "product5key",
-      "value": "Münzbox"
-    },
-    {
-      "key": "product5value",
-      "value": ""
-    },
-    {
-      "key": "product6key",
-      "value": ""
-    },
-    {
-      "key": "product6value",
-      "value": ""
-    },
-    {
-      "key": "product7key",
-      "value": ""
-    },
-    {
-      "key": "product7value",
-      "value": ""
-    },
-    {
-      "key": "onlock",
-      "value": ""
-    },
-    {
-      "key": "buy",
-      "value": ""
-    },
-    {
-      "key": "buySuccess",
-      "value": ""
-    },
-    {
-      "key": "style",
-      "value": ""
-    },
-    {
-      "key": "background",
-      "value": ""
-    },
-    {
-      "key": "noFruit",
-      "value": ""
-    },
-    {
-      "key": "noDestroyItem",
-      "value": ""
-    },
-    {
-      "key": "noRankUpItem",
-      "value": ""
-    }
-  ]
+    "items": [
+        {
+            "key": "movie",
+            "value": ""
+        },
+        {
+            "key": "noCoin",
+            "value": ""
+        },
+        {
+            "key": "cancel",
+            "value": ""
+        },
+        {
+            "key": "viewAds",
+            "value": ""
+        },
+        {
+            "key": "confirm",
+            "value": ""
+        },
+        {
+            "key": "use",
+            "value": ""
+        },
+        {
+            "key": "setting",
+            "value": ""
+        },
+        {
+            "key": "effectsoff",
+            "value": ""
+        },
+        {
+            "key": "effectson",
+            "value": ""
+        },
+        {
+            "key": "backgroundoff",
+            "value": ""
+        },
+        {
+            "key": "backgroundon",
+            "value": ""
+        },
+        {
+            "key": "language",
+            "value": ""
+        },
+        {
+            "key": "credit",
+            "value": ""
+        },
+        {
+            "key": "normal",
+            "value": ""
+        },
+        {
+            "key": "product1key",
+            "value": ""
+        },
+        {
+            "key": "product1value",
+            "value": ""
+        },
+        {
+            "key": "product2key",
+            "value": ""
+        },
+        {
+            "key": "product2value",
+            "value": ""
+        },
+        {
+            "key": "product3key",
+            "value": ""
+        },
+        {
+            "key": "product3value",
+            "value": ""
+        },
+        {
+            "key": "product4key",
+            "value": ""
+        },
+        {
+            "key": "product4value",
+            "value": ""
+        },
+        {
+            "key": "product5key",
+            "value": "Münzbox"
+        },
+        {
+            "key": "product5value",
+            "value": ""
+        },
+        {
+            "key": "product6key",
+            "value": ""
+        },
+        {
+            "key": "product6value",
+            "value": ""
+        },
+        {
+            "key": "product7key",
+            "value": ""
+        },
+        {
+            "key": "product7value",
+            "value": ""
+        },
+        {
+            "key": "onlock",
+            "value": ""
+        },
+        {
+            "key": "buy",
+            "value": ""
+        },
+        {
+            "key": "buySuccess",
+            "value": ""
+        },
+        {
+            "key": "style",
+            "value": ""
+        },
+        {
+            "key": "background",
+            "value": ""
+        },
+        {
+            "key": "noFruit",
+            "value": ""
+        },
+        {
+            "key": "noDestroyItem",
+            "value": ""
+        },
+        {
+            "key": "noRankUpItem",
+            "value": ""
+        },
+        {
+            "key": "evaluation",
+            "value": ""
+        },
+        {
+            "key": "evaluationMessage",
+            "value": ""
+        }
+    ]
 }

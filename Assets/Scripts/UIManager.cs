@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject destroyItemPanelOnMain;
 	public GameObject rankUpItemPanelOnGame;
 	public GameObject destroyItemPanelOnGame;
+	public GameObject evalutionMassage;
 
 	public Button rankItemBtn;
 	public Button destroyItemBtn;
@@ -300,5 +301,18 @@ public class UIManager : MonoBehaviour {
 
 	private string EscapeURL(string url) {
 		return WWW.EscapeURL(url).Replace("+", "%20");
+	}
+
+	public void GoToStore() {
+#if UNITY_ANDROID
+		Application.OpenURL("market://details?id=com.bognstudio.mergegame");
+
+#elif UNITY_IPHONE
+		Application.OpenURL("itms-apps://itunes.apple.com/app/id1556222154");
+
+#else
+		Application.OpenURL("https://play.google.com/store/apps/details?id=com.bognstudio.mergegame");
+
+#endif
 	}
 }

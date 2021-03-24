@@ -1,152 +1,160 @@
 {
-  "items": [
-    {
-      "key": "movie",
-      "value": "观看视频并获得300个硬币。"
-    },
-    {
-      "key": "noCoin",
-      "value": "没有足够的硬币!!"
-    },
-    {
-      "key": "cancel",
-      "value": "取消"
-    },
-    {
-      "key": "viewAds",
-      "value": "观看视频"
-    },
-    {
-      "key": "confirm",
-      "value": "确认"
-    },
-    {
-      "key": "use",
-      "value": "使用"
-    },
-    {
-      "key": "setting",
-      "value": "设定值"
-    },
-    {
-      "key": "effectsoff",
-      "value": "效果关闭"
-    },
-    {
-      "key": "effectson",
-      "value": "对的影响"
-    },
-    {
-      "key": "backgroundoff",
-      "value": "关闭背景音乐"
-    },
-    {
-      "key": "backgroundon",
-      "value": "开启背景音乐"
-    },
-    {
-      "key": "language",
-      "value": "简体中文"
-    },
-    {
-      "key": "credit",
-      "value": "信用"
-    },
-    {
-      "key": "normal",
-      "value": "普通的"
-    },
-    {
-      "key": "product1key",
-      "value": "高级升级"
-    },
-    {
-      "key": "product1value",
-      "value": "删除广告并更舒适地享受游戏。"
-    },
-    {
-      "key": "product2key",
-      "value": "双硬币"
-    },
-    {
-      "key": "product2value",
-      "value": "它使您在游戏中获得的金币翻倍。永远！！"
-    },
-    {
-      "key": "product3key",
-      "value": "堆硬币"
-    },
-    {
-      "key": "product3value",
-      "value": "立即添加2,000个硬币。"
-    },
-    {
-      "key": "product4key",
-      "value": "零钱袋"
-    },
-    {
-      "key": "product4value",
-      "value": "立即添加8,000个硬币。享受折扣价。"
-    },
-    {
-      "key": "product5key",
-      "value": "投币箱"
-    },
-    {
-      "key": "product5value",
-      "value": "立即添加14,000个硬币。体验更高的折扣率！"
-    },
-    {
-      "key": "product6key",
-      "value": "毁灭"
-    },
-    {
-      "key": "product6value",
-      "value": "从2级到8级随机破坏2个水果！"
-    },
-    {
-      "key": "product7key",
-      "value": "进化"
-    },
-    {
-      "key": "product7value",
-      "value": "从4到8个阶段随机进化一个水果！"
-    },
-    {
-      "key": "onlock",
-      "value": "开锁"
-    },
-    {
-      "key": "buy",
-      "value": "硬币。你想买吗？"
-    },
-    {
-      "key": "buySuccess",
-      "value": "购买成功！！"
-    },
-    {
-      "key": "style",
-      "value": "风格"
-    },
-    {
-      "key": "background",
-      "value": "背景"
-    },
-    {
-      "key": "noFruit",
-      "value": "没有符合条件的水果。"
-    },
-    {
-      "key": "noDestroyItem",
-      "value": "没有足够的物品。您想观看视频并使用销毁物品一次吗？"
-    },
-    {
-      "key": "noRankUpItem",
-      "value": "没有足够的物品。您想观看视频并使用一次演进项目吗？"
-    },
-    {
-      "key": "gameover",
-      "value": "退出游戏吗？"
-    }
-  ]
+    "items": [
+        {
+            "key": "movie",
+            "value": "观看视频并获得300个硬币。"
+        },
+        {
+            "key": "noCoin",
+            "value": "没有足够的硬币!!"
+        },
+        {
+            "key": "cancel",
+            "value": "取消"
+        },
+        {
+            "key": "viewAds",
+            "value": "观看视频"
+        },
+        {
+            "key": "confirm",
+            "value": "确认"
+        },
+        {
+            "key": "use",
+            "value": "使用"
+        },
+        {
+            "key": "setting",
+            "value": "设定值"
+        },
+        {
+            "key": "effectsoff",
+            "value": "效果关闭"
+        },
+        {
+            "key": "effectson",
+            "value": "对的影响"
+        },
+        {
+            "key": "backgroundoff",
+            "value": "关闭背景音乐"
+        },
+        {
+            "key": "backgroundon",
+            "value": "开启背景音乐"
+        },
+        {
+            "key": "language",
+            "value": "简体中文"
+        },
+        {
+            "key": "credit",
+            "value": "信用"
+        },
+        {
+            "key": "normal",
+            "value": "普通的"
+        },
+        {
+            "key": "product1key",
+            "value": "高级升级"
+        },
+        {
+            "key": "product1value",
+            "value": "删除广告并更舒适地享受游戏。"
+        },
+        {
+            "key": "product2key",
+            "value": "双硬币"
+        },
+        {
+            "key": "product2value",
+            "value": "它使您在游戏中获得的金币翻倍。永远！！"
+        },
+        {
+            "key": "product3key",
+            "value": "堆硬币"
+        },
+        {
+            "key": "product3value",
+            "value": "立即添加2,000个硬币。"
+        },
+        {
+            "key": "product4key",
+            "value": "零钱袋"
+        },
+        {
+            "key": "product4value",
+            "value": "立即添加8,000个硬币。享受折扣价。"
+        },
+        {
+            "key": "product5key",
+            "value": "投币箱"
+        },
+        {
+            "key": "product5value",
+            "value": "立即添加14,000个硬币。体验更高的折扣率！"
+        },
+        {
+            "key": "product6key",
+            "value": "毁灭"
+        },
+        {
+            "key": "product6value",
+            "value": "从2级到8级随机破坏2个水果！"
+        },
+        {
+            "key": "product7key",
+            "value": "进化"
+        },
+        {
+            "key": "product7value",
+            "value": "从4到8个阶段随机进化一个水果！"
+        },
+        {
+            "key": "onlock",
+            "value": "开锁"
+        },
+        {
+            "key": "buy",
+            "value": "硬币。你想买吗？"
+        },
+        {
+            "key": "buySuccess",
+            "value": "购买成功！！"
+        },
+        {
+            "key": "style",
+            "value": "风格"
+        },
+        {
+            "key": "background",
+            "value": "背景"
+        },
+        {
+            "key": "noFruit",
+            "value": "没有符合条件的水果。"
+        },
+        {
+            "key": "noDestroyItem",
+            "value": "没有足够的物品。您想观看视频并使用销毁物品一次吗？"
+        },
+        {
+            "key": "noRankUpItem",
+            "value": "没有足够的物品。您想观看视频并使用一次演进项目吗？"
+        },
+        {
+            "key": "gameover",
+            "value": "退出游戏吗？"
+        },
+        {
+            "key": "evaluation",
+            "value": "评估"
+        },
+        {
+            "key": "evaluationMessage",
+            "value": "如果您喜欢玩游戏，请留下星级和支持信息吗？"
+        }
+    ]
 }

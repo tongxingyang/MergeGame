@@ -1,152 +1,160 @@
 {
-  "items": [
-    {
-      "key": "movie",
-      "value": "Assista ao vídeo e ganhe 300 moedas."
-    },
-    {
-      "key": "noCoin",
-      "value": "Moedas insuficientes !!"
-    },
-    {
-      "key": "cancel",
-      "value": "cancelar"
-    },
-    {
-      "key": "viewAds",
-      "value": "Assista o vídeo"
-    },
-    {
-      "key": "confirm",
-      "value": "confirme"
-    },
-    {
-      "key": "use",
-      "value": "Usar"
-    },
-    {
-      "key": "setting",
-      "value": "Configurações"
-    },
-    {
-      "key": "effectsoff",
-      "value": "efeitos fora"
-    },
-    {
-      "key": "effectson",
-      "value": "efeitos em"
-    },
-    {
-      "key": "backgroundoff",
-      "value": "música de fundo desligada"
-    },
-    {
-      "key": "backgroundon",
-      "value": "música de fundo ligada"
-    },
-    {
-      "key": "language",
-      "value": "Português"
-    },
-    {
-      "key": "credit",
-      "value": "Crédito"
-    },
-    {
-      "key": "normal",
-      "value": "Normal"
-    },
-    {
-      "key": "product1key",
-      "value": "Atualização premium"
-    },
-    {
-      "key": "product1value",
-      "value": "Remova os anúncios e curta o jogo com mais conforto."
-    },
-    {
-      "key": "product2key",
-      "value": "Moeda dupla"
-    },
-    {
-      "key": "product2value",
-      "value": "Ele dobra as moedas que você ganha no jogo. para sempre!!"
-    },
-    {
-      "key": "product3key",
-      "value": "Pilha de moedas"
-    },
-    {
-      "key": "product3value",
-      "value": "2,000 moedas são adicionadas imediatamente."
-    },
-    {
-      "key": "product4key",
-      "value": "Bolso de moedas"
-    },
-    {
-      "key": "product4value",
-      "value": "8,000 moedas são adicionadas imediatamente. Desfrute de um preço com desconto."
-    },
-    {
-      "key": "product5key",
-      "value": "Caixa de moedas"
-    },
-    {
-      "key": "product5value",
-      "value": "14,000 moedas são adicionadas imediatamente. Experimente uma taxa de desconto maior!"
-    },
-    {
-      "key": "product6key",
-      "value": "Destruição"
-    },
-    {
-      "key": "product6value",
-      "value": "Destrua 2 frutas do nível 2 ao 8 aleatoriamente!"
-    },
-    {
-      "key": "product7key",
-      "value": "Evolução"
-    },
-    {
-      "key": "product7value",
-      "value": "Evolua aleatoriamente uma fruta de 4 a 8 estágios !!"
-    },
-    {
-      "key": "onlock",
-      "value": "Desbloquear"
-    },
-    {
-      "key": "buy",
-      "value": "moedas. Você gostaria de comprar?"
-    },
-    {
-      "key": "buySuccess",
-      "value": "Sucesso de compra !!"
-    },
-    {
-      "key": "style",
-      "value": "Estilo"
-    },
-    {
-      "key": "background",
-      "value": "Fundo"
-    },
-    {
-      "key": "noFruit",
-      "value": "Não há fruta que cumpra as condições."
-    },
-    {
-      "key": "noDestroyItem",
-      "value": "Não há itens suficientes. Você gostaria de assistir ao vídeo e usar o item de destruição uma vez?"
-    },
-    {
-      "key": "noRankUpItem",
-      "value": "Não há itens suficientes. Você gostaria de assistir ao vídeo e usar o item de evolução uma vez?"
-    },
-    {
-      "key": "gameover",
-      "value": "Quer sair do jogo?"
-    }
-  ]
+    "items": [
+        {
+            "key": "movie",
+            "value": "Assista ao vídeo e ganhe 300 moedas."
+        },
+        {
+            "key": "noCoin",
+            "value": "Moedas insuficientes !!"
+        },
+        {
+            "key": "cancel",
+            "value": "cancelar"
+        },
+        {
+            "key": "viewAds",
+            "value": "Assista o vídeo"
+        },
+        {
+            "key": "confirm",
+            "value": "confirme"
+        },
+        {
+            "key": "use",
+            "value": "Usar"
+        },
+        {
+            "key": "setting",
+            "value": "Configurações"
+        },
+        {
+            "key": "effectsoff",
+            "value": "efeitos fora"
+        },
+        {
+            "key": "effectson",
+            "value": "efeitos em"
+        },
+        {
+            "key": "backgroundoff",
+            "value": "música de fundo desligada"
+        },
+        {
+            "key": "backgroundon",
+            "value": "música de fundo ligada"
+        },
+        {
+            "key": "language",
+            "value": "Português"
+        },
+        {
+            "key": "credit",
+            "value": "Crédito"
+        },
+        {
+            "key": "normal",
+            "value": "Normal"
+        },
+        {
+            "key": "product1key",
+            "value": "Atualização premium"
+        },
+        {
+            "key": "product1value",
+            "value": "Remova os anúncios e curta o jogo com mais conforto."
+        },
+        {
+            "key": "product2key",
+            "value": "Moeda dupla"
+        },
+        {
+            "key": "product2value",
+            "value": "Ele dobra as moedas que você ganha no jogo. para sempre!!"
+        },
+        {
+            "key": "product3key",
+            "value": "Pilha de moedas"
+        },
+        {
+            "key": "product3value",
+            "value": "2,000 moedas são adicionadas imediatamente."
+        },
+        {
+            "key": "product4key",
+            "value": "Bolso de moedas"
+        },
+        {
+            "key": "product4value",
+            "value": "8,000 moedas são adicionadas imediatamente. Desfrute de um preço com desconto."
+        },
+        {
+            "key": "product5key",
+            "value": "Caixa de moedas"
+        },
+        {
+            "key": "product5value",
+            "value": "14,000 moedas são adicionadas imediatamente. Experimente uma taxa de desconto maior!"
+        },
+        {
+            "key": "product6key",
+            "value": "Destruição"
+        },
+        {
+            "key": "product6value",
+            "value": "Destrua 2 frutas do nível 2 ao 8 aleatoriamente!"
+        },
+        {
+            "key": "product7key",
+            "value": "Evolução"
+        },
+        {
+            "key": "product7value",
+            "value": "Evolua aleatoriamente uma fruta de 4 a 8 estágios !!"
+        },
+        {
+            "key": "onlock",
+            "value": "Desbloquear"
+        },
+        {
+            "key": "buy",
+            "value": "moedas. Você gostaria de comprar?"
+        },
+        {
+            "key": "buySuccess",
+            "value": "Sucesso de compra !!"
+        },
+        {
+            "key": "style",
+            "value": "Estilo"
+        },
+        {
+            "key": "background",
+            "value": "Fundo"
+        },
+        {
+            "key": "noFruit",
+            "value": "Não há fruta que cumpra as condições."
+        },
+        {
+            "key": "noDestroyItem",
+            "value": "Não há itens suficientes. Você gostaria de assistir ao vídeo e usar o item de destruição uma vez?"
+        },
+        {
+            "key": "noRankUpItem",
+            "value": "Não há itens suficientes. Você gostaria de assistir ao vídeo e usar o item de evolução uma vez?"
+        },
+        {
+            "key": "gameover",
+            "value": "Quer sair do jogo?"
+        },
+        {
+            "key": "evaluation",
+            "value": "avaliação"
+        },
+        {
+            "key": "evaluationMessage",
+            "value": "Se você gosta de jogar, poderia deixar uma avaliação com estrelas e uma mensagem de apoio?"
+        }
+    ]
 }

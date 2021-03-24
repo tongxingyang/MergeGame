@@ -9,6 +9,7 @@ namespace DataInfo {
 		public int bestScore;
 		public int coin;
 		public int adsCount;
+		public int evalutionCount;
 		public int rankupItemCount;
 		public int destroyItemCount;
 

@@ -75,7 +75,7 @@ public class AdsManager : MonoBehaviour {
                 bannerView.Destroy();
             }
 
-            this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+            this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
 
             this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
 

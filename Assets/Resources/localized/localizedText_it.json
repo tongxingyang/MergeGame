@@ -1,152 +1,160 @@
 {
-  "items": [
-    {
-      "key": "movie",
-      "value": "Guarda il video e ottieni 300 monete."
-    },
-    {
-      "key": "noCoin",
-      "value": "Non abbastanza monete!!"
-    },
-    {
-      "key": "cancel",
-      "value": "Annulla"
-    },
-    {
-      "key": "viewAds",
-      "value": "Guarda il video"
-    },
-    {
-      "key": "confirm",
-      "value": "Confermare"
-    },
-    {
-      "key": "use",
-      "value": "Usare"
-    },
-    {
-      "key": "setting",
-      "value": "impostazioni"
-    },
-    {
-      "key": "effectsoff",
-      "value": "effetti disattivati"
-    },
-    {
-      "key": "effectson",
-      "value": "effetti su"
-    },
-    {
-      "key": "backgroundoff",
-      "value": "musica di sottofondo disattivata"
-    },
-    {
-      "key": "backgroundon",
-      "value": "musica di sottofondo"
-    },
-    {
-      "key": "language",
-      "value": "Italiano"
-    },
-    {
-      "key": "credit",
-      "value": "Credito"
-    },
-    {
-      "key": "normal",
-      "value": "Normale"
-    },
-    {
-      "key": "product1key",
-      "value": "Aggiornamento premium"
-    },
-    {
-      "key": "product1value",
-      "value": "Rimuovi gli annunci e goditi il ​​gioco più comodamente."
-    },
-    {
-      "key": "product2key",
-      "value": "Doppia moneta"
-    },
-    {
-      "key": "product2value",
-      "value": "Raddoppia le monete che ottieni nel gioco. per sempre!!"
-    },
-    {
-      "key": "product3key",
-      "value": "Pila di monete"
-    },
-    {
-      "key": "product3value",
-      "value": "2,000 monete vengono aggiunte immediatamente."
-    },
-    {
-      "key": "product4key",
-      "value": "Tasca portamonete"
-    },
-    {
-      "key": "product4value",
-      "value": "8,000 monete vengono aggiunte immediatamente. Goditi un prezzo scontato."
-    },
-    {
-      "key": "product5key",
-      "value": "Scatola per monete"
-    },
-    {
-      "key": "product5value",
-      "value": "14,000 monete vengono aggiunte immediatamente. Prova un tasso di sconto più alto!"
-    },
-    {
-      "key": "product6key",
-      "value": "Distruzione"
-    },
-    {
-      "key": "product6value",
-      "value": "Distruggi casualmente 2 frutti dal livello 2 all'8!"
-    },
-    {
-      "key": "product7key",
-      "value": "Evoluzione"
-    },
-    {
-      "key": "product7value",
-      "value": "Fai evolvere casualmente un frutto da 4 a 8 livelli !!"
-    },
-    {
-      "key": "onlock",
-      "value": "Sbloccare"
-    },
-    {
-      "key": "buy",
-      "value": "monete. Vorresti acquistarlo?"
-    },
-    {
-      "key": "buySuccess",
-      "value": "Acquisto di successo !!"
-    },
-    {
-      "key": "style",
-      "value": "Stile"
-    },
-    {
-      "key": "background",
-      "value": "sfondo"
-    },
-    {
-      "key": "noFruit",
-      "value": "Non c'è frutto che soddisfi le condizioni."
-    },
-    {
-      "key": "noDestroyItem",
-      "value": "Non ci sono abbastanza articoli. Ti piacerebbe guardare il video e utilizzare l'oggetto di distruzione una volta?"
-    },
-    {
-      "key": "noRankUpItem",
-      "value": "Non ci sono abbastanza articoli. Ti piacerebbe guardare il video e utilizzare l'oggetto evoluzione una volta?"
-    },
-    {
-      "key": "gameover",
-      "value": "Uscire dal gioco?"
-    }
-  ]
+    "items": [
+        {
+            "key": "movie",
+            "value": "Guarda il video e ottieni 300 monete."
+        },
+        {
+            "key": "noCoin",
+            "value": "Non abbastanza monete!!"
+        },
+        {
+            "key": "cancel",
+            "value": "Annulla"
+        },
+        {
+            "key": "viewAds",
+            "value": "Guarda il video"
+        },
+        {
+            "key": "confirm",
+            "value": "Confermare"
+        },
+        {
+            "key": "use",
+            "value": "Usare"
+        },
+        {
+            "key": "setting",
+            "value": "impostazioni"
+        },
+        {
+            "key": "effectsoff",
+            "value": "effetti disattivati"
+        },
+        {
+            "key": "effectson",
+            "value": "effetti su"
+        },
+        {
+            "key": "backgroundoff",
+            "value": "musica di sottofondo disattivata"
+        },
+        {
+            "key": "backgroundon",
+            "value": "musica di sottofondo"
+        },
+        {
+            "key": "language",
+            "value": "Italiano"
+        },
+        {
+            "key": "credit",
+            "value": "Credito"
+        },
+        {
+            "key": "normal",
+            "value": "Normale"
+        },
+        {
+            "key": "product1key",
+            "value": "Aggiornamento premium"
+        },
+        {
+            "key": "product1value",
+            "value": "Rimuovi gli annunci e goditi il ​​gioco più comodamente."
+        },
+        {
+            "key": "product2key",
+            "value": "Doppia moneta"
+        },
+        {
+            "key": "product2value",
+            "value": "Raddoppia le monete che ottieni nel gioco. per sempre!!"
+        },
+        {
+            "key": "product3key",
+            "value": "Pila di monete"
+        },
+        {
+            "key": "product3value",
+            "value": "2,000 monete vengono aggiunte immediatamente."
+        },
+        {
+            "key": "product4key",
+            "value": "Tasca portamonete"
+        },
+        {
+            "key": "product4value",
+            "value": "8,000 monete vengono aggiunte immediatamente. Goditi un prezzo scontato."
+        },
+        {
+            "key": "product5key",
+            "value": "Scatola per monete"
+        },
+        {
+            "key": "product5value",
+            "value": "14,000 monete vengono aggiunte immediatamente. Prova un tasso di sconto più alto!"
+        },
+        {
+            "key": "product6key",
+            "value": "Distruzione"
+        },
+        {
+            "key": "product6value",
+            "value": "Distruggi casualmente 2 frutti dal livello 2 all'8!"
+        },
+        {
+            "key": "product7key",
+            "value": "Evoluzione"
+        },
+        {
+            "key": "product7value",
+            "value": "Fai evolvere casualmente un frutto da 4 a 8 livelli !!"
+        },
+        {
+            "key": "onlock",
+            "value": "Sbloccare"
+        },
+        {
+            "key": "buy",
+            "value": "monete. Vorresti acquistarlo?"
+        },
+        {
+            "key": "buySuccess",
+            "value": "Acquisto di successo !!"
+        },
+        {
+            "key": "style",
+            "value": "Stile"
+        },
+        {
+            "key": "background",
+            "value": "sfondo"
+        },
+        {
+            "key": "noFruit",
+            "value": "Non c'è frutto che soddisfi le condizioni."
+        },
+        {
+            "key": "noDestroyItem",
+            "value": "Non ci sono abbastanza articoli. Ti piacerebbe guardare il video e utilizzare l'oggetto di distruzione una volta?"
+        },
+        {
+            "key": "noRankUpItem",
+            "value": "Non ci sono abbastanza articoli. Ti piacerebbe guardare il video e utilizzare l'oggetto evoluzione una volta?"
+        },
+        {
+            "key": "gameover",
+            "value": "Uscire dal gioco?"
+        },
+        {
+            "key": "evaluation",
+            "value": "valutazione"
+        },
+        {
+            "key": "evaluationMessage",
+            "value": "Se ti piace giocare, potresti lasciare una valutazione a stelle e un messaggio di supporto?"
+        }
+    ]
 }

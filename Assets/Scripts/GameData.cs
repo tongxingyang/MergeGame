@@ -6,8 +6,8 @@ using UnityEngine;
 namespace DataInfo {
 	[System.Serializable]
 	public class GameData {
-		public int bestScore;
-		public int coin;
+		public int bestScore = 0;
+		public int coin = 0;
 		public int adsCount;
 		public int evalutionCount;
 		public int rankupItemCount;

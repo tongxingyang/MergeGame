@@ -27,7 +27,9 @@ public class AdsManager : MonoBehaviour {
     //private static readonly string iOS_REWARD_ID = "ca-app-pub-3940256099942544/1712485313";
 
     public static AdsManager init = null;
+    public GameObject bottomBlock;
     public bool isPremium = false;
+
 
     List<string> deviceIds = new List<string>();
 
@@ -76,9 +78,7 @@ public class AdsManager : MonoBehaviour {
             }
 
             this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
-
             this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
-
             this.bannerView.LoadAd(CreateAdRequest());
         }
     }

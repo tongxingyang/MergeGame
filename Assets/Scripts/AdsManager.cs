@@ -75,9 +75,10 @@ public class AdsManager : MonoBehaviour {
                 bannerView.Destroy();
             }
 
-            this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
+            this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
             this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
+            this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
 
             this.bannerView.LoadAd(CreateAdRequest());
         }
@@ -118,7 +119,17 @@ public class AdsManager : MonoBehaviour {
     }
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
-        Debug.Log($"{sender.ToString()} loaded is fail : {args.Message}");
+        Debug.Log($"{sender} loaded is fail : {args.Message}");
+    }
+
+    public void HandleOnAdLoaded(object sender, EventArgs arge) {
+        AboveAds();
+    }
+
+    private void AboveAds() {
+        Vector3 adsAbovePos = new Vector3(0, this.bannerView.GetHeightInPixels() / 200, 0);
+        GameManager.init.premiumGround.transform.position += adsAbovePos;
+        ObjectManager.init._currBackground.transform.position += adsAbovePos;
     }
 
     private void RequestRewardedAd() {

@@ -45,6 +45,9 @@ public class ObjectManager : MonoBehaviour {
 
 	private static Queue<GameObject> garbageObjectContainer;
 	private GameObject currObject;
+	public GameObject _currBackground {
+        get { return currBackground; }
+    }
 	private GameObject currBackground;
 
 	private void Start() {

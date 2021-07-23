@@ -40,8 +40,6 @@ public class AdsManager : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // ?????? ???? ????
-
     private BannerView bannerView;
     private InterstitialAd interstitialAd;
 
@@ -78,9 +76,9 @@ public class AdsManager : MonoBehaviour {
             this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
             this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
-            this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
 
             this.bannerView.LoadAd(CreateAdRequest());
+            AboveAds();
         }
     }
 
@@ -122,14 +120,11 @@ public class AdsManager : MonoBehaviour {
         Debug.Log($"{sender} loaded is fail : {args.Message}");
     }
 
-    public void HandleOnAdLoaded(object sender, EventArgs arge) {
-        AboveAds();
-    }
-
     private void AboveAds() {
-        Vector3 adsAbovePos = new Vector3(0, this.bannerView.GetHeightInPixels() / 200, 0);
-        GameManager.init.premiumGround.transform.position += adsAbovePos;
-        ObjectManager.init._currBackground.transform.position += adsAbovePos;
+
+        Vector3 adsAbovePos = new Vector3(0, this.bannerView.GetHeightInPixels() / 300, 0);
+
+        Camera.main.transform.position -= adsAbovePos;
     }
 
     private void RequestRewardedAd() {

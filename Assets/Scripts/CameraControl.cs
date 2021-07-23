@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour {
     private static readonly float AUDIO_FADEOUT_VAL = 0.2f;
 
+    public int width = 9;
+    public int height = 17;
 
     public bool isBGMFadeOut = false;
 
@@ -21,7 +23,7 @@ public class CameraControl : MonoBehaviour {
 
         Camera cam = GetComponent<Camera>();
         Rect rt = cam.rect;
-        float scale_height = ((float)Screen.width / Screen.height) / ((float)9 / 18);
+        float scale_height = ((float)Screen.width / Screen.height) / ((float)width / height);
 
         float scale_width = 1f / scale_height;
 

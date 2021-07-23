@@ -5565,7 +5565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -440.00977, y: 384}
+  m_AnchoredPosition: {x: -440.00974, y: 384}
   m_SizeDelta: {x: -880.02, y: -1311.946}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &248260152
@@ -8649,7 +8649,7 @@ PrefabInstance:
     - target: {fileID: 7047714515860036341, guid: f21e9a75d12dfbc46904e484ddd7ea53,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 7047714515860036341, guid: f21e9a75d12dfbc46904e484ddd7ea53,
         type: 3}
@@ -10538,7 +10538,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10580,6 +10580,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d41ac79fa74c4ae3a715bc20aa6e904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 9
+  height: 18
   isBGMFadeOut: 0
   audioSource: {fileID: 0}
 --- !u!1 &524379636
@@ -16764,8 +16766,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844039219}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0029, y: -4.9, z: 0}
-  m_LocalScale: {x: 1, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1677066012}
   m_RootOrder: 2
@@ -16783,18 +16785,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.67}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 5.4, y: 1.35}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.4, y: 0.675}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.4, y: 1.35}
+  m_Size: {x: 5.4, y: 0.6751189}
   m_EdgeRadius: 0
 --- !u!1 &847783060
 GameObject:
@@ -34855,7 +34857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 231}
+  m_AnchoredPosition: {x: 0, y: 231}
   m_SizeDelta: {x: 706.556, y: 522.194}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1836663251
@@ -40305,7 +40307,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 2160}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

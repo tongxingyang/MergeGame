@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour {
 	private static readonly float DESTROY_MAX_OBJECT_DELAY = 1.0f;
 	private static readonly int OPEN_UI_ANIM = Animator.StringToHash("isGameOver");
 	private static readonly int SHOP_VAL = Animator.StringToHash("toMenu");
+
+	public UnityAction OnShopClick;
 
 	public static UIManager init = null;
 	private void Awake() {
@@ -65,6 +67,9 @@ public class UIManager : MonoBehaviour {
 
 	public TextMeshProUGUI errorLogPanel;
 
+	[SerializeField] private Button _shopButton;
+	[SerializeField] private ViewCanvasShop _viewCanvasShop;
+
 	private bool _isEnableCoinAds = true;
 	public bool isEnableCoinAds {
 		get { return _isEnableCoinAds; }
@@ -103,6 +108,13 @@ public class UIManager : MonoBehaviour {
     private void Start() {
 		rankItemBtn.onClick.AddListener(OpenRankUpItemPanelOnMain);
 		destroyItemBtn.onClick.AddListener(OpenDestroyItemPanelOnMain);
+		_shopButton.onClick.AddListener(() => OnShopClick.Invoke());
+
+		OnShopClick += () => { _viewCanvasShop.SetActive(true); };
+		OnShopClick += PlayUIBtnSound;
+
+		GameManager.init.OnGameStart += () => IsGameStart(true);
+		GameManager.init.OnLobby += () => IsGameStart(false);
 	}
 
 	private void Update() {
@@ -192,10 +204,6 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public void PlayShopAnim(int val) {
-		animator.SetInteger(SHOP_VAL, val);
-	}
-
 	public void PlayUIBtnSound() {
 		PlayAudioClip(uiBtn);
 	}
@@ -250,13 +258,15 @@ public class UIManager : MonoBehaviour {
 	private IEnumerator OnMaxLevelEffect(GameObject obj) {
 		yield return new WaitForSeconds(MAX_LEVEL_PANEL_OFF_DELAY);
 		maxLevelEffectPanel.SetActive(false);
-
 		yield return new WaitForSeconds(DESTROY_MAX_OBJECT_DELAY);
+		MaxLine.init.gameObject.SetActive(true);
+		ScoreManager.init.currScore += 5000;
 		PlayDestroySound();
 		obj.GetComponent<CircleCollider2D>().enabled = false;
 		obj.GetComponent<MainObject>().DestroyObj();
-		MaxLine.init.SetColor(false);
-		ScoreManager.init.currScore += 5000;
+		/*
+		
+		MaxLine.init.SetColor(false);*/
 	}
 
 	public void SetCoinAdsTimer() {
@@ -290,17 +300,6 @@ public class UIManager : MonoBehaviour {
 	private void OpenDestroyItemPanelOnGame() {
 		destroyItemPanelOnGame.SetActive(true);
 		ObjectManager.init.TargetOfItemFadeOutOnDestroy();
-	}
-
-	public void SendToeMail() {
-		string Emailadd = "ssunine21@gmail.com";
-		string Emailname = EscapeURL("문의사항");
-
-		Application.OpenURL("mailto:" + Emailadd + "?subject=" + Emailname);
-	}
-
-	private string EscapeURL(string url) {
-		return WWW.EscapeURL(url).Replace("+", "%20");
 	}
 
 	public void GoToStore() {

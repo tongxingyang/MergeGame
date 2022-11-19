@@ -8,8 +8,8 @@ public class PriceLocalized : IAPManager {
 	public string products;
 
 	private void OnEnable() {
-		this.GetComponent<TextMeshProUGUI>().text =
+/*		this.GetComponent<TextMeshProUGUI>().text =
 			string.Format("{0} {1}", storeController.products.WithID(products).metadata.localizedPrice,
-			storeController.products.WithID(products).metadata.isoCurrencyCode);
+			storeController.products.WithID(products).metadata.isoCurrencyCode);*/
 	}
 }

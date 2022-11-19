@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Database;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
 	static readonly private string TITLE = "RANK";
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour {
 	private static readonly float GAME_OVER_DELAY = 2.3f;
 
 	public DatabaseReference databaseReference;
+	public UnityAction OnGameStart;
+	public UnityAction OnLobby;
 
 	public string key = "";
 	public static GameManager init = null;
@@ -67,13 +70,13 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 
 		databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+		Application.targetFrameRate = 60;
+		OnGameStart += GameStart;
 	}
 
     public void GameStart() {
 		if (!isEnterGame) {
 			isEnterGame = true;
-			ScoreManager.init.SetGameStart();
-			UIManager.init.IsGameStart(true);
 		}
 	}
 
@@ -85,9 +88,8 @@ public class GameManager : MonoBehaviour {
 	public void AtHome() {
 		if (Time.timeScale < 1f) Time.timeScale = 1f;
 		isGameOver = false;
-		UIManager.init.IsGameStart(false);
-		ScoreManager.init.SetGameOver();
 		ObjectManager.init.StopAllCoroutines();
+		OnLobby.Invoke();
 	}
 
 	public void GameOver() {

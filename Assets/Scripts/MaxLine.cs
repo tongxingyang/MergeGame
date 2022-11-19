@@ -37,6 +37,7 @@ public class MaxLine : MonoBehaviour {
     private void Start() {
         animator = GetComponent<Animator>();
         boxCollider2D = this.GetComponent<BoxCollider2D>();
+        ObjectHeightAsync();
     }
 
     public void WaringLine(MainObject obj) {
@@ -53,6 +54,14 @@ public class MaxLine : MonoBehaviour {
 
     public void StopFlickerAnim() {
         animator.SetBool(isWaring, false);
+    }
+
+    private void ObjectHeightAsync() {
+        float maxWidth = Screen.width > 1080 ? 1080 : Screen.width;
+        float hight = maxWidth * 1.3f;
+        Vector2 pos = Camera.main.ScreenToWorldPoint(Vector2.one * hight);
+        pos.x = 0;
+        this.transform.position = pos;
     }
 
     IEnumerator delayToWaringLine() {

@@ -64,6 +64,9 @@ class ScoreManager : MonoBehaviour {
 		coin = 0;
 		destroyItemCount = 1;
 		rankItemCount = 1;
+
+		GameManager.init.OnGameStart += SetGameStart;
+		GameManager.init.OnLobby += SetGameOver;
 	}
 
 	public int coin {

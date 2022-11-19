@@ -20,7 +20,7 @@ public class CameraControl : MonoBehaviour {
         else if (init != this) {
             Destroy(this.gameObject);
         }
-
+/*
         Camera cam = GetComponent<Camera>();
         Rect rt = cam.rect;
         float scale_height = ((float)Screen.width / Screen.height) / ((float)width / height);
@@ -36,7 +36,7 @@ public class CameraControl : MonoBehaviour {
         }
 
         rt.height = Screen.height;
-        cam.rect = rt;
+        cam.rect = rt;*/
     }
 
 

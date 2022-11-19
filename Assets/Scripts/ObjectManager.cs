@@ -6,7 +6,8 @@ public class ObjectManager : MonoBehaviour {
 	private static readonly int GARBAGE_COUNT = 10;
 	private static readonly int MAX_CREATE_OBJECT_NUMBER = 5;
 	private static readonly float TIME_TO_NEXT_OBJECT = 0.7f;
-	private static readonly float INIT_Y_POSITION = 4;
+
+	private List<Transform> objectList = new List<Transform>();
 
 	public enum MergeLevel {
 		min, one, two, three, four, five, six, seven, eight, nine, max
@@ -23,20 +24,14 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public GameObject[] objects;
-	public GameObject background;
+	public GameObject[] backgroundPrefabs;
 
-	public float backgroundLeft {
-        get {
-			return -(background.GetComponent<SpriteRenderer>().sprite.rect.width
-				/ (background.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * 0.01f) * 0.005f);
-		}
-    }
-	public float backgroundRight {
-		get {
-			return background.GetComponent<SpriteRenderer>().sprite.rect.width
-				/ (background.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * 0.01f) * 0.005f;
-		}
-	}
+	public BlockManager[] block;
+
+	//TODO : 밖으로 나가지 않게 하는 함수 수정
+	public float backgroundLeft => block[0].GetX();
+	public float backgroundRight => block[1].GetX();
+
 	public int currBackgroundNum;
 	public int currStyleNum;
 
@@ -45,25 +40,42 @@ public class ObjectManager : MonoBehaviour {
 
 	private static Queue<GameObject> garbageObjectContainer;
 	private GameObject currObject;
+	private float _initY;
+
 	public GameObject _currBackground {
-        get { return currBackground; }
-    }
+		get { return currBackground; }
+	}
 	private GameObject currBackground;
 
 	private void Start() {
 		objParent = new GameObject("objParent");
 		garbageObjectContainer = new Queue<GameObject>();
 
+		ObjectsSizeAsync();
+
 		if (currBackground == null)
-			currBackground = Instantiate(background);
+			currBackground = Instantiate(backgroundPrefabs[0]);
 
 		CreateObject(0);
 	}
 
+	private void ObjectsSizeAsync() {
+		float maxWidth = Screen.width > 1080 ? 1080 : Screen.width;
+		float maxHeight = Screen.height > 1920 ? 1920 : Screen.height;
+		float screenRate = maxWidth / maxHeight;
+		float objRate = screenRate / 0.5625f;
+
+		objParent.transform.localScale = Vector3.one * objRate;
+
+		float hight = maxWidth * 1.3f;
+		_initY = Camera.main.ScreenToWorldPoint(Vector2.one * hight).y;
+	}
+
 	public void CreateObject(int rand) {
 		if (!GameManager.init.isGameOver) {
-			currObject = Instantiate(objects[rand], new Vector3(0, INIT_Y_POSITION, 0), Quaternion.identity);
+			currObject = Instantiate(objects[rand], new Vector3(0, _initY, 0), Quaternion.identity);
 			currObject.transform.parent = objParent.transform;
+			objectList.Add(currObject.transform);
 			MouseControl.init.SetCurrObject(currObject);
 		}
 	}
@@ -72,6 +84,7 @@ public class ObjectManager : MonoBehaviour {
 		GameObject tempObj = Instantiate(objects[(int)target.mergeLevel], target.transform.position, Quaternion.identity);
 		tempObj.GetComponent<MainObject>().Setting();
 		tempObj.transform.parent = objParent.transform;
+		objectList.Add(tempObj.transform);
 
 		if (tempObj.GetComponent<MainObject>().mergeLevel == MergeLevel.max) {
 			UIManager.init.OnMaxLevelPanel(tempObj);
@@ -113,6 +126,7 @@ public class ObjectManager : MonoBehaviour {
 	IEnumerator TimeToNextObject() {
 		yield return new WaitForSeconds(TIME_TO_NEXT_OBJECT);
 		CreateObject(Random.Range(0, MAX_CREATE_OBJECT_NUMBER));
+		//CreateObject(Random.Range(0, 9));
 		UIManager.init.AddScore(ScoreManager.DROP_SCORE);
 	}
 
@@ -130,6 +144,7 @@ public class ObjectManager : MonoBehaviour {
 		foreach (Transform gameObject in objParent.GetComponentsInChildren<Transform>()) {
 			Destroy(gameObject.gameObject);
 		}
+		objectList.Clear();
 		Start();
 	}
 
@@ -149,9 +164,11 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	public void ChangeBackgroundImage(int wallNum) {
+		if (currBackgroundNum == wallNum) return;
+
 		currBackgroundNum = wallNum;
-		Sprite sprite = Resources.Load<Sprite>("obj/background" + wallNum);
-		currBackground.GetComponent<SpriteRenderer>().sprite = sprite;
+		DestroyImmediate(currBackground);
+		currBackground = Instantiate(backgroundPrefabs[wallNum]);
 	}
 
 	public void RankUpItem(bool isAdsRewarded = false) {

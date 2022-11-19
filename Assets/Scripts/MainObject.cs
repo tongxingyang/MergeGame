@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MainObject : MonoBehaviour {
 	private static readonly float DESTROY_ITEM_DELAY = 1.5f;
-	private static readonly int GRAVITY_SCALE = 2;
+	private static readonly float GRAVITY_SCALE = 3.2f;
 	private static readonly int FLICKER_OBJ = Animator.StringToHash("flicker");
 	private static readonly int DESTROY_MAX_LEVEL = Animator.StringToHash("destroy");
 	private static readonly int FADE_OUT = Animator.StringToHash("fadeout");
@@ -22,7 +22,9 @@ public class MainObject : MonoBehaviour {
 
 	private Sprite sprite;
 	private Animator animator;
+	private Rigidbody2D _rigidbody;
 	private Vector3 fixedPos, dynamicPos;
+	private Vector3 screenPos;
 
 	private bool isDrop = false;
 	private bool isFixed = false;
@@ -31,6 +33,11 @@ public class MainObject : MonoBehaviour {
 
 	private void Start() {
 		animator = GetComponent<Animator>();
+		_rigidbody = GetComponent<Rigidbody2D>();
+		radius = GetRadius();
+		screenPos.x = Camera.main.ViewportToWorldPoint(Vector2.zero).x;
+		screenPos.y = Camera.main.ViewportToWorldPoint(Vector2.one).x;
+		StartCoroutine(CoAsyncPosition());
 	}
 
 	private void Update() {
@@ -38,6 +45,8 @@ public class MainObject : MonoBehaviour {
 			animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f){
 			gameObject.SetActive(false);
 		}
+
+
 		dynamicPos = transform.position;
 
         if (isFixed) {
@@ -47,18 +56,32 @@ public class MainObject : MonoBehaviour {
 		} else {
 			MaxLine.init.StopFlickerAnim();
         }
-
-		if (transform.position.x <= ObjectManager.init.backgroundLeft) dynamicPos.x = ObjectManager.init.backgroundLeft;
-		if (transform.position.x >= ObjectManager.init.backgroundRight) dynamicPos.x = ObjectManager.init.backgroundRight;
+		//TODO : 밖으로 나가지 않게 하는 함수 수정
+		//if (transform.position.x <= ObjectManager.init.backgroundLeft) dynamicPos.x = ObjectManager.init.backgroundLeft;
+		//if (transform.position.x >= ObjectManager.init.backgroundRight) dynamicPos.x = ObjectManager.init.backgroundRight;
 
 		transform.position = dynamicPos;
 	}
 
+	private IEnumerator CoAsyncPosition() {
+		while(true) {
+			if (transform.position.x - radius < ObjectManager.init.backgroundLeft) {
+				Vector2 temp = new Vector2(ObjectManager.init.backgroundLeft + radius, transform.position.y);
+				transform.position = temp;
+				_rigidbody.angularVelocity = 0;
+			}
+			else if (transform.position.x + radius > ObjectManager.init.backgroundRight) {
+				Vector2 temp = new Vector2(ObjectManager.init.backgroundRight - radius, transform.position.y);
+				transform.position = temp;
+				_rigidbody.angularVelocity = 0;
+			}
+			yield return null;
+        }
+    }
+
 	public void Setting() {
 		try {
-			sprite = GetComponent<SpriteRenderer>().sprite;
-			radius = sprite.rect.width / (sprite.pixelsPerUnit * 0.01f) * 0.005f;
-
+			radius = GetRadius();
 			gameObject.AddComponent<CircleCollider2D>();
 			gameObject.GetComponent<CircleCollider2D>().radius = radius;
 			gameObject.GetComponent<Rigidbody2D>().gravityScale = GRAVITY_SCALE;
@@ -66,6 +89,11 @@ public class MainObject : MonoBehaviour {
 		} catch (System.NullReferenceException e) {
 			Debug.Log(e.StackTrace);
 		}
+	}
+
+	private float GetRadius() {
+		sprite = GetComponent<SpriteRenderer>().sprite;
+		return sprite.rect.width / (sprite.pixelsPerUnit * 0.01f) * 0.005f;
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
@@ -97,9 +125,6 @@ public class MainObject : MonoBehaviour {
 	}
 
 	private void targetPosCheckAndMerge(GameObject collision) {
-		Vector2 velocity = this.GetComponent<Rigidbody2D>().velocity;
-		Vector2 targetVelocity = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
-
 		if(this.transform.position.y >= collision.transform.position.y) {
 			mergeObject(collision);
 		}

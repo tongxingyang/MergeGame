@@ -39,7 +39,11 @@ public class MouseControl : MonoBehaviour {
 		currObject = temp;
     }
 
-	private void Update() {
+    private void Start() {
+		UIManager.init.OnShopClick += () => { isTouchAction = false; };
+    }
+
+    private void Update() {
 		if(Input.touchCount > 0) {
 			if(Input.GetTouch(0).phase == TouchPhase.Began) {
 				ObjectControlWhenOnTouch();
@@ -80,7 +84,7 @@ public class MouseControl : MonoBehaviour {
 			isGameClicking = true;
 
             if (!isGameStart) {
-				GameManager.init.GameStart();
+				GameManager.init.OnGameStart.Invoke();
 				isGameStart = true;
 			}
 

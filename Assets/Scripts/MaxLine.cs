@@ -57,8 +57,8 @@ public class MaxLine : MonoBehaviour {
     }
 
     private void ObjectHeightAsync() {
-        float maxWidth = Screen.width > 1080 ? 1080 : Screen.width;
-        float hight = maxWidth * 1.3f;
+        float maxWidth = Screen.width;// > 1080 ? 1080 : Screen.width;
+        float hight = maxWidth * 1.5f;
         Vector2 pos = Camera.main.ScreenToWorldPoint(Vector2.one * hight);
         pos.x = 0;
         this.transform.position = pos;

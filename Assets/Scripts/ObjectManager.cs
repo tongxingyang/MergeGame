@@ -60,14 +60,15 @@ public class ObjectManager : MonoBehaviour {
 	}
 
 	private void ObjectsSizeAsync() {
-		float maxWidth = Screen.width > 1080 ? 1080 : Screen.width;
-		float maxHeight = Screen.height > 1920 ? 1920 : Screen.height;
+		float maxWidth = Screen.width;//> 1080 ? 1080 : Screen.width;
+		float maxHeight = Screen.height;// > 1920 ? 1920 : Screen.height;
+		if (maxHeight < maxWidth) maxWidth = 1080;
 		float screenRate = maxWidth / maxHeight;
 		float objRate = screenRate / 0.5625f;
 
 		objParent.transform.localScale = Vector3.one * objRate;
 
-		float hight = maxWidth * 1.3f;
+		float hight = maxWidth * 1.5f;
 		_initY = Camera.main.ScreenToWorldPoint(Vector2.one * hight).y;
 	}
 

@@ -21,8 +21,13 @@ public class BlockManager : MonoBehaviour {
     private Vector2 GetPos() {
         float halfRect = _boxCollider.size.x * 0.5f;
         Vector2 pos;
+        float maxWidth = Screen.width;
+        float maxHeight = Screen.height;
+
+        if (maxHeight < maxWidth) maxWidth = 1080;
+
         float realHalf = Screen.width * 0.5f;
-        float ingameHalf = realHalf > 540 ? 540 : realHalf;
+        float ingameHalf = maxWidth * 0.5f;// > 540 ? 540 : realHalf;
 
 
         if (_isLeft) {
